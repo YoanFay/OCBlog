@@ -5,13 +5,18 @@
 
 namespace App\Src\Controller;
 
-class Homepage
+class Homepage extends Controller
 {
-
-    public function homepage()
+    /**
+     * @return void
+     */
+    public function index()
     {
 
-        return ok;
+        $this->render('homepage/homepage', [
+            'a' => 1,
+            'b' => 2,
+        ]);
     }
 
 }
