@@ -3,6 +3,8 @@
  * Définition de la classe Homepage
  */
 
+namespace App\Src\Controller;
+
 class Homepage
 {
 

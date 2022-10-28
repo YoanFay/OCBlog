@@ -1,5 +1,7 @@
 <?php
 
+namespace App\Src\Core;
+
 /**
  * Définition de la classe Base qui crée les liens vers la base de données
  * La classe sera appelée à chaque fois qu'une donnée de la base de données sera nécessaire
