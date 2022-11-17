@@ -1,1 +1,44 @@
 {% extends "/layout/base.html.twig" %}
+
+{% block header %}
+
+<div class="d-flex justify-content-center align-items-center flex-column">
+    <nav class="bg-black text-white d-flex justify-content-between flex-row w-100 p-2 align-items-center">
+        <div class="d-flex flex-row">
+            <ul class="m-0">
+                Inscription
+            </ul>
+            <ul class="m-0">
+                Connexion
+            </ul>
+        </div>
+        <div>
+            <ul class="m-0">
+                CV
+            </ul>
+        </div>
+    </nav>
+    <div class="d-flex flex-row justify-content-center col-12 mt-2">
+        <div class="col-3 d-flex flex-row-reverse">
+            <img class="rounded-circle" width="50%" src="public/img/config/{{ image }}">
+        </div>
+        <div class="col-4 d-flex justify-content-center flex-column ms-2">
+            <h1>Blog de Yoan Fayolle</h1>
+            <h2 class="h4">{{ catch_phrase }}</h2>
+        </div>
+    </div>
+</div>
+
+{%endblock%}
+
+{% block main %}
+
+    <div class="d-flex justify-content-center mt-5">
+    <div class="card col-8">
+        <div class="card-body">
+
+        </div>
+    </div>
+    </div>
+
+{% endblock %}

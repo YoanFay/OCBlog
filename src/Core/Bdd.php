@@ -2,55 +2,56 @@
 
 namespace App\Src\Core;
 
+use Exception;
+use PDO;
+
 /**
  * Définition de la classe Base qui crée les liens vers la base de données
  * La classe sera appelée à chaque fois qu'une donnée de la base de données sera nécessaire
  */
 class Bdd
 {
-    private static $connect = null;
-    private $bdd;
+    protected static $connect = null;
+    public $bdd;
 
-    private function __construct()
+    public function __construct()
     {
-        $serveur = "localhost";
-        $login = "root";
-        $password = "root";
-        $base = "blog";
+        $host = '127.0.0.1';
+        $db   = 'blog';
+        $user = 'root';
+        $pass = 'root';
 
 
-        //Création d'un lien à la base de données de type PDO
+        $dsn = "mysql:host=$host;dbname=$db";
+        $options = [
+            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_EMULATE_PREPARES   => false,
+        ];
         try {
-            $this->bdd = new PDO('mysql:host=' . $serveur . ';dbname=' . $base, $login, $password);
-            $this->bdd->exec('SET NAMES UTF8');
-        } catch (Exception $e) {
-            die('Erreur : ' . $e->getMessage());
+            $this->bdd = new PDO($dsn, $user, $pass, $options);
+        } catch (\PDOException $e) {
+            throw new \PDOException($e->getMessage(), (int)$e->getCode());
         }
-    }
-
-    public static function getInstance()
-    {
-        if (is_null(self::$connect)) {
-            self::$connect = new Bdd();
-        }
-        return self::$connect;
     }
 
     //----------------------------------------
     //FONCTIONS
     //----------------------------------------
 
-    // Permet de préparer une requête SQL. Retourne la requête préparée sous forme d'objet
-    public function prepare($req)
+    public function query($req, $params = [])
     {
-        $query = $this->bdd->prepare($req);
-        return $query;
+        $this->bdd->prepare($req)->execute($params);
     }
 
-    // Permet d'exécuter une requête SQL préparée. Retourne le résultat (s'il y en a un) de la requête sous forme d'objet
-    public function execute($query, $param)
+    public function select($req, $params = [])
     {
-        $req = $query->execute($param);
-        return $req;
+        $query = $this->bdd->prepare($req);
+        $query->execute($params);
+        return $query->fetchAll();
+    }
+
+    public function lastInsert(){
+        return $this->bdd->lastInsertId();
     }
 }

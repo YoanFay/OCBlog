@@ -12,6 +12,9 @@ class Autoloader{
     }
 
     static function autoload($class){
+        if (substr($class,0,5) === 'Twig\\'){
+            $class = "Vendor\\Twig\\Twig\\Src\\".substr($class,5);
+        }
         $class = str_replace(__NAMESPACE__ . '\\', '', $class);
         $file = __DIR__ . '\\' . $class . '.php';
 

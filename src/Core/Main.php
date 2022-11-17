@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Src\Core;
+ini_set('display_errors', 1);
 
 use App\Src\Controller\Homepage;
 
@@ -12,7 +13,7 @@ class Main{
         $params = [];
         //filter_input(input_GET, 'p')
         if(isset($_GET['p'])) {
-            $params = explode('/', $_GET['p']);
+            $params = explode('/', filter_input(INPUT_GET, 'p'));
         }
 
         if ($params[0] !== ''){

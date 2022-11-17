@@ -1,22 +1,22 @@
 <?php return array(
     'root' => array(
-        'pretty_version' => 'dev-master',
-        'version' => 'dev-master',
+        'pretty_version' => 'dev-develop',
+        'version' => 'dev-develop',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => '0f3cb0f0c83ae18632ed998b78f164def76d432a',
+        'reference' => '391685e749cfde7d31ad475a07ccecdd677d6121',
         'name' => '__root__',
         'dev' => true,
     ),
     'versions' => array(
         '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
+            'pretty_version' => 'dev-develop',
+            'version' => 'dev-develop',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => '0f3cb0f0c83ae18632ed998b78f164def76d432a',
+            'reference' => '391685e749cfde7d31ad475a07ccecdd677d6121',
             'dev_requirement' => false,
         ),
         'symfony/polyfill-ctype' => array(
@@ -37,23 +37,29 @@
             'reference' => '9344f9cb97f3b19424af1a21a3b0e75b0a7d8d7e',
             'dev_requirement' => false,
         ),
-        'symfony/polyfill-php72' => array(
-            'pretty_version' => 'v1.26.0',
-            'version' => '1.26.0.0',
+        'twbs/bootstrap' => array(
+            'pretty_version' => 'v5.2.2',
+            'version' => '5.2.2.0',
             'type' => 'library',
-            'install_path' => __DIR__ . '/../symfony/polyfill-php72',
+            'install_path' => __DIR__ . '/../twbs/bootstrap',
             'aliases' => array(),
-            'reference' => 'bf44a9fd41feaac72b074de600314a93e2ae78e2',
+            'reference' => '961d5ff9844372a4e294980c667bbe7e0651cdeb',
             'dev_requirement' => false,
         ),
         'twig/twig' => array(
-            'pretty_version' => 'v2.15.3',
-            'version' => '2.15.3.0',
+            'pretty_version' => 'v3.4.3',
+            'version' => '3.4.3.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../twig/twig',
             'aliases' => array(),
-            'reference' => 'ab402673db8746cb3a4c46f3869d6253699f614a',
+            'reference' => 'c38fd6b0b7f370c198db91ffd02e23b517426b58',
             'dev_requirement' => false,
+        ),
+        'twitter/bootstrap' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => 'v5.2.2',
+            ),
         ),
     ),
 );

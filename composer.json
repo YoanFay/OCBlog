@@ -1,5 +1,7 @@
 {
     "require": {
-        "twig/twig": "^2.0"
+        "twig/twig": "^3.4",
+        "twbs/bootstrap": "^5.2",
+        "ext-pdo": "*"
     }
 }

@@ -5,6 +5,8 @@
 
 namespace App\Src\Controller;
 
+use App\Src\Core\Bdd;
+
 class Homepage extends Controller
 {
     /**
@@ -12,10 +14,16 @@ class Homepage extends Controller
      */
     public function index()
     {
+        $bdd = new Bdd();
+
+        $req = 'SELECT * FROM config';
+        $config = $bdd->select($req);
+        $config = $config[0];
 
         $this->render('homepage/homepage', [
-            'a' => 1,
-            'b' => 2,
+            'image' => $config['image'],
+            'catch_phrase' => $config['catch_phrase'],
+            'cv' => $config['cv'],
         ]);
     }
 
