@@ -5,16 +5,20 @@
 <div class="d-flex justify-content-center align-items-center flex-column">
     <nav class="bg-black text-white d-flex justify-content-between flex-row w-100 p-2 align-items-center">
         <div class="d-flex flex-row">
+            {% if user == null %}
             <ul class="m-0">
-                Inscription
+                <a class="text-white text-decoration-none" href="http://localhost/ocBlog/Authentication/signup">Inscription</a>
             </ul>
             <ul class="m-0">
-                Connexion
+                <a class="text-white text-decoration-none" href="http://localhost/ocBlog/Authentication/signin">Connexion</a>
             </ul>
+                {% else %}
+                    <a class="text-white text-decoration-none" href="http://localhost/ocBlog/Authentication/logout">Deconnexion</a>
+            {% endif %}
         </div>
         <div>
             <ul class="m-0">
-                CV
+                <a class="text-white text-decoration-none" href="/OcBlog/public/pdf/{{ cv }}" target="_blank">CV</a>
             </ul>
         </div>
     </nav>
@@ -23,7 +27,7 @@
             <img class="rounded-circle" width="50%" src="public/img/config/{{ image }}">
         </div>
         <div class="col-4 d-flex justify-content-center flex-column ms-2">
-            <h1>Blog de Yoan Fayolle</h1>
+            <h1>{{ title }}</h1>
             <h2 class="h4">{{ catch_phrase }}</h2>
         </div>
     </div>

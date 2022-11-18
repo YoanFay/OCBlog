@@ -14,16 +14,25 @@ class Homepage extends Controller
      */
     public function index()
     {
+        session_start();
+        $user = null;
+
         $bdd = new Bdd();
 
         $req = 'SELECT * FROM config';
         $config = $bdd->select($req);
         $config = $config[0];
 
+        if (isset($_SESSION['user'])){
+            $user = $_SESSION['user'];
+        }
+
         $this->render('homepage/homepage', [
             'image' => $config['image'],
             'catch_phrase' => $config['catch_phrase'],
             'cv' => $config['cv'],
+            'title' => $config['title'],
+            'user' => $user,
         ]);
     }
 

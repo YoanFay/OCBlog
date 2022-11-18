@@ -16,11 +16,18 @@ $infoRole = [
 $bdd->query($req, $infoRole);
 $idRole = $bdd->lastInsert();
 
+$infoRole = [
+    'name' => "Utilisateur",
+    'code' => "user"
+];
+
+$bdd->query($req, $infoRole);
+
 $infoAdmin = [
     'lastname' => "Fayolle",
     'firstname' => "Yoan",
     'login' => "yF-OcBlog",
-    'password' => md5("mDp@dmin"),
+    'password' => password_hash("mDp@dmin", PASSWORD_BCRYPT),
     'created' => date_format(new DateTime(), 'Y-m-d H:i:s'),
     'role' => $idRole
 ];
@@ -32,7 +39,8 @@ $bdd->query($req, $infoAdmin);
 $config = [
     'image' => "photo_Yoan_Fayolle.jpg",
     'phrase' => "Pour un site trop bien",
-    'cv' => "cv_Yoan_Fayolle.pdf"
+    'cv' => "cv_Yoan_Fayolle.pdf",
+    'title' => "Blog de Yoan Fayolle",
 ];
 
 $req = 'INSERT INTO config VALUES(NULL, :image, :phrase, :cv)';
