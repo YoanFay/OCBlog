@@ -2,6 +2,7 @@
 
 namespace App\Src\Core;
 
+use App\Src\Entity\Post;
 use Exception;
 use PDO;
 
@@ -25,7 +26,7 @@ class Bdd
         $dsn = "mysql:host=$host;dbname=$db";
         $options = [
             PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS,
             PDO::ATTR_EMULATE_PREPARES   => false,
         ];
         try {
@@ -44,9 +45,10 @@ class Bdd
         $this->bdd->prepare($req)->execute($params);
     }
 
-    public function select($req, $params = [])
+    public function select($req, $class, $params = [])
     {
         $query = $this->bdd->prepare($req);
+        $query->setFetchMode(PDO::FETCH_CLASS, $class);
         $query->execute($params);
         return $query->fetchAll();
     }

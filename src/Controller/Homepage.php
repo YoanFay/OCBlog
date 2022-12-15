@@ -6,6 +6,8 @@
 namespace App\Src\Controller;
 
 use App\Src\Core\Bdd;
+use App\Src\Repository\ConfigRepository;
+use App\Src\Repository\PostRepository;
 
 class Homepage extends Controller
 {
@@ -14,17 +16,20 @@ class Homepage extends Controller
      */
     public function index()
     {
-        $bdd = new Bdd();
+        $postRepository = new PostRepository();
+        $configRepository = new ConfigRepository();
 
-        $req = 'SELECT * FROM config';
-        $config = $bdd->select($req);
-        $config = $config[0];
+        $config = $configRepository->findOne();
+        $posts = $postRepository->findAll();
+        $user = Session::get('user');
 
         $this->render('homepage/homepage', [
-            'image' => $config['image'],
-            'catch_phrase' => $config['catch_phrase'],
-            'cv' => $config['cv'],
+            'image' => $config->getImage(),
+            'catch_phrase' => $config->getCatchPhrase(),
+            'cv' => $config->getCv(),
+            'title' => $config->getTitle(),
+            'user' => $user,
+            'posts' => $posts
         ]);
     }
-
 }
