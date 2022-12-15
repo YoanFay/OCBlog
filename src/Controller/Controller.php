@@ -12,6 +12,8 @@ abstract class Controller{
 
     public function __construct()
     {
+        session_start();
+
         $this->loader = new FilesystemLoader('../templates');
 
         $this->twig = new Environment($this->loader);

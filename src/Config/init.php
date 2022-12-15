@@ -46,3 +46,18 @@ $config = [
 $req = 'INSERT INTO config VALUES(NULL, :image, :phrase, :cv)';
 
 $bdd->query($req, $config);
+
+$categoryPro = [
+    'name' => "Professionnel",
+    'code' => "pro",
+];
+
+$categoryPerso = [
+    'name' => "Personnel",
+    'code' => "perso",
+];
+
+$req = 'INSERT INTO category VALUES(NULL, :name, :code)';
+
+$bdd->query($req, $categoryPro);
+$bdd->query($req, $categoryPerso);

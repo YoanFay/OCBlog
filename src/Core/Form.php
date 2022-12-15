@@ -10,19 +10,6 @@ class Form{
         return $this->formCode;
     }
 
-    public function validate(array $form, array $champs){
-
-        foreach ($champs as $champ) {
-
-            if (!isset($form[$champ]) || empty($form[$champ])){
-                return false;
-            }
-
-        }
-
-        return true;
-    }
-
     private function addAttribute(array $attributes): string
     {
         $str = '';
@@ -71,6 +58,43 @@ class Form{
         $this->formCode .= $attributes?$this->addAttribute($attributes) : '';
 
         $this->formCode .= ">$text</label>";
+
+        return $this;
+    }
+
+    public function addTextArea(string $nom, string $text = "", array $attributes = []):self
+    {
+        $this->formCode .= "<textarea name='$nom'";
+
+        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+
+        $this->formCode .= "$text</textarea>";
+
+        return $this;
+    }
+
+    public function addSelect(string $nom, array $options, array $attributes = []):self
+    {
+        $this->formCode .= "<select name='$nom'";
+
+        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+
+        foreach ($options as $key => $option) {
+            $this->formCode .= "<option value='$key'>$option</option>";
+        }
+
+        $this->formCode .= "</select>";
+
+        return $this;
+    }
+
+    public function addError(array $errors = []):self
+    {
+        $this->formCode .= "<p>";
+
+        foreach ($errors as $key => $error) {
+            $this->formCode .= "<p class='d-flex align-items-center text-danger'><span class='material-symbols-outlined me-2'>warning</span>$error</p>";
+        }
 
         return $this;
     }

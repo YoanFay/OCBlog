@@ -2,16 +2,36 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/public/.htaccess" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/authentication/signIn.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/authentication/signUp.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Session.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Category.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Config.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Post.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Role.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/AuthentificationForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/PostForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/RoleRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Twig/DateHExtension.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Validator/PostValidator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Validator/Validator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/post/add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.htaccess" beforeDir="false" afterPath="$PROJECT_DIR$/htaccess" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/9468c050-987a-4785-a44c-722b19da2a3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9468c050-987a-4785-a44c-722b19da2a3e.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/pdf/config/CV Yoan Fayolle.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/public/pdf/CV_Yoan_Fayolle.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Config/init.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config/init.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Homepage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Bdd.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Bdd.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Main.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout/base.html.twig" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,29 +66,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "H:/UwAmp/www/OCBlog/templates/authentication",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "SQL Dialects",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/UwAmp/www/OCBlog/src/Repository&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.webide.settings.project.settings.php&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\UwAmp\www\OCBlog\templates\authentication" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Controller" />
-      <recent name="H:\UwAmp\www\OCBlog\public" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Repository" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Form" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Entity" />
+      <recent name="H:\UwAmp\www\OCBlog\templates\post" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\UwAmp\www\OCBlog\public\pdf" />
@@ -109,7 +131,13 @@
       <workItem from="1667550324319" duration="5524000" />
       <workItem from="1667566492407" duration="6346000" />
       <workItem from="1668669041273" duration="13717000" />
-      <workItem from="1668753743825" duration="4689000" />
+      <workItem from="1668753743825" duration="7251000" />
+      <workItem from="1668761667403" duration="2640000" />
+      <workItem from="1669359309838" duration="13051000" />
+      <workItem from="1669879221196" duration="12075000" />
+      <workItem from="1669964826053" duration="14140000" />
+      <workItem from="1670539853889" duration="8737000" />
+      <workItem from="1671087500547" duration="2861000" />
     </task>
     <servers />
   </component>
