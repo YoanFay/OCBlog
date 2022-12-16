@@ -64,7 +64,6 @@ class Post extends Controller
 
         $this->render('post/delete', [
             'form' => $form->create(),
-            'user' => $user,
         ]);
 
     }
@@ -131,7 +130,6 @@ class Post extends Controller
 
         $this->render('post/update', [
             'form' => $form->create(),
-            'user' => $user,
         ]);
     }
 
@@ -192,8 +190,12 @@ class Post extends Controller
         $form = $postForm->addPost($categoryTab, $testPost, $token);
 
         $this->render('post/add', [
-            'form' => $form->create()
+            'form' => $form->create(),
         ]);
+
+    }
+
+    public function listPostNotValidate(){
 
     }
 }

@@ -17,6 +17,8 @@ abstract class Controller{
         $this->loader = new FilesystemLoader('../templates');
 
         $this->twig = new Environment($this->loader);
+
+        $this->twig->addGlobal('user', Session::getAuth());
     }
 
     public function render($fichier, array $donnees = []){

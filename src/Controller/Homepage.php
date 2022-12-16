@@ -21,7 +21,6 @@ class Homepage extends Controller
 
         $config = $configRepository->findOne();
         $posts = $postRepository->findLastPost();
-        $user = Session::getAuth();
         $flash = Session::getFlash();
         Session::resetFlash();
 
@@ -30,7 +29,6 @@ class Homepage extends Controller
             'catch_phrase' => $config->getCatchPhrase(),
             'cv' => $config->getCv(),
             'title' => $config->getTitle(),
-            'user' => $user,
             'posts' => $posts,
             'flash' => $flash,
         ]);

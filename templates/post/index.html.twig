@@ -1,39 +1,9 @@
 {% extends "/layout/base.html.twig" %}
 
-{% block header %}
-
-    <div class="d-flex justify-content-center align-items-center flex-column">
-        <nav class="bg-black text-white d-flex justify-content-between flex-row w-100 p-2 align-items-center">
-            <div class="d-flex flex-row">
-                {% if user == null %}
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/signup">Inscription</a>
-                    </ul>
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/signin">Connexion</a>
-                    </ul>
-                {% else %}
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Post">Voir les articles</a>
-                    </ul>
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/logout">Deconnexion</a>
-                    </ul>
-                {% endif %}
-            </div>
-            <div>
-                <ul class="m-0">
-                    <a class="text-white text-decoration-none" href="pdf/{{ cv }}" target="_blank">CV</a>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
-{%endblock%}
-
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
+        <a href="/Post/add"><button class="btn btn-primary">Ajouter un article</button></a>
         {% for post in posts %}
         <div class="card col-8 my-2 cursor-click" onclick="onePost({{ post.id }})">
             <div class="card-body">
