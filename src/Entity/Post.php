@@ -2,18 +2,29 @@
 
 namespace App\Src\Entity;
 
+use App\Src\Controller\Session;
+
 class Post{
 
     private $id;
     private $content;
     private $image;
-    private $createdAt;
-    private $publishedAt;
-    private $updatedAt;
-    private $deletedAt;
+    private $created_at;
+    private $published_at;
+    private $updated_at;
+    private $deleted_at;
     private $excerpt;
-    private $categoryId;
-    private $userId;
+    private $category_id;
+    private $userid;
+
+    public function __construct(){
+        $this->image = null;
+        $this->createdAt = date_format(new \DateTime(), 'Y-m-d H:i:s');
+        $this->publishedAt = date_format(new \DateTime(), 'Y-m-d H:i:s');
+        $this->updatedAt = null;
+        $this->deletedAt = null;
+        $this->userId = Session::getAuth('user_id');
+    }
 
     /**
      * @return int
@@ -68,7 +79,7 @@ class Post{
      */
     public function getCreatedAt()
     {
-        return $this->createdAt;
+        return $this->created_at;
     }
 
     /**
@@ -76,7 +87,7 @@ class Post{
      */
     public function setCreatedAt($createdAt): void
     {
-        $this->createdAt = $createdAt;
+        $this->created_at = $createdAt;
     }
 
     /**
@@ -84,7 +95,7 @@ class Post{
      */
     public function getPublishedAt()
     {
-        return $this->publishedAt;
+        return $this->published_at;
     }
 
     /**
@@ -92,7 +103,7 @@ class Post{
      */
     public function setPublishedAt($publishedAt): void
     {
-        $this->publishedAt = $publishedAt;
+        $this->published_at = $publishedAt;
     }
 
     /**
@@ -100,7 +111,7 @@ class Post{
      */
     public function getUpdatedAt()
     {
-        return $this->updatedAt;
+        return $this->updated_at;
     }
 
     /**
@@ -108,7 +119,7 @@ class Post{
      */
     public function setUpdatedAt($updatedAt): void
     {
-        $this->updatedAt = $updatedAt;
+        $this->updated_at = $updatedAt;
     }
 
     /**
@@ -116,7 +127,7 @@ class Post{
      */
     public function getDeletedAt()
     {
-        return $this->deletedAt;
+        return $this->deleted_at;
     }
 
     /**
@@ -124,7 +135,7 @@ class Post{
      */
     public function setDeletedAt($deletedAt): void
     {
-        $this->deletedAt = $deletedAt;
+        $this->deleted_at = $deletedAt;
     }
 
     /**
@@ -148,7 +159,7 @@ class Post{
      */
     public function getCategoryId(): int
     {
-        return $this->categoryId;
+        return $this->category_id;
     }
 
     /**
@@ -156,7 +167,7 @@ class Post{
      */
     public function setCategoryId(int $categoryId): void
     {
-        $this->categoryId = $categoryId;
+        $this->category_id = $categoryId;
     }
 
     /**
@@ -164,13 +175,13 @@ class Post{
      */
     public function getUserId(): int
     {
-        return $this->userId;
+        return $this->user_id;
     }
 
     /**
      * @param int $userId
      */
-    public function setUserId(int $userId): void
+    public function setUser_id(int $userId): void
     {
         $this->userId = $userId;
     }

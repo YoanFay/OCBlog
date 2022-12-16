@@ -20,8 +20,10 @@ class Homepage extends Controller
         $configRepository = new ConfigRepository();
 
         $config = $configRepository->findOne();
-        $posts = $postRepository->findAll();
-        $user = Session::get('user');
+        $posts = $postRepository->findLastPost();
+        $user = Session::getAuth();
+        $flash = Session::getFlash();
+        Session::resetFlash();
 
         $this->render('homepage/homepage', [
             'image' => $config->getImage(),
@@ -29,7 +31,8 @@ class Homepage extends Controller
             'cv' => $config->getCv(),
             'title' => $config->getTitle(),
             'user' => $user,
-            'posts' => $posts
+            'posts' => $posts,
+            'flash' => $flash,
         ]);
     }
 }

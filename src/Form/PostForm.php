@@ -13,9 +13,9 @@ class PostForm{
         $this->form = new Form();
     }
 
-    public function addPost($categoryTab, $errors){
+    public function addPost($categoryTab, $errors, $token){
 
-        return $this->form->startForm('post', 'http://localhost/Post/add')
+        return $this->form->startForm('post', '/Post/add')
             ->addLabelFor('content', "Contenue")
             ->addTextArea('content',"", ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content']??[])
@@ -23,8 +23,39 @@ class PostForm{
             ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['category']??[])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addHidden('formName', 'addPost')
+            ->addHidden('csrfToken', $token)
             ->endForm()
-        ;
+            ;
+
+    }
+
+    public function deletePost($id, $token){
+
+        return $this->form->startForm('post', '/Post/deletePost/'.$id)
+                ->addText('Voulez-vous supprimer ce post ?')
+                ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
+                ->addHidden('formName', 'deletePost')
+                ->addHidden('csrfToken', $token)
+                ->endForm()
+            ;
+
+    }
+
+    public function updatePost($categoryTab, $errors, $id, $content, $token){
+
+        return $this->form->startForm('post', '/Post/updatePost/'.$id)
+            ->addLabelFor('content', "Contenue")
+            ->addTextArea('content',"$content", ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['content']??[])
+            ->addLabelFor('category', "Catégorie")
+            ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['category']??[])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addHidden('formName', 'updatePost')
+            ->addHidden('csrfToken', $token)
+            ->endForm()
+            ;
 
     }
 }

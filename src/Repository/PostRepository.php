@@ -62,6 +62,19 @@ class PostRepository
 
     }
 
+    public function findLastPost()
+    {
+
+        $req = 'SELECT * FROM post ORDER BY created_at DESC LIMIT 3';
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function insert(Post $post)
     {
 
@@ -77,6 +90,45 @@ class PostRepository
             'excerpt' => $post->getExcerpt(),
             'category' => $post->getCategoryId(),
             'user' => $post->getUserId(),
+        ];
+
+        $this->bdd->query($req, $postInfo);
+    }
+
+    public function find(int $id){
+
+        $req = "SELECT * FROM post WHERE id = ".$id;
+
+        if($post = $this->bdd->select($req, $this->class)) {
+            return $post[0];
+        }else{
+            return NULL;
+        }
+    }
+
+    public function delete(int $id){
+        $req = "DELETE FROM post WHERE id = ".$id;
+
+        try {
+            $this->bdd->query($req);
+        }catch (Exception $e){
+            return $e;
+        }
+    }
+
+    public function update(Post $post)
+    {
+
+        $req = 'UPDATE post SET content = :content, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
+
+        $postInfo = [
+            'id' => $post->getId(),
+            'content' => $post->getContent(),
+            //'image' => $post->getImage(),
+            'publishedAt' => $post->getPublishedAt(),
+            'updatedAt' => $post->getUpdatedAt(),
+            'excerpt' => $post->getExcerpt(),
+            'category' => $post->getCategoryId(),
         ];
 
         $this->bdd->query($req, $postInfo);

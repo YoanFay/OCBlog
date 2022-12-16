@@ -18,7 +18,7 @@ class DateHExtension extends \Twig\Extension\AbstractExtension
     }
     public function dateH(DateTime $date)
     {
-        $dateH = $date->format("d/m/Y")." à ".$date->format("h:i");
+        $dateH = $date->format("d/m/Y")." à ".$date->format("H:i", "Europe/Paris");
 
         return $dateH;
     }

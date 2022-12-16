@@ -16,31 +16,31 @@ class Authentication extends Controller{
         $userRepository = new UserRepository();
         $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
+        $request = new Request();
 
-        if (!empty($_POST)){
+        if ($request->issetPost()){
 
             $role = $roleRepository->findOneBy(['code' => 'user']);
 
             $user = new User();
 
-            $user->setFirstname(filter_input(INPUT_POST, 'firstname'));
-            $user->setLastname(filter_input(INPUT_POST, 'lastname'));
-            $user->setLogin(filter_input(INPUT_POST, 'login'));
-            $user->setPassword(password_hash(filter_input(INPUT_POST, 'password'), PASSWORD_BCRYPT));
-            $user->setCreatedAt(new \DateTime());
-            $user->setRole($role->getId());
+            $user->setFirstname($request->get('post', 'firstname'));
+            $user->setLastname($request->get('post', 'lastname'));
+            $user->setLogin($request->get('post', 'login'));
+            $user->setPassword(password_hash($request->get('post', 'password'), PASSWORD_BCRYPT));
+            $user->setRoleId($role->getId());
 
             $validate = $userRepository->add($user);
 
             if ($validate === true){
-                header('Location: http://localhost/Authentication/signIn');
+                header('Location: /Authentication/signIn');
             }
             else{
                 var_dump($validate);
             }
         }
 
-        $form = $authenticationForm->signIn();
+        $form = $authenticationForm->signUp();
 
         $this->render('authentication/signUp', [
             'form' => $form->create()
@@ -50,18 +50,21 @@ class Authentication extends Controller{
     public function signIn(){
 
         $userRepository = new UserRepository();
+        $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
+        $request = new Request();
 
-        if (!empty($_POST)){
+        if ($request->issetPost()){
 
-            $login = filter_input(INPUT_POST, 'login');
-            $password = filter_input(INPUT_POST, 'password');
+            $login = $request->get('post', 'login');
+            $password = $request->get('post', 'password');
 
             $user = $userRepository->findOneBy(['login' => $login]);
+            $role = $roleRepository->find($user->getRoleId());
 
             if (password_verify($password, $user->getPassword())){
-                Session::set('user', $user);
-                header('Location: http://localhost/');
+                Session::setAuth($user, $role);
+                header('Location: /');
             }
         }
 
@@ -73,7 +76,7 @@ class Authentication extends Controller{
     }
 
     public function logout(){
-        session_destroy();
-            header('Location: http://localhost/');
+        Session::logout();
+        header('Location: /');
     }
 }

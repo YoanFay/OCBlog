@@ -1,3 +1,7 @@
 .background-body{
     background-color: antiquewhite;
 }
+
+.cursor-click{
+    cursor: pointer ;
+}

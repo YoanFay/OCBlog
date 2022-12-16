@@ -6,6 +6,7 @@ class Role{
     private $id;
     private $name;
     private $code;
+    private $level;
 
     /**
      * @return int
@@ -53,6 +54,22 @@ class Role{
     public function setCode(string $code): void
     {
         $this->code = $code;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel(): int
+    {
+        return $this->level;
+    }
+
+    /**
+     * @param int $level
+     */
+    public function setLevel(int $level): void
+    {
+        $this->level = $level;
     }
 
 

@@ -11,6 +11,11 @@ class User{
     private $created_at;
     private $role_id;
 
+    public function __construct(){
+        $this->created_at = new \DateTime();
+
+    }
+
     /**
      * @return int
      */

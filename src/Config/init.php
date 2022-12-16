@@ -10,7 +10,8 @@ $req = "INSERT INTO role VALUES (NULL, :name, :code)";
 
 $infoRole = [
     'name' => "Super Admin",
-    'code' => "superAdmin"
+    'code' => "superAdmin",
+    'level' => 99,
 ];
 
 $bdd->query($req, $infoRole);
@@ -18,7 +19,8 @@ $idRole = $bdd->lastInsert();
 
 $infoRole = [
     'name' => "Utilisateur",
-    'code' => "user"
+    'code' => "user",
+    'level' => 10,
 ];
 
 $bdd->query($req, $infoRole);

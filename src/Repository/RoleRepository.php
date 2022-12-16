@@ -44,4 +44,15 @@ class RoleRepository{
 
     }
 
+    public function find(int $id){
+
+        $req = "SELECT * FROM role WHERE id = ".$id;
+
+        if($role = $this->bdd->select($req, $this->class)) {
+            return $role[0];
+        }else{
+            return NULL;
+        }
+    }
+
 }

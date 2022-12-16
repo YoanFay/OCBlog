@@ -44,7 +44,7 @@ class PostValidator extends Validator
         }
     }
 
-    // A voir quand le systeme pour les images sera fait
+    // TODO A voir quand le systeme pour les images sera fait
     public function image($parameter)
     {
         if (is_string($parameter)) {

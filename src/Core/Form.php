@@ -90,11 +90,22 @@ class Form{
 
     public function addError(array $errors = []):self
     {
-        $this->formCode .= "<p>";
-
         foreach ($errors as $key => $error) {
             $this->formCode .= "<p class='d-flex align-items-center text-danger'><span class='material-symbols-outlined me-2'>warning</span>$error</p>";
         }
+
+        return $this;
+    }
+
+    public function addText(string $text):self
+    {
+        $this->formCode .= "<p class='d-flex align-items-center'>$text</p>";
+
+        return $this;
+    }
+
+    public function addHidden(string $name, string $value){
+        $this->formCode .= "<input type='hidden'  name='$name' value='$value' />";
 
         return $this;
     }

@@ -4,6 +4,7 @@ namespace App\Src\Core;
 ini_set('display_errors', 1);
 
 use App\Src\Controller\Homepage;
+use App\Src\Controller\Request;
 use App\Src\Controller\Session;
 
 class Main
@@ -12,10 +13,10 @@ class Main
     public function start()
     {
         $params = [];
+        $request = new Request();
 
-        //filter_input(input_GET, 'p')
-        if (isset($_GET['p'])) {
-            $params = explode('/', filter_input(INPUT_GET, 'p'));
+        if ($request->issetGet()) {
+            $params = explode('/', $request->get('get', 'p'));
         }
 
         if ($params[0] !== '') {

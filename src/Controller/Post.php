@@ -2,62 +2,99 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Core\Bdd;
-use App\Src\Core\Form;
 use App\Src\Form\PostForm;
 use App\Src\Repository\CategoryRepository;
 use App\Src\Repository\PostRepository;
-use App\Src\Repository\RoleRepository;
 use App\Src\Validator\PostValidator;
-use Twig\Cache\NullCache;
-use App\Src\Entity\Post AS PostEntity;
+use App\Src\Entity\Post as PostEntity;
 
-class Post extends Controller {
+class Post extends Controller
+{
 
-    public function index(){
-        header('Location: http://localhost/Post/add');
+    public function index()
+    {
+        $postRepository = new PostRepository();
+        $posts = $postRepository->findAll();
+
+        $this->render('post/index', [
+            "posts" => $posts,
+            "user" => Session::getAuth(),
+        ]);
     }
 
-    public function add(){
-
-        $categoryRepository = new CategoryRepository();
-        $roleRepository = new RoleRepository();
+    public function onePost($id)
+    {
         $postRepository = new PostRepository();
-        $postForm = new PostForm();
-        $testPost = [];
-        $user = Session::get('user');
+        $post = $postRepository->find($id[0]);
 
-        if ($user === NULL){
-            header('Location: http://localhost');
+        $this->render('post/onePost', [
+            "post" => $post,
+            "user" => Session::getAuth(),
+        ]);
+    }
+
+    public function deletePost($id)
+    {
+
+        $user = Session::getAuth();
+        if ($user === NULL) {
+            header('Location: /');
         }
 
-        if (!empty($_POST)){
+        $request = new Request();
 
-            $createdAt = date_format(new \DateTime(), 'Y-m-d H:i:s');
-            $publishedAt = NULL;
+        if ($request->issetPost() && $request->get('post', 'formName') === 'deletePost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/deletePost/' . $id[0]) {
 
-            $rolesCheck = $roleRepository->findOneBy(['id' => $user->getRoleId()]);
+            $postRepository = new PostRepository();
+            $postRepository->delete($id[0]);
 
+            Session::setFlash('success', 'L\'article à bien était supprimé');
 
-            if ($rolesCheck->getCode() === 'superAdmin'){
-                $publishedAt = $createdAt;
+            header('Location: /');
+
+        }
+
+        $postForm = new PostForm();
+
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $postForm->deletePost($token, $id[0]);
+
+        $this->render('post/delete', [
+            'form' => $form->create(),
+            'user' => $user,
+        ]);
+
+    }
+
+    public function updatePost($id)
+    {
+
+        $user = Session::getAuth();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($id[0]);
+        if ($user === NULL || $user['user_id'] !== $post->getUserId()) {
+            header('Location: /');
+        }
+
+        $request = new Request();
+
+        $testPost = [];
+
+        if ($request->issetPost() && $request->get('post', 'formName') === 'updatePost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/updatePost/' . $id[0]) {
+
+            // TODO Fonctionalité temporaire
+            if (Session::getAuth('level') !== 99) {
+                header('Location: /');
             }
-            //Fonction temporaire
-            else{
-                header('Location: http://localhost');
-            }
 
-            $post = new PostEntity();
-
-            $post->setContent(filter_input(INPUT_POST, 'content'));
-            $post->setImage(NULL);
-            $post->setCreatedAt($createdAt);
-            $post->setPublishedAt($publishedAt);
-            $post->setUpdatedAt(NULL);
-            $post->setDeletedAt(NULL);
-            $post->setExcerpt(substr(filter_input(INPUT_POST, 'content'), 0, 70));
-            $post->setCategoryId(filter_input(INPUT_POST, 'category'));
-            $post->setUserId($user->getId());
+            $post->setContent($request->get('post', 'content'));
+            $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
+            $post->setCategoryId($request->get('post', 'category'));
+            $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
 
             $postValidator = new PostValidator($post);
 
@@ -66,9 +103,13 @@ class Post extends Controller {
             if ($testPost === true) {
                 $postRepository->insert($post);
 
-                header('Location: http://localhost');
+                Session::setFlash('success', 'L\'aticle à bien était modifié');
+
+                header('Location: /');
             }
         }
+
+        $categoryRepository = new CategoryRepository();
 
         $categories = $categoryRepository->findAll();
 
@@ -80,7 +121,75 @@ class Post extends Controller {
             ];
         }
 
-        $form = $postForm->addPost($categoryTab, $testPost);
+        $postForm = new PostForm();
+
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $postForm->updatePost($categoryTab, $testPost, $id[0], $post->getContent(), $token);
+
+        $this->render('post/update', [
+            'form' => $form->create(),
+            'user' => $user,
+        ]);
+    }
+
+    public function add()
+    {
+
+        $user = Session::getAuth();
+        if ($user === NULL) {
+            header('Location: /');
+        }
+        $request = new Request();
+        $testPost = [];
+
+        if ($request->issetPost() && $request->get('post', 'formName') === 'addPost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/add') {
+
+            // Todo Fonctionalité temporaire
+            if (Session::getAuth('level') !== 99) {
+                header('Location: /');
+            }
+
+            $post = new PostEntity();
+
+            $post->setContent($request->get('post', 'content'));
+            $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
+            $post->setCategoryId($request->get('post', 'category'));
+
+            $postValidator = new PostValidator($post);
+
+            $testPost = $postValidator->validate();
+
+            if ($testPost === true) {
+                $postRepository = new PostRepository();
+                $postRepository->insert($post);
+
+                Session::setFlash('success', 'L\'aticle à bien était envoyé');
+
+                header('Location: /');
+            }
+        }
+
+        $categoryRepository = new CategoryRepository();
+        $postForm = new PostForm();
+
+        $categories = $categoryRepository->findAll();
+
+        $categoryTab = [];
+
+        foreach ($categories as $category) {
+            $categoryTab += [
+                $category->getId() => $category->getName(),
+            ];
+        }
+
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $postForm->addPost($categoryTab, $testPost, $token);
 
         $this->render('post/add', [
             'form' => $form->create()

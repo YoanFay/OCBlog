@@ -23,7 +23,7 @@ class UserRepository{
             'login' => $user->getLogin(),
             'password' => $user->getPassword(),
             'created' => $user->getCreatedAt()->format('Y-m-d H:i:s'),
-            'role' => $user->getRole()
+            'role' => $user->getRoleId()
         ];
 
         $req = 'INSERT INTO user VALUES(NULL, :lastname, :firstname, :login, :password, :created, :role)';
