@@ -22,6 +22,7 @@ class PostForm{
             ->addLabelFor('category', "Catégorie")
             ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['category']??[])
+            ->addInput('file', 'image', ['class' => 'form-control my-3'])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
             ->addHidden('formName', 'addPost')
             ->addHidden('csrfToken', $token)
@@ -33,11 +34,23 @@ class PostForm{
     public function deletePost($id, $token){
 
         return $this->form->startForm('post', '/Post/deletePost/'.$id)
-                ->addText('Voulez-vous supprimer ce post ?')
-                ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
-                ->addHidden('formName', 'deletePost')
-                ->addHidden('csrfToken', $token)
-                ->endForm()
+            ->addText('Voulez-vous supprimer ce post ?')
+            ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
+            ->addHidden('formName', 'deletePost')
+            ->addHidden('csrfToken', $token)
+            ->endForm()
+            ;
+
+    }
+
+    public function publishPost($id, $token){
+
+        return $this->form->startForm('post', '/Post/publishedPost/'.$id)
+            ->addText('Voulez-vous publié ce post ?')
+            ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary'])
+            ->addHidden('formName', 'publishPost')
+            ->addHidden('csrfToken', $token)
+            ->endForm()
             ;
 
     }

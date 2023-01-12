@@ -52,7 +52,7 @@ class PostRepository
     public function findAll()
     {
 
-        $req = 'SELECT * FROM post';
+        $req = 'SELECT * FROM post ORDER BY created_at DESC ';
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -66,6 +66,32 @@ class PostRepository
     {
 
         $req = 'SELECT * FROM post ORDER BY created_at DESC LIMIT 3';
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
+    public function findLastPublishedPost()
+    {
+
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL ORDER BY created_at DESC LIMIT 3';
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
+    public function findNotPublishedPost()
+    {
+
+        $req = 'SELECT * FROM post WHERE published_at IS NULL ORDER BY created_at ASC';
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -126,7 +152,7 @@ class PostRepository
             'content' => $post->getContent(),
             //'image' => $post->getImage(),
             'publishedAt' => $post->getPublishedAt(),
-            'updatedAt' => $post->getUpdatedAt(),
+            'updatedAt' => date_format(new \DateTime(), 'Y-m-d H:i:s'),
             'excerpt' => $post->getExcerpt(),
             'category' => $post->getCategoryId(),
         ];

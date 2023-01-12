@@ -3,7 +3,6 @@
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
-        <a href="/Post/add"><button class="btn btn-primary">Ajouter un article</button></a>
         {% for post in posts %}
         <div class="card col-8 my-2 cursor-click" onclick="onePost({{ post.id }})">
             <div class="card-body">
@@ -18,7 +17,7 @@
         </div>
         {% else %}
             <div class="row">
-                Aucun post actuellement
+                Aucun post en attente de modération actuellement
             </div>
         {% endfor %}
     </div>

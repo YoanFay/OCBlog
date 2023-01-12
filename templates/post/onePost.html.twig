@@ -1,53 +1,32 @@
 {% extends "/layout/base.html.twig" %}
 
-{% block header %}
-
-    <div class="d-flex justify-content-center align-items-center flex-column">
-        <nav class="bg-black text-white d-flex justify-content-between flex-row w-100 p-2 align-items-center">
-            <div class="d-flex flex-row">
-                {% if user == null %}
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/signup">Inscription</a>
-                    </ul>
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/signin">Connexion</a>
-                    </ul>
-                {% else %}
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Post">Voir les articles</a>
-                    </ul>
-                    <ul class="m-0">
-                        <a class="text-white text-decoration-none" href="http://localhost/Authentication/logout">Deconnexion</a>
-                    </ul>
-                {% endif %}
-            </div>
-            <div>
-                <ul class="m-0">
-                    <a class="text-white text-decoration-none" href="pdf/{{ cv }}" target="_blank">CV</a>
-                </ul>
-            </div>
-        </nav>
-    </div>
-
-{%endblock%}
-
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
         <div class="card col-8 my-2" onclick="onePost({{ post.id }})">
             <div class="card-body">
                 <div class="row">
-                    {{post.content}}
+                    {{ post.content }}
                     <hr>
                     <div class="d-flex flex-row-reverse">
-                        Posté le : {{ post.created_at|date("d/m/Y") }} à {{ post.created_at|date("H:i", "Europe/Paris") }}
+                        Posté le : {{ post.created_at|date("d/m/Y") }}
+                        à {{ post.created_at|date("H:i", "Europe/Paris") }}
                     </div>
                 </div>
-                {% if user.user_id == post.user_id or user.level > 60%}
-                <a href="/Post/deletePost/{{ post.id }}"><button class="btn btn-danger">Supprimer</button></a>
+                {% if user.user_id == post.user_id or user.level > 60 %}
+                    <a href="/Post/deletePost/{{ post.id }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </a>
+                    {% if post.publishedAt is null %}
+                    <a href="/Post/publishedPost/{{ post.id }}">
+                        <button class="btn btn-primary">Publier</button>
+                    </a>
+                    {% endif %}
                 {% endif %}
                 {% if user.user_id == post.user_id %}
-                <a href="/Post/updatePost/{{ post.id }}"><button class="btn btn-primary">Modifier</button></a>
+                    <a href="/Post/updatePost/{{ post.id }}">
+                        <button class="btn btn-primary">Modifier</button>
+                    </a>
                 {% endif %}
             </div>
         </div>
