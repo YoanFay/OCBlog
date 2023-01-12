@@ -110,8 +110,14 @@ class Form{
         return $this;
     }
 
-    public function addFile(string $name, string $value){
-        $this->formCode .= "<input type='file'  name='$name' />";
+    public function addCheckbox(string $name,$text){
+        $this->formCode .= "<div class='d-flex flex-row justify-content-start mb-2'><input type='checkbox' name='$name' id='$name' class='me-2' /><label for='$name'>$text</label></div>";
+
+        return $this;
+    }
+
+    public function addImage(string $type, $name){
+        $this->formCode .= "<img src='/img/$type/$name' width='100px'>";
 
         return $this;
     }

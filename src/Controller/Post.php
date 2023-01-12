@@ -14,7 +14,7 @@ class Post extends Controller
     public function index()
     {
         $postRepository = new PostRepository();
-        $posts = $postRepository->findAll();
+        $posts = $postRepository->findPublishedPost();
 
         $this->render('post/index', [
             "posts" => $posts,
@@ -46,6 +46,14 @@ class Post extends Controller
         if ($this->valideForm($request,'deletePost', 'Post/deletePost/' . $id)) {
 
             $postRepository = new PostRepository();
+            $post = $postRepository->find($id);
+            
+            $file = "img/posts/".$post->getImage();
+            if (file_exists($file)) {
+                unlink($file);
+                $post->setImage(Null);
+            }
+
             $postRepository->delete($id);
 
             Session::setFlash('success', 'L\'article à bien était supprimé');
@@ -84,26 +92,48 @@ class Post extends Controller
 
         if ($this->valideForm($request,'updatePost', 'Post/updatePost/' . $id)) {
 
-            // TODO Fonctionalité temporaire
-            if (Session::getAuth('level') !== 99) {
-                header('Location: /');
-            }
-
             $post->setContent($request->get('post', 'content'));
             $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
             $post->setCategoryId($request->get('post', 'category'));
             $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-            $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+
+            if (Session::getAuth('level') === 99) {
+                $post->setPublishedAt($post->getUpdatedAt());
+            }else{
+                $post->setPublishedAt(Null);
+            }
+
+            if ($request->get('file', 'image')['name']) {
+
+                $file = "img/posts/".$post->getImage();
+                if (file_exists($file)) {
+                    unlink($file);
+                    $post->setImage(Null);
+                }
+
+                $array = explode('.', $request->get('file', 'image')['name']);
+                $file_ext = strtolower(end($array));
+                $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()) . $post->getUserId() . '.' . $file_ext;
+                $post->setImage($filename);
+            }elseif($request->get('post','deleteImage') === "on"){
+                $file = "img/posts/".$post->getImage();
+                if (file_exists($file)) {
+                    unlink($file);
+                    $post->setImage(Null);
+                }
+            }
 
             $postValidator = new PostValidator($post);
 
             $testPost = $postValidator->validate();
 
             if ($testPost === true) {
-                $postRepository->insert($post);
+
+                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/posts/".$post->getImage());
+
+                $postRepository->update($post);
 
                 Session::setFlash('success', 'L\'aticle à bien était modifié');
-
                 header('Location: /');
             }
         }
@@ -126,7 +156,7 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->updatePost($categoryTab, $testPost, $id, $post->getContent(), $token);
+        $form = $postForm->updatePost($categoryTab, $testPost, $id, $post->getContent(), $token, $post->getImage());
 
         $this->render('post/update', [
             'form' => $form->create(),
@@ -150,6 +180,14 @@ class Post extends Controller
             $post->setContent($request->get('post', 'content'));
             $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
             $post->setCategoryId($request->get('post', 'category'));
+            $post->setCreatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $post->setUserId(Session::getAuth('user_id'));
+
+            $array = explode('.', $request->get('file', 'image')['name']);
+            $file_ext = strtolower(end($array));
+            $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()).$post->getUserId().'.'.$file_ext;
+
+            $post->setImage($filename);
 
             if (Session::getAuth('level') === 99) {
                 $post->setPublishedAt($post->getCreatedAt());
@@ -160,7 +198,9 @@ class Post extends Controller
             $testPost = $postValidator->validate();
 
             if ($testPost === true) {
-                var_dump($post);
+
+                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/posts/".$post->getImage());
+
                 $postRepository = new PostRepository();
                 $postRepository->insert($post);
 

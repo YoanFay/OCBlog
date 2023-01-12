@@ -4,7 +4,8 @@ namespace App\Src\Form;
 
 use App\Src\Core\Form;
 
-class PostForm{
+class PostForm
+{
 
     private $form;
 
@@ -13,62 +14,75 @@ class PostForm{
         $this->form = new Form();
     }
 
-    public function addPost($categoryTab, $errors, $token){
+    public function addPost($categoryTab, $errors, $token)
+    {
 
-        return $this->form->startForm('post', '/Post/add')
+        return $this->form->startForm('post', '/Post/add', ['enctype' => 'multipart/form-data'])
             ->addLabelFor('content', "Contenue")
-            ->addTextArea('content',"", ['class' => 'form-control my-3', 'required' => true])
-            ->addError($errors['content']??[])
+            ->addTextArea('content', "", ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['content'] ?? [])
             ->addLabelFor('category', "Catégorie")
             ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
-            ->addError($errors['category']??[])
-            ->addInput('file', 'image', ['class' => 'form-control my-3'])
-            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addError($errors['category'] ?? [])
+            ->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage'])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary', 'id' => 'formSubmit'])
             ->addHidden('formName', 'addPost')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-            ;
+            ->endForm();
 
     }
 
-    public function deletePost($id, $token){
+    public function deletePost($id, $token)
+    {
 
-        return $this->form->startForm('post', '/Post/deletePost/'.$id)
+        return $this->form->startForm('post', '/Post/deletePost/' . $id)
             ->addText('Voulez-vous supprimer ce post ?')
             ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
             ->addHidden('formName', 'deletePost')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-            ;
+            ->endForm();
 
     }
 
-    public function publishPost($id, $token){
+    public function publishPost($id, $token)
+    {
 
-        return $this->form->startForm('post', '/Post/publishedPost/'.$id)
+        return $this->form->startForm('post', '/Post/publishedPost/' . $id)
             ->addText('Voulez-vous publié ce post ?')
             ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary'])
             ->addHidden('formName', 'publishPost')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-            ;
+            ->endForm();
 
     }
 
-    public function updatePost($categoryTab, $errors, $id, $content, $token){
+    public function updatePost($categoryTab, $errors, $id, $content, $token, $image)
+    {
 
-        return $this->form->startForm('post', '/Post/updatePost/'.$id)
+        $updateForm = $this->form->startForm('post', '/Post/updatePost/' . $id, ['enctype' => 'multipart/form-data'])
             ->addLabelFor('content', "Contenue")
-            ->addTextArea('content',"$content", ['class' => 'form-control my-3', 'required' => true])
-            ->addError($errors['content']??[])
+            ->addTextArea('content', "$content", ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['content'] ?? [])
             ->addLabelFor('category', "Catégorie")
             ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
-            ->addError($errors['category']??[])
-            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addError($errors['category'] ?? []);
+
+        if ($image) {
+            $updateForm->addImage('posts', $image);
+        }
+
+        $updateForm->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage']);
+
+        if ($image) {
+            $updateForm->addCheckbox('deleteImage', "Supprimer l'image");
+        }
+
+        $updateForm->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
             ->addHidden('formName', 'updatePost')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-            ;
+            ->endForm();
+
+        return $updateForm;
 
     }
 }

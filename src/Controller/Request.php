@@ -7,12 +7,14 @@ class Request{
     private $post;
     private $get;
     private $server;
+    private $file;
 
     public function __construct()
     {
         $this->post = $_POST;
         $this->get = $_GET;
         $this->server = $_SERVER;
+        $this->file = $_FILES;
     }
 
     public function issetPost(){

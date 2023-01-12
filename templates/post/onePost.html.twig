@@ -3,6 +3,9 @@
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
+        {% if post.image is not null %}
+        <img src="/img/posts/{{ post.image }}" width="200px">
+        {% endif %}
         <div class="card col-8 my-2" onclick="onePost({{ post.id }})">
             <div class="card-body">
                 <div class="row">
@@ -13,7 +16,7 @@
                         à {{ post.created_at|date("H:i", "Europe/Paris") }}
                     </div>
                 </div>
-                {% if user.user_id == post.user_id or user.level > 60 %}
+                {% if user.user_id == post.userId or user.level > 60 %}
                     <a href="/Post/deletePost/{{ post.id }}">
                         <button class="btn btn-danger">Supprimer</button>
                     </a>
@@ -23,7 +26,7 @@
                     </a>
                     {% endif %}
                 {% endif %}
-                {% if user.user_id == post.user_id %}
+                {% if user.user_id == post.userId %}
                     <a href="/Post/updatePost/{{ post.id }}">
                         <button class="btn btn-primary">Modifier</button>
                     </a>

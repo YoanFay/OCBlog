@@ -101,6 +101,19 @@ class PostRepository
 
     }
 
+    public function findPublishedPost()
+    {
+
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL ORDER BY created_at DESC';
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function insert(Post $post)
     {
 
@@ -145,12 +158,12 @@ class PostRepository
     public function update(Post $post)
     {
 
-        $req = 'UPDATE post SET content = :content, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
+        $req = 'UPDATE post SET content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
 
         $postInfo = [
             'id' => $post->getId(),
             'content' => $post->getContent(),
-            //'image' => $post->getImage(),
+            'image' => $post->getImage(),
             'publishedAt' => $post->getPublishedAt(),
             'updatedAt' => date_format(new \DateTime(), 'Y-m-d H:i:s'),
             'excerpt' => $post->getExcerpt(),

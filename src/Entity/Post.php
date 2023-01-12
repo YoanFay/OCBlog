@@ -8,23 +8,14 @@ class Post{
 
     private $id;
     private $content;
-    private $image;
+    private $image = null;
     private $created_at;
-    private $published_at;
-    private $updated_at;
-    private $deleted_at;
+    private $published_at = null;
+    private $updated_at = null;
+    private $deleted_at = null;
     private $excerpt;
     private $category_id;
     private $user_id;
-
-    public function __construct(){
-        $this->image = null;
-        $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
-        //$this->published_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
-        $this->updated_at = null;
-        $this->deleted_at = null;
-        $this->user_id = Session::getAuth('user_id');
-    }
 
     /**
      * @return int
@@ -181,7 +172,7 @@ class Post{
     /**
      * @param int $userId
      */
-    public function setUser_id(int $userId): void
+    public function setUserId(int $userId): void
     {
         $this->user_id = $userId;
     }

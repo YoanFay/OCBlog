@@ -2,6 +2,7 @@
 
 namespace App\Src\Validator;
 
+use App\Src\Entity\Post;
 use App\Src\Repository\CategoryRepository;
 use App\Src\Repository\UserRepository;
 
@@ -19,13 +20,8 @@ class PostValidator extends Validator
     public function validate()
     {
         $this->content($this->post->getContent());
-        /*$this->createdAt($this->post->getCreatedAt());
-        $this->publishedAt($this->post->getPublishedAt());
-        $this->updatedAt($this->post->getUpdatedAt());
-        $this->deletedAt($this->post->getDeletedAt());
-        $this->excerpt($this->post->getExcerpt());*/
+        $this->image($this->post->getImage());
         $this->category($this->post->getCategoryId());
-        //$this->user($this->post->getUserId());
 
         if ($this->error === []){
             return true;
@@ -47,10 +43,14 @@ class PostValidator extends Validator
     // TODO A voir quand le systeme pour les images sera fait
     public function image($parameter)
     {
-        if (is_string($parameter)) {
-            return true;
-        } else {
-            return false;
+        if (!empty($parameter)) {
+            $array = explode('.', $parameter);
+            $file_ext = strtolower(end($array));
+
+            $ext = array("jpeg", "jpg", "png");
+            if (in_array($file_ext, $ext) === false) {
+                $this->error['image'] = "Le fichier doit être dans l'un des format suivant : .jpeg, .jpg ou .png";
+            }
         }
     }
 
