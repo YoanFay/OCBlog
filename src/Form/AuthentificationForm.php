@@ -13,7 +13,7 @@ class AuthentificationForm{
         $this->form = new Form();
     }
 
-    public function signUp(){
+    public function signUp($token){
 
         return $this->form->startForm('post')
             ->addLabelFor('firstname', "Prénom")
@@ -25,12 +25,14 @@ class AuthentificationForm{
             ->addLabelFor('password', "Mot de passe")
             ->addInput('password', 'password', ['class' => 'form-control', 'required' => true])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addHidden('formName', 'signUp')
+            ->addHidden('csrfToken', $token)
             ->endForm()
         ;
 
     }
 
-    public function signIn(){
+    public function signIn($token){
 
         return $this->form->startForm('post', 'http://localhost/Authentication/signIn')
             ->addLabelFor('login', "Login")
@@ -38,6 +40,8 @@ class AuthentificationForm{
             ->addLabelFor('password', "Mot de passe")
             ->addInput('password', 'password', ['class' => 'form-control', 'required' => true])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addHidden('formName', 'signIn')
+            ->addHidden('csrfToken', $token)
             ->endForm()
         ;
 

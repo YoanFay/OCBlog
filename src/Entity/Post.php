@@ -15,15 +15,15 @@ class Post{
     private $deleted_at;
     private $excerpt;
     private $category_id;
-    private $userid;
+    private $user_id;
 
     public function __construct(){
         $this->image = null;
-        $this->createdAt = date_format(new \DateTime(), 'Y-m-d H:i:s');
-        $this->publishedAt = date_format(new \DateTime(), 'Y-m-d H:i:s');
-        $this->updatedAt = null;
-        $this->deletedAt = null;
-        $this->userId = Session::getAuth('user_id');
+        $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
+        //$this->published_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
+        $this->updated_at = null;
+        $this->deleted_at = null;
+        $this->user_id = Session::getAuth('user_id');
     }
 
     /**
@@ -183,7 +183,7 @@ class Post{
      */
     public function setUser_id(int $userId): void
     {
-        $this->userId = $userId;
+        $this->user_id = $userId;
     }
 
 }

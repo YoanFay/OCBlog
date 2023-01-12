@@ -25,7 +25,7 @@ class Post extends Controller
     public function onePost($id)
     {
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id[0]);
+        $post = $postRepository->find($id);
 
         $this->render('post/onePost', [
             "post" => $post,
@@ -37,16 +37,16 @@ class Post extends Controller
     {
 
         $user = Session::getAuth();
-        if ($user === NULL) {
+        if (!$user) {
             header('Location: /');
         }
 
         $request = new Request();
 
-        if ($request->issetPost() && $request->get('post', 'formName') === 'deletePost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/deletePost/' . $id[0]) {
+        if ($this->valideForm($request,'deletePost', 'Post/deletePost/' . $id)) {
 
             $postRepository = new PostRepository();
-            $postRepository->delete($id[0]);
+            $postRepository->delete($id);
 
             Session::setFlash('success', 'L\'article à bien était supprimé');
 
@@ -60,7 +60,7 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->deletePost($token, $id[0]);
+        $form = $postForm->deletePost($id, $token);
 
         $this->render('post/delete', [
             'form' => $form->create(),
@@ -73,8 +73,8 @@ class Post extends Controller
 
         $user = Session::getAuth();
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id[0]);
-        if ($user === NULL || $user['user_id'] !== $post->getUserId()) {
+        $post = $postRepository->find($id);
+        if (!$user || $user['user_id'] !== $post->getUserId()) {
             header('Location: /');
         }
 
@@ -82,7 +82,7 @@ class Post extends Controller
 
         $testPost = [];
 
-        if ($request->issetPost() && $request->get('post', 'formName') === 'updatePost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/updatePost/' . $id[0]) {
+        if ($this->valideForm($request,'updatePost', 'Post/updatePost/' . $id)) {
 
             // TODO Fonctionalité temporaire
             if (Session::getAuth('level') !== 99) {
@@ -126,7 +126,7 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->updatePost($categoryTab, $testPost, $id[0], $post->getContent(), $token);
+        $form = $postForm->updatePost($categoryTab, $testPost, $id, $post->getContent(), $token);
 
         $this->render('post/update', [
             'form' => $form->create(),
@@ -137,18 +137,13 @@ class Post extends Controller
     {
 
         $user = Session::getAuth();
-        if ($user === NULL) {
+        if (!$user) {
             header('Location: /');
         }
         $request = new Request();
         $testPost = [];
 
-        if ($request->issetPost() && $request->get('post', 'formName') === 'addPost' && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/Post/add') {
-
-            // Todo Fonctionalité temporaire
-            if (Session::getAuth('level') !== 99) {
-                header('Location: /');
-            }
+        if ($this->valideForm($request, 'addPost', 'Post/add')) {
 
             $post = new PostEntity();
 
@@ -156,11 +151,16 @@ class Post extends Controller
             $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
             $post->setCategoryId($request->get('post', 'category'));
 
+            if (Session::getAuth('level') === 99) {
+                $post->setPublishedAt($post->getCreatedAt());
+            }
+
             $postValidator = new PostValidator($post);
 
             $testPost = $postValidator->validate();
 
             if ($testPost === true) {
+                var_dump($post);
                 $postRepository = new PostRepository();
                 $postRepository->insert($post);
 
@@ -196,6 +196,50 @@ class Post extends Controller
     }
 
     public function listPostNotValidate(){
+
+        $postRepository = new PostRepository();
+        $posts = $postRepository->findNotPublishedPost();
+
+        $this->render('post/moderate', [
+            "posts" => $posts,
+            "user" => Session::getAuth(),
+        ]);
+
+    }
+
+    public function publishedPost($id){
+
+        if (!Session::getAuth()) {
+            header('Location: /');
+        }
+
+        $request = new Request();
+
+        if ($this->valideForm($request, 'publishPost', 'publishedPost/' . $id)) {
+
+            $postRepository = new PostRepository();
+
+            $post = $postRepository->find($id);
+            $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $postRepository->update($post);
+
+            Session::setFlash('success', "L'article a bien été publié");
+
+            header('Location: /');
+
+        }
+
+        $postForm = new PostForm();
+
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $postForm->publishPost($id, $token);
+
+        $this->render('post/publish', [
+            'form' => $form->create(),
+        ]);
 
     }
 }

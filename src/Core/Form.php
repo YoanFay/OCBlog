@@ -109,4 +109,10 @@ class Form{
 
         return $this;
     }
+
+    public function addFile(string $name, string $value){
+        $this->formCode .= "<input type='file'  name='$name' />";
+
+        return $this;
+    }
 }

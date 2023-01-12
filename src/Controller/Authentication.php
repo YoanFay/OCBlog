@@ -18,7 +18,7 @@ class Authentication extends Controller{
         $authenticationForm = new AuthentificationForm();
         $request = new Request();
 
-        if ($request->issetPost()){
+        if ($this->valideForm($request, 'signUp', 'Authentication/signUp')){
 
             $role = $roleRepository->findOneBy(['code' => 'user']);
 
@@ -40,7 +40,11 @@ class Authentication extends Controller{
             }
         }
 
-        $form = $authenticationForm->signUp();
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $authenticationForm->signUp($token);
 
         $this->render('authentication/signUp', [
             'form' => $form->create()
@@ -54,7 +58,7 @@ class Authentication extends Controller{
         $authenticationForm = new AuthentificationForm();
         $request = new Request();
 
-        if ($request->issetPost()){
+        if ($this->valideForm($request, 'signIn', 'Authentication/signIn')){
 
             $login = $request->get('post', 'login');
             $password = $request->get('post', 'password');
@@ -68,7 +72,11 @@ class Authentication extends Controller{
             }
         }
 
-        $form = $authenticationForm->signIn();
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $authenticationForm->signIn($token);
 
         $this->render('authentication/signIn', [
             'form' => $form->create()
