@@ -13,11 +13,11 @@ class Post extends Controller
 
     public function index()
     {
-        $postRepository = new PostRepository();
-        $posts = $postRepository->findPublishedPost();
+        $categoryRepository = new CategoryRepository();
+        $categories = $categoryRepository->findAll();
 
         $this->render('post/index', [
-            "posts" => $posts,
+            "categories" => $categories,
             "user" => Session::getAuth(),
         ]);
     }
@@ -236,12 +236,11 @@ class Post extends Controller
     }
 
     public function listPostNotValidate(){
-
-        $postRepository = new PostRepository();
-        $posts = $postRepository->findNotPublishedPost();
+        $categoryRepository = new CategoryRepository();
+        $categories = $categoryRepository->findAll();
 
         $this->render('post/moderate', [
-            "posts" => $posts,
+            "categories" => $categories,
             "user" => Session::getAuth(),
         ]);
 
@@ -281,5 +280,43 @@ class Post extends Controller
             'form' => $form->create(),
         ]);
 
+    }
+
+    public function listPostAjax(){
+        $request = new Request();
+        $postRepository = new PostRepository();
+        $category_id = $request->get('post', 'category')??0;
+
+
+        if ($category_id == 0){
+            $posts = $postRepository->findPublishedPost();
+        }
+        else{
+            $posts = $postRepository->findPublishedPostByCategory($category_id);
+        }
+
+        $this->render('post/listPostAjax', [
+            "posts" => $posts,
+            "user" => Session::getAuth(),
+        ]);
+    }
+
+    public function listModeratePostAjax(){
+        $request = new Request();
+        $postRepository = new PostRepository();
+        $category_id = $request->get('post', 'category')??0;
+
+
+        if ($category_id == 0){
+            $posts = $postRepository->findNotPublishedPost();
+        }
+        else{
+            $posts = $postRepository->findNotPublishedPostByCategory($category_id);
+        }
+
+        $this->render('post/listModeratePostAjax', [
+            "posts" => $posts,
+            "user" => Session::getAuth(),
+        ]);
     }
 }

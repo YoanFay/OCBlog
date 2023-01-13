@@ -49,6 +49,36 @@ class PostRepository
 
     }
 
+    public function findBy(array $parameters = [])
+    {
+
+        $req = 'SELECT * FROM post';
+
+        $row = 0;
+        $length = count($parameters);
+
+        if ($parameters !== []) {
+            $req .= ' WHERE ';
+
+            foreach ($parameters as $key => $parameter) {
+                $req .= "$key = '$parameter'";
+
+                $row++;
+
+                if ($row !== $length) {
+                    $req .= " AND ";
+                }
+            }
+        }
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function findAll()
     {
 
@@ -60,6 +90,28 @@ class PostRepository
             return NULL;
         }
 
+    }
+
+    public function findPublishedPostByCategory($category_id){
+
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND category_id = :category_id ORDER BY created_at DESC';
+
+        if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+    }
+
+    public function findNotPublishedPostByCategory($category_id){
+
+        $req = 'SELECT * FROM post WHERE published_at IS NULL AND category_id = :category_id ORDER BY created_at ASC';
+
+        if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
+            return $posts;
+        } else {
+            return NULL;
+        }
     }
 
     public function findLastPost()

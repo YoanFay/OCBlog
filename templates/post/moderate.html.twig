@@ -3,24 +3,24 @@
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
-        {% for post in posts %}
-        <div class="card col-8 my-2 cursor-click" onclick="onePost({{ post.id }})">
-            <div class="card-body">
-                    <div class="row">
-                        {{post.content}}
-                        <hr>
-                        <div class="d-flex flex-row-reverse">
-                            Posté le : {{ post.created_at|date("d/m/Y") }} à {{ post.created_at|date("H:i", "Europe/Paris") }}
-                        </div>
-                    </div>
-            </div>
-        </div>
-        {% else %}
-            <div class="row">
-                Aucun post en attente de modération actuellement
-            </div>
-        {% endfor %}
+        <select class="form-control mt-5" style="width: 15%;" id="selectCategory">
+            <option value="0" selected>Tout</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
     </div>
+
+    <div class="d-flex flex-column align-items-center mt-5" id="listModeratePost">
+    </div>
+
+    <div id="modal" class="d-none">
+        <div class="modal-content">
+            <img id="imageModal" src="" width="500px">
+        </div>
+    </div>
+
+    <div id="overlay" class="d-none" onclick="closeImage()"></div>
 
 {% endblock %}
 
@@ -30,6 +30,41 @@
         function onePost(id){
             window.location = "/Post/onePost/" + id;
         }
+
+        function showImage(image) {
+            console.log(image);
+            $("#imageModal").attr('src', '/img/posts/' + image);
+            $("#modal").removeClass('d-none');
+            $("#overlay").removeClass("d-none");
+        }
+
+        function closeImage(){
+            $("#modal").addClass('d-none');
+            $("#overlay").addClass("d-none");
+        }
+
+        $("#close-modal-button").click(closeImage());
+
+        function listModeratePostAjax(id = 0){
+            $('#listModeratePost').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
+            $.ajax({
+                url: "/Post/listModeratePostAjax",
+                type: "POST",
+                data: {category: id},
+                success: function(response) {
+                    $('#listModeratePost').html(response);
+                }
+            });
+        }
+
+        $('document').ready(function (){
+            listModeratePostAjax()
+        });
+
+        $("#selectCategory").change(function(){
+            var selectedOption = $(this).val();
+            listModeratePostAjax(selectedOption)
+        });
     </script>
 
 {% endblock %}
