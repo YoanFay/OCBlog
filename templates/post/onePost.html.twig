@@ -4,7 +4,7 @@
 
     <div class="d-flex flex-column align-items-center mt-5">
         {% if post.image is not null %}
-        <img src="/img/posts/{{ post.image }}" width="200px">
+        <img src="/img/post/{{ post.image }}" width="200px">
         {% endif %}
         <div class="card col-8 my-2" onclick="onePost({{ post.id }})">
             <div class="card-body">

@@ -2,9 +2,12 @@
 
 namespace App\Src\Controller;
 
+use App\Src\Entity\File;
 use App\Src\Form\PostForm;
 use App\Src\Repository\CategoryRepository;
 use App\Src\Repository\PostRepository;
+use App\Src\Service\UploadService;
+use App\Src\Validator\FileValidator;
 use App\Src\Validator\PostValidator;
 use App\Src\Entity\Post as PostEntity;
 
@@ -43,12 +46,12 @@ class Post extends Controller
 
         $request = new Request();
 
-        if ($this->valideForm($request,'deletePost', 'Post/deletePost/' . $id)) {
+        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/' . $id)) {
 
             $postRepository = new PostRepository();
             $post = $postRepository->find($id);
-            
-            $file = "img/posts/".$post->getImage();
+
+            $file = "img/post/" . $post->getImage();
             if (file_exists($file)) {
                 unlink($file);
                 $post->setImage(Null);
@@ -90,7 +93,7 @@ class Post extends Controller
 
         $testPost = [];
 
-        if ($this->valideForm($request,'updatePost', 'Post/updatePost/' . $id)) {
+        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/' . $id)) {
 
             $post->setContent($request->get('post', 'content'));
             $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
@@ -99,13 +102,13 @@ class Post extends Controller
 
             if (Session::getAuth('level') === 99) {
                 $post->setPublishedAt($post->getUpdatedAt());
-            }else{
+            } else {
                 $post->setPublishedAt(Null);
             }
 
             if ($request->get('file', 'image')['name']) {
 
-                $file = "img/posts/".$post->getImage();
+                $file = "img/post/" . $post->getImage();
                 if (file_exists($file)) {
                     unlink($file);
                     $post->setImage(Null);
@@ -115,8 +118,8 @@ class Post extends Controller
                 $file_ext = strtolower(end($array));
                 $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()) . $post->getUserId() . '.' . $file_ext;
                 $post->setImage($filename);
-            }elseif($request->get('post','deleteImage') === "on"){
-                $file = "img/posts/".$post->getImage();
+            } elseif ($request->get('post', 'deleteImage') === "on") {
+                $file = "img/post/" . $post->getImage();
                 if (file_exists($file)) {
                     unlink($file);
                     $post->setImage(Null);
@@ -129,7 +132,7 @@ class Post extends Controller
 
             if ($testPost === true) {
 
-                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/posts/".$post->getImage());
+                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/post/" . $post->getImage());
 
                 $postRepository->update($post);
 
@@ -165,29 +168,20 @@ class Post extends Controller
 
     public function add()
     {
-
         $user = Session::getAuth();
         if (!$user) {
             header('Location: /');
         }
         $request = new Request();
         $testPost = [];
+        $testFile = [];
 
         if ($this->valideForm($request, 'addPost', 'Post/add')) {
 
-            $post = new PostEntity();
+            $post = new PostEntity("default");
 
             $post->setContent($request->get('post', 'content'));
-            $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
             $post->setCategoryId($request->get('post', 'category'));
-            $post->setCreatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-            $post->setUserId(Session::getAuth('user_id'));
-
-            $array = explode('.', $request->get('file', 'image')['name']);
-            $file_ext = strtolower(end($array));
-            $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()).$post->getUserId().'.'.$file_ext;
-
-            $post->setImage($filename);
 
             if (Session::getAuth('level') === 99) {
                 $post->setPublishedAt($post->getCreatedAt());
@@ -197,14 +191,25 @@ class Post extends Controller
 
             $testPost = $postValidator->validate();
 
-            if ($testPost === true) {
+            $file = new File($request->get('file', 'image'));
 
-                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/posts/".$post->getImage());
+            $fileValidator = new FileValidator($file);
+
+            $testFile = $fileValidator->validateImage();
+
+            if ($testPost === true && $testFile === true) {
+
+                if ($file->getName()) {
+
+                    if ($filename = UploadService::uploadPost($file)){
+                        $post->setImage($filename);
+                    }
+                }
 
                 $postRepository = new PostRepository();
                 $postRepository->insert($post);
 
-                Session::setFlash('success', 'L\'aticle à bien était envoyé');
+                Session::setFlash('success', "L'article a bien été envoyé");
 
                 header('Location: /');
             }
@@ -227,7 +232,7 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->addPost($categoryTab, $testPost, $token);
+        $form = $postForm->addPost($categoryTab, $testPost, $testFile, $token);
 
         $this->render('post/add', [
             'form' => $form->create(),
@@ -235,7 +240,8 @@ class Post extends Controller
 
     }
 
-    public function listPostNotValidate(){
+    public function listPostNotValidate()
+    {
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
@@ -246,7 +252,8 @@ class Post extends Controller
 
     }
 
-    public function publishedPost($id){
+    public function publishedPost($id)
+    {
 
         if (!Session::getAuth()) {
             header('Location: /');
@@ -282,16 +289,16 @@ class Post extends Controller
 
     }
 
-    public function listPostAjax(){
+    public function listPostAjax()
+    {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category')??0;
+        $category_id = $request->get('post', 'category') ?? 0;
 
 
-        if ($category_id == 0){
+        if ($category_id == 0) {
             $posts = $postRepository->findPublishedPost();
-        }
-        else{
+        } else {
             $posts = $postRepository->findPublishedPostByCategory($category_id);
         }
 
@@ -301,16 +308,16 @@ class Post extends Controller
         ]);
     }
 
-    public function listModeratePostAjax(){
+    public function listModeratePostAjax()
+    {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category')??0;
+        $category_id = $request->get('post', 'category') ?? 0;
 
 
-        if ($category_id == 0){
+        if ($category_id == 0) {
             $posts = $postRepository->findNotPublishedPost();
-        }
-        else{
+        } else {
             $posts = $postRepository->findNotPublishedPostByCategory($category_id);
         }
 

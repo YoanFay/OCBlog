@@ -1,0 +1,42 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+    <div class="row col-12">
+    <div class="card col-4 mt-4 ms-4">
+        <div class="card-header">
+            <p>Info du site</p>
+        </div>
+        <div class="card-body">
+            <ul>Titre du site : {{ config.title }} </ul>
+            <ul>Phrase d'accroche : {{ config.catchPhrase }}</ul>
+            <ul>Image du site : <a class="linkImage cursor-click" onclick="showImage('{{ config.image }}')">{{ config.image }}</a></ul>
+            <ul>CV : <a href="pdf/{{ config.cv }}" target="_blank">{{ config.cv }}</a></ul>
+        </div>
+    </div>
+    </div>
+
+    <div id="modal" class="d-none">
+        <div class="modal-content">
+            <img id="imageModal" src="" width="500px">
+        </div>
+    </div>
+
+    <div id="overlay" class="d-none" onclick="closeImage()"></div>
+{% endblock %}
+
+{% block script %}
+    <script>
+        function showImage(image) {
+            $("#imageModal").attr('src', '/img/config/' + image);
+            $("#modal").removeClass('d-none');
+            $("#overlay").removeClass("d-none");
+        }
+
+        function closeImage(){
+            $("#modal").addClass('d-none');
+            $("#overlay").addClass("d-none");
+        }
+
+        $("#close-modal-button").click(closeImage());
+    </script>
+{% endblock %}

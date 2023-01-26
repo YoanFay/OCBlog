@@ -10,7 +10,7 @@
                     {% if post.image is not null %}
                         <a class="linkImage cursor-click" onclick="showImage('{{ post.image }}')">Afficher l'image</a>
                     {% endif %}
-                    Posté le : {{ post.created_at|date("d/m/Y") }} à {{ post.created_at|date("H:i", "Europe/Paris") }}
+                    Posté le : {{ post.createdAt|date("d/m/Y") }} à {{ post.createdAt|date("H:i", "Europe/Paris") }}
                 </div>
             </div>
         </div>

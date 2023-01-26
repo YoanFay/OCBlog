@@ -22,8 +22,8 @@
                         {{ post.content }}
                         <hr>
                         <div class="d-flex flex-row-reverse">
-                            Posté le : {{ post.created_at|date("d/m/Y") }}
-                            à {{ post.created_at|date("H:i", "Europe/Paris") }}
+                            Posté le : {{ post.createdAt|date("d/m/Y") }}
+                            à {{ post.createdAt|date("H:i", "Europe/Paris") }}
                         </div>
                     </div>
                 </div>

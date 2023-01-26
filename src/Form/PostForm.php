@@ -14,7 +14,7 @@ class PostForm
         $this->form = new Form();
     }
 
-    public function addPost($categoryTab, $errors, $token)
+    public function addPost($categoryTab, $errors, $errorsFile, $token)
     {
 
         return $this->form->startForm('post', '/Post/add', ['enctype' => 'multipart/form-data'])
@@ -25,6 +25,7 @@ class PostForm
             ->addSelect('category', $categoryTab, ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['category'] ?? [])
             ->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage'])
+            ->addError($errorsFile['image'] ?? [])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary', 'id' => 'formSubmit'])
             ->addHidden('formName', 'addPost')
             ->addHidden('csrfToken', $token)

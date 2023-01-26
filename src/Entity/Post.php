@@ -8,14 +8,29 @@ class Post{
 
     private $id;
     private $content;
-    private $image = null;
+    private $image;
     private $created_at;
-    private $published_at = null;
-    private $updated_at = null;
-    private $deleted_at = null;
+    private $published_at;
+    private $updated_at;
+    private $deleted_at;
     private $excerpt;
     private $category_id;
     private $user_id;
+    private const excerpt_size = 70;
+
+    public function __construct($init = false){
+        if($init == "default"){
+            $this->default();
+        }
+    }
+
+    public function default(){
+        $this->image = null;
+        $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
+        $this->updated_at = null;
+        $this->deleted_at = null;
+        $this->user_id = Session::getAuth('user_id');
+    }
 
     /**
      * @return int
@@ -47,6 +62,7 @@ class Post{
     public function setContent(string $content): void
     {
         $this->content = $content;
+        $this->setExcerpt(substr($content, 0, self::excerpt_size));
     }
 
     /**

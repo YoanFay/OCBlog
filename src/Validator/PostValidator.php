@@ -20,7 +20,6 @@ class PostValidator extends Validator
     public function validate()
     {
         $this->content($this->post->getContent());
-        $this->image($this->post->getImage());
         $this->category($this->post->getCategoryId());
 
         if ($this->error === []){
@@ -37,20 +36,6 @@ class PostValidator extends Validator
         }
         if ($this->validateIsString($parameter) !== true){
             $this->error['content'][] = "L'article doit être une chaîne de caractère.";
-        }
-    }
-
-    // TODO A voir quand le systeme pour les images sera fait
-    public function image($parameter)
-    {
-        if (!empty($parameter)) {
-            $array = explode('.', $parameter);
-            $file_ext = strtolower(end($array));
-
-            $ext = array("jpeg", "jpg", "png");
-            if (in_array($file_ext, $ext) === false) {
-                $this->error['image'] = "Le fichier doit être dans l'un des format suivant : .jpeg, .jpg ou .png";
-            }
         }
     }
 

@@ -15,6 +15,9 @@
             <div class="d-flex justify-content-center align-items-center flex-column">
                 <nav class="bg-black text-white d-flex justify-content-between flex-row w-100 p-2 align-items-center">
                     <div class="d-flex flex-row">
+                        <ul class="m-0">
+                            <a class="text-white text-decoration-none" href="/">Accueil</a>
+                        </ul>
                         {% if user == null %}
                             <ul class="m-0">
                                 <a class="text-white text-decoration-none" href="/Authentication/signUp">Inscription</a>
@@ -29,6 +32,9 @@
                             {% if user.level > 60 %}
                                 <ul class="m-0">
                                     <a class="text-white text-decoration-none" href="/Post/listPostNotValidate">Modérer</a>
+                                </ul>
+                                <ul class="m-0">
+                                    <a class="text-white text-decoration-none" href="/Admin">Administrer</a>
                                 </ul>
                             {% endif %}
                             <ul class="m-0">
