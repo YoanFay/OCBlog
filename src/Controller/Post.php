@@ -2,11 +2,15 @@
 
 namespace App\Src\Controller;
 
+use App\Src\Entity\Comment as CommentEntity;
 use App\Src\Entity\File;
+use App\Src\Form\CommentForm;
 use App\Src\Form\PostForm;
 use App\Src\Repository\CategoryRepository;
+use App\Src\Repository\CommentRepository;
 use App\Src\Repository\PostRepository;
 use App\Src\Service\UploadService;
+use App\Src\Validator\CommentValidator;
 use App\Src\Validator\FileValidator;
 use App\Src\Validator\PostValidator;
 use App\Src\Entity\Post as PostEntity;
@@ -27,12 +31,50 @@ class Post extends Controller
 
     public function onePost($id)
     {
+        $testComment = [];
+
+        $request = new Request();
+
+        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$id)) {
+
+        $comment = new CommentEntity("default", $id);
+
+        $comment->setContent($request->get('post', 'content'));
+
+        if (Session::getAuth('level') === 99) {
+            $comment->setValidatedAt($comment->getCreatedAt());
+        }
+
+        $commentValidator = new CommentValidator($comment);
+
+        $testComment = $commentValidator->validate();
+
+        if ($testComment === true) {
+
+            $commentRepository = new CommentRepository();
+            $commentRepository->insert($comment);
+
+            Session::setFlash('success', "Le commentaire a bien été envoyé");
+        }
+    }
         $postRepository = new PostRepository();
+        $commentRepository = new CommentRepository();
         $post = $postRepository->find($id);
+        $comments = $commentRepository->findBy(['post_id' => $post->getId(), 'validated_at' => "is not null", 'deleted_at' => 'is null'], ['created_at' => 'DESC']);
+
+        $commentForm = new CommentForm();
+
+        $token = uniqid(rand(), true);
+
+        Session::setToken($token);
+
+        $form = $commentForm->addComment($id, $testComment, $token);
 
         $this->render('post/onePost', [
             "post" => $post,
+            "comments" => $comments,
             "user" => Session::getAuth(),
+            'form' => $form->create(),
         ]);
     }
 
@@ -51,13 +93,13 @@ class Post extends Controller
             $postRepository = new PostRepository();
             $post = $postRepository->find($id);
 
-            $file = "img/post/" . $post->getImage();
+            $file = "/img/post/" . $post->getImage();
             if (file_exists($file)) {
                 unlink($file);
                 $post->setImage(Null);
             }
 
-            $postRepository->delete($id);
+            $postRepository->softDelete($id);
 
             Session::setFlash('success', 'L\'article à bien était supprimé');
 
@@ -201,8 +243,10 @@ class Post extends Controller
 
                 if ($file->getName()) {
 
-                    if ($filename = UploadService::uploadPost($file)){
+                    if ($filename = UploadService::uploadPost($file)) {
                         $post->setImage($filename);
+                    } else {
+                        //TODO: Mettre une flash pour dire que ça à foiré
                     }
                 }
 
@@ -242,6 +286,11 @@ class Post extends Controller
 
     public function listPostNotValidate()
     {
+
+        if (Session::getAuth('level') < 60) {
+            header('Location: /');
+        }
+
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
@@ -261,7 +310,7 @@ class Post extends Controller
 
         $request = new Request();
 
-        if ($this->valideForm($request, 'publishPost', 'publishedPost/' . $id)) {
+        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/' . $id)) {
 
             $postRepository = new PostRepository();
 
@@ -322,6 +371,24 @@ class Post extends Controller
         }
 
         $this->render('post/listModeratePostAjax', [
+            "posts" => $posts,
+            "user" => Session::getAuth(),
+        ]);
+    }
+
+    public function listModerateCommentPostAjax()
+    {
+        $request = new Request();
+        $postRepository = new PostRepository();
+        $category_id = $request->get('post', 'category') ?? 0;
+
+        if ($category_id == 0) {
+            $posts = $postRepository->findNotPublishedCommentPost();
+        } else {
+            $posts = $postRepository->findNotPublishedCommentPostByCategory($category_id);
+        }
+
+        $this->render('comment/listModerateCommentPostAjax', [
             "posts" => $posts,
             "user" => Session::getAuth(),
         ]);

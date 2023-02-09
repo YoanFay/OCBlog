@@ -1,0 +1,51 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+
+    <div class="d-flex flex-column align-items-center mt-5">
+        <div class="card col-8 my-2">
+            <div class="card-body">
+                <div class="row">
+                    {{ post.content }}
+                    <hr>
+                    <div class="d-flex flex-row-reverse">
+                        Posté le : {{ post.createdAt|date("d/m/Y") }}
+                        à {{ post.createdAt|date("H:i", "Europe/Paris") }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mt-5">
+        <p class="h3">Commentaires</p>
+    </div>
+
+    {% for comment in comments %}
+        <div class="d-flex flex-column align-items-center mt-5">
+            <div class="card col-8 my-2">
+                <div class="card-body">
+                    <div class="row">
+                        {{ comment.content }}
+                        <hr>
+                        <div class="d-flex flex-row-reverse">
+                            Posté le : {{ comment.created_at|date("d/m/Y") }}
+                            à {{ comment.created_at|date("H:i", "Europe/Paris") }}
+                        </div>
+                    </div>
+                    {% if user.user_id == comment.userId or user.level > 60 %}
+                        <a href="/Comment/deleteComment/{{ comment.id }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </a>
+                        {% if comment.publishedAt is null %}
+                            <a href="/Comment/publishedComment/{{ comment.id }}">
+                                <button class="btn btn-primary">Publier</button>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+{% endblock %}

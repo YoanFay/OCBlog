@@ -6,14 +6,14 @@
         {% if post.image is not null %}
         <img src="/img/post/{{ post.image }}" width="200px">
         {% endif %}
-        <div class="card col-8 my-2" onclick="onePost({{ post.id }})">
+        <div class="card col-8 my-2">
             <div class="card-body">
                 <div class="row">
                     {{ post.content }}
                     <hr>
                     <div class="d-flex flex-row-reverse">
-                        Posté le : {{ post.created_at|date("d/m/Y") }}
-                        à {{ post.created_at|date("H:i", "Europe/Paris") }}
+                        Posté le : {{ post.createdAt|date("d/m/Y") }}
+                        à {{ post.createdAt|date("H:i", "Europe/Paris") }}
                     </div>
                 </div>
                 {% if user.user_id == post.userId or user.level > 60 %}
@@ -34,5 +34,44 @@
             </div>
         </div>
     </div>
+
+    <div class="d-flex flex-column align-items-center mt-5">
+    <p class="h3">Commentaires</p>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mt-5">
+    <div class="card col-8 my-2">
+        <div class="card-body">
+            {{ form | raw}}
+        </div>
+    </div>
+    </div>
+
+    {% for comment in comments %}
+    <div class="d-flex flex-column align-items-center mt-5">
+        <div class="card col-8 my-2">
+            <div class="card-body">
+                <div class="row">
+                    {{ comment.content }}
+                    <hr>
+                    <div class="d-flex flex-row-reverse">
+                        Posté le : {{ comment.created_at|date("d/m/Y") }}
+                        à {{ comment.created_at|date("H:i", "Europe/Paris") }}
+                    </div>
+                </div>
+                    {% if user.user_id == comment.userId or user.level > 60 %}
+                        <a href="/Comment/deleteComment/{{ comment.id }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </a>
+                    {% endif %}
+                    {% if user.user_id == comment.userId %}
+                        <a href="/Comment/updateComment/{{ comment.id }}">
+                            <button class="btn btn-primary">Modifier</button>
+                        </a>
+                    {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
 
 {% endblock %}

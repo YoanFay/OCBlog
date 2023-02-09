@@ -3,6 +3,10 @@
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
+        <div class="tabs">
+            <span data-tab-value="#listModeratePost">Article</span>
+            <span data-tab-value="#listModerateComment">Commentaire</span>
+        </div>
         <select class="form-control mt-5" style="width: 15%;" id="selectCategory">
             <option value="0" selected>Tout</option>
             {% for category in categories %}
@@ -11,7 +15,10 @@
         </select>
     </div>
 
-    <div class="d-flex flex-column align-items-center mt-5" id="listModeratePost">
+    <div class="d-flex flex-column align-items-center mt-5 active ongletDiv" id="listModeratePost" data-tab-info>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mt-5 d-none ongletDiv" id="listModerateComment" data-tab-info>
     </div>
 
     <div id="modal" class="d-none">
@@ -29,6 +36,9 @@
     <script>
         function onePost(id){
             window.location = "/Post/onePost/" + id;
+        }
+        function onePostComment(id){
+            window.location = "/Comment/moderateComment/" + id;
         }
 
         function showImage(image) {
@@ -57,13 +67,45 @@
             });
         }
 
+        function listModerateCommentPostAjax(id = 0){
+            $('#listModerateComment').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
+            $.ajax({
+                url: "/Post/listModerateCommentPostAjax",
+                type: "POST",
+                data: {category: id},
+                success: function(response) {
+                    $('#listModerateComment').html(response);
+                }
+            });
+        }
+
         $('document').ready(function (){
-            listModeratePostAjax()
+            listModeratePostAjax(),
+            listModerateCommentPostAjax()
         });
 
         $("#selectCategory").change(function(){
             var selectedOption = $(this).val();
-            listModeratePostAjax(selectedOption)
+            listModeratePostAjax(selectedOption),
+                listModerateCommentPostAjax(selectedOption)
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            const tabs = $('[data-tab-value]');
+            const tabInfos = $('[data-tab-info]');
+
+            tabs.each(function(i, tab) {
+                $(tab).click(function() {
+                    const target = $(document.querySelector(tab.dataset.tabValue));
+
+                    tabInfos.each(function(j, tabInfo) {
+                        $(tabInfo).removeClass('active').addClass('d-none');
+                    });
+                    target.addClass('active').removeClass('d-none');
+                });
+            });
         });
     </script>
 

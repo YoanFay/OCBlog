@@ -1,0 +1,15 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+
+    <div class="d-flex flex-column align-items-center mt-5">
+        <div class="card col-8 my-2">
+            <div class="card-body">
+                <div class="row">
+                    {{ form | raw}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

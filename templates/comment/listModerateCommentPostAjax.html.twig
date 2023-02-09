@@ -1,0 +1,23 @@
+{% for post in posts %}
+    <p>-------------- {{ post.nbr }} commentaire{% if post.nbr > 1 %}s{% endif %} à modérer --------------</p>
+    <div class="card col-8 my-2">
+        <div class="card-body">
+            <div class="row">
+                <p class="cursor-click" onclick="onePostComment({{ post.id }})">
+                    {{ post.content }}
+                </p>
+                <hr>
+                <div class="d-flex {% if post.image is not null %} justify-content-between {% else %} flex-row-reverse {% endif %}">
+                    {% if post.image is not null %}
+                        <a class="linkImage cursor-click" onclick="showImage('{{ post.image }}')">Afficher l'image</a>
+                    {% endif %}
+                    Posté le : {{ post.createdAt|date("d/m/Y") }} à {{ post.createdAt|date("H:i", "Europe/Paris") }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="row">
+        Aucun post en attente de modération actuellement
+    </div>
+{% endfor %}

@@ -94,7 +94,7 @@ class PostRepository
 
     public function findPublishedPostByCategory($category_id){
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND category_id = :category_id ORDER BY created_at DESC';
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY created_at DESC';
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -105,7 +105,7 @@ class PostRepository
 
     public function findNotPublishedPostByCategory($category_id){
 
-        $req = 'SELECT * FROM post WHERE published_at IS NULL AND category_id = :category_id ORDER BY created_at ASC';
+        $req = 'SELECT * FROM post WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY created_at ASC';
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -130,7 +130,7 @@ class PostRepository
     public function findLastPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL ORDER BY created_at DESC LIMIT 3';
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 3';
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -143,7 +143,7 @@ class PostRepository
     public function findNotPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NULL ORDER BY created_at ASC';
+        $req = 'SELECT * FROM post WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY created_at ASC';
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -156,7 +156,7 @@ class PostRepository
     public function findPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL ORDER BY created_at DESC';
+        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY created_at DESC';
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -164,6 +164,30 @@ class PostRepository
             return NULL;
         }
 
+    }
+
+    public function findNotPublishedCommentPost()
+    {
+
+        $req = 'SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS "nbr" FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at';
+
+        if ($posts = $this->bdd->select($req, $this->class)) {
+            return $posts;
+        } else {
+            return NULL;
+        }
+
+    }
+
+    public function findNotPublishedCommentPostByCategory($category_id){
+
+        $req = 'SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS "nbr" FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id';
+
+        if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
+            return $posts;
+        } else {
+            return NULL;
+        }
     }
 
     public function insert(Post $post)
@@ -207,6 +231,16 @@ class PostRepository
         }
     }
 
+    public function softDelete(int $id){
+        $req = 'UPDATE post SET deleted_at = "'.date_format(new \DateTime(), 'Y-m-d H:i:s').'" WHERE id = '.$id;
+
+        try {
+            $this->bdd->query($req);
+        }catch (Exception $e){
+            return $e;
+        }
+    }
+
     public function update(Post $post)
     {
 
@@ -222,7 +256,11 @@ class PostRepository
             'category' => $post->getCategoryId(),
         ];
 
-        $this->bdd->query($req, $postInfo);
+        try {
+            $this->bdd->query($req, $postInfo);
+        }catch (Exception $e){
+            return $e;
+        }
     }
 
 }

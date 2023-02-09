@@ -850,11 +850,11 @@ zeldahw|schema||Nomuas||UPDATE|G</Grants>
     <user id="242" parent="1" name="Nomuas"/>
     <table id="243" parent="224" name="category">
       <Engine>InnoDB</Engine>
-      <CollationName>latin1_swedish_ci</CollationName>
+      <CollationName>utf8_general_ci</CollationName>
     </table>
     <table id="244" parent="224" name="comment">
       <Engine>InnoDB</Engine>
-      <CollationName>latin1_swedish_ci</CollationName>
+      <CollationName>utf8_general_ci</CollationName>
     </table>
     <table id="245" parent="224" name="config">
       <Engine>InnoDB</Engine>
@@ -873,7 +873,7 @@ zeldahw|schema||Nomuas||UPDATE|G</Grants>
       <CollationName>latin1_swedish_ci</CollationName>
     </table>
     <column id="249" parent="243" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>3</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -882,11 +882,13 @@ zeldahw|schema||Nomuas||UPDATE|G</Grants>
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <CollationName>latin1_swedish_ci</CollationName>
     </column>
     <column id="251" parent="243" name="code">
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
+      <CollationName>latin1_swedish_ci</CollationName>
     </column>
     <key id="252" parent="243" name="PRIMARY">
       <ColNames>id</ColNames>
@@ -894,7 +896,7 @@ zeldahw|schema||Nomuas||UPDATE|G</Grants>
       <Primary>1</Primary>
     </key>
     <column id="253" parent="244" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>11</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -909,7 +911,7 @@ zeldahw|schema||Nomuas||UPDATE|G</Grants>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="256" parent="244" name="valdiated_at">
+    <column id="256" parent="244" name="validated_at">
       <DataType>datetime|0s</DataType>
       <Position>4</Position>
     </column>
@@ -957,7 +959,7 @@ user_id</ColNames>
       <Primary>1</Primary>
     </key>
     <column id="266" parent="245" name="id">
-      <AutoIncrement>1</AutoIncrement>
+      <AutoIncrement>2</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
@@ -972,155 +974,168 @@ user_id</ColNames>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="269" parent="245" name="cv">
+    <column id="269" parent="245" name="title">
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <key id="270" parent="245" name="PRIMARY">
+    <column id="270" parent="245" name="cv">
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>5</Position>
+    </column>
+    <key id="271" parent="245" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="271" parent="246" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="272" parent="246" name="id">
+      <AutoIncrement>25</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="272" parent="246" name="content">
+    <column id="273" parent="246" name="content">
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
+      <CollationName>utf8_general_ci</CollationName>
     </column>
-    <column id="273" parent="246" name="image">
+    <column id="274" parent="246" name="image">
       <DataType>text|0s</DataType>
       <Position>3</Position>
+      <CollationName>utf8_general_ci</CollationName>
     </column>
-    <column id="274" parent="246" name="created_at">
+    <column id="275" parent="246" name="created_at">
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="275" parent="246" name="published_at">
+    <column id="276" parent="246" name="published_at">
       <DataType>datetime|0s</DataType>
       <Position>5</Position>
     </column>
-    <column id="276" parent="246" name="updated_at">
+    <column id="277" parent="246" name="updated_at">
       <DataType>datetime|0s</DataType>
       <Position>6</Position>
     </column>
-    <column id="277" parent="246" name="deleted_at">
+    <column id="278" parent="246" name="deleted_at">
       <DataType>datetime|0s</DataType>
       <Position>7</Position>
     </column>
-    <column id="278" parent="246" name="excerpt">
+    <column id="279" parent="246" name="excerpt">
       <DataType>varchar(70)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>8</Position>
+      <CollationName>utf8_general_ci</CollationName>
     </column>
-    <column id="279" parent="246" name="category_id">
+    <column id="280" parent="246" name="category_id">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>9</Position>
     </column>
-    <column id="280" parent="246" name="user_id">
+    <column id="281" parent="246" name="user_id">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>10</Position>
     </column>
-    <foreign-key id="281" parent="246" name="fk_post_category1">
+    <foreign-key id="282" parent="246" name="fk_post_category1">
       <ColNames>category_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>category</RefTableName>
     </foreign-key>
-    <foreign-key id="282" parent="246" name="fk_post_user1">
+    <foreign-key id="283" parent="246" name="fk_post_user1">
       <ColNames>user_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>user</RefTableName>
     </foreign-key>
-    <index id="283" parent="246" name="fk_post_category1_idx">
+    <index id="284" parent="246" name="fk_post_category1_idx">
       <ColNames>category_id</ColNames>
       <Type>btree</Type>
     </index>
-    <index id="284" parent="246" name="fk_post_user1_idx">
+    <index id="285" parent="246" name="fk_post_user1_idx">
       <ColNames>user_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="285" parent="246" name="PRIMARY">
+    <key id="286" parent="246" name="PRIMARY">
       <ColNames>id
 category_id
 user_id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="286" parent="247" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="287" parent="247" name="id">
+      <AutoIncrement>3</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="287" parent="247" name="name">
+    <column id="288" parent="247" name="name">
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="288" parent="247" name="code">
+    <column id="289" parent="247" name="code">
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <key id="289" parent="247" name="PRIMARY">
+    <column id="290" parent="247" name="level">
+      <DataType>int(99)|0s</DataType>
+      <NotNull>1</NotNull>
+      <Position>4</Position>
+    </column>
+    <key id="291" parent="247" name="PRIMARY">
       <ColNames>id</ColNames>
       <NameSurrogate>1</NameSurrogate>
       <Primary>1</Primary>
     </key>
-    <column id="290" parent="248" name="id">
-      <AutoIncrement>1</AutoIncrement>
+    <column id="292" parent="248" name="id">
+      <AutoIncrement>8</AutoIncrement>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>1</Position>
     </column>
-    <column id="291" parent="248" name="lastname">
+    <column id="293" parent="248" name="lastname">
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>2</Position>
     </column>
-    <column id="292" parent="248" name="firstname">
+    <column id="294" parent="248" name="firstname">
       <DataType>varchar(45)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>3</Position>
     </column>
-    <column id="293" parent="248" name="login">
+    <column id="295" parent="248" name="login">
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>4</Position>
     </column>
-    <column id="294" parent="248" name="password">
+    <column id="296" parent="248" name="password">
       <DataType>varchar(70)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>5</Position>
     </column>
-    <column id="295" parent="248" name="created_at">
+    <column id="297" parent="248" name="created_at">
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <Position>6</Position>
     </column>
-    <column id="296" parent="248" name="role_id">
+    <column id="298" parent="248" name="role_id">
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <Position>7</Position>
     </column>
-    <foreign-key id="297" parent="248" name="fk_user_role1">
+    <foreign-key id="299" parent="248" name="fk_user_role1">
       <ColNames>role_id</ColNames>
       <RefColNames>id</RefColNames>
       <RefTableName>role</RefTableName>
     </foreign-key>
-    <index id="298" parent="248" name="fk_user_role1_idx">
+    <index id="300" parent="248" name="fk_user_role1_idx">
       <ColNames>role_id</ColNames>
       <Type>btree</Type>
     </index>
-    <key id="299" parent="248" name="PRIMARY">
+    <key id="301" parent="248" name="PRIMARY">
       <ColNames>id
 role_id</ColNames>
       <NameSurrogate>1</NameSurrogate>

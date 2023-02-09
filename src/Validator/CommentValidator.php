@@ -2,25 +2,24 @@
 
 namespace App\Src\Validator;
 
-use App\Src\Entity\Post;
+use App\Src\Entity\comment;
 use App\Src\Repository\CategoryRepository;
 use App\Src\Repository\UserRepository;
 
-class PostValidator extends Validator
+class CommentValidator extends Validator
 {
 
-    private $post;
+    private $comment;
 
-    public function __construct($post)
+    public function __construct($comment)
     {
-        $this->post = $post;
+        $this->comment = $comment;
         $this->error = [];
     }
 
     public function validate()
     {
-        $this->content($this->post->getContent());
-        $this->category($this->post->getCategoryId());
+        $this->content($this->comment->getContent());
 
         if ($this->error === []){
             return true;
@@ -36,18 +35,6 @@ class PostValidator extends Validator
         }
         if ($this->validateIsString($parameter) !== true){
             $this->error['content'][] = "L'article doit être une chaîne de caractère.";
-        }
-    }
-
-    public function category($parameter)
-    {
-
-        $categoryRepository = new CategoryRepository();
-
-        $category = $categoryRepository->find($parameter);
-
-        if ($category === null) {
-            $this->error['category'][] = "La catégorie sélectionnée n'existe pas.";
         }
     }
 

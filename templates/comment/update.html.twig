@@ -1,0 +1,30 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+
+    <div class="d-flex flex-column align-items-center mt-5">
+        <div class="card col-8 my-2" onclick="onePost({{ post.id }})">
+            <div class="card-body">
+                <div class="row">
+                    {{ form | raw}}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block script%}
+    <script>
+        $("#formImage").change(function () {
+            var fileExtension = ['jpeg', 'jpg', 'png'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                $('#formSubmit').addClass('disabled');
+                $('#errorImage').removeClass('d-none');
+            }else{
+                $('#formSubmit').removeClass('disabled');
+                $('#errorImage').addClass('d-none');
+            }
+        });
+    </script>
+{% endblock %}

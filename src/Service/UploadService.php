@@ -7,6 +7,7 @@ class UploadService
 
     private const image_post_path = "img/post/";
 
+    //TODO: Faire un Core/Upload quand j'en aurais besoin
     static public function uploadPost($file)
     {
 
