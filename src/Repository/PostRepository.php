@@ -212,7 +212,7 @@ class PostRepository
 
     public function find(int $id){
 
-        $req = "SELECT * FROM post WHERE id = ".$id;
+        $req = "SELECT * FROM post INNER JOIN user ON post.user_id = user.id WHERE post.id = ".$id;
 
         if($post = $this->bdd->select($req, $this->class)) {
             return $post[0];

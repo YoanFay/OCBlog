@@ -4,7 +4,8 @@ namespace App\Src\Form;
 
 use App\Src\Core\Form;
 
-class AuthentificationForm{
+class AuthentificationForm
+{
 
     private $form;
 
@@ -13,26 +14,33 @@ class AuthentificationForm{
         $this->form = new Form();
     }
 
-    public function signUp($token){
+    public function signUp($token, $errorFile, $errors)
+    {
 
         return $this->form->startForm('post')
             ->addLabelFor('firstname', "Prénom")
             ->addInput('text', 'firstname', ['class' => 'form-control col-6', 'id' => 'firstname', 'required' => true])
+            ->addError($errors['firstname'] ?? [])
             ->addLabelFor('lastname', "Nom")
             ->addInput('text', 'lastname', ['class' => 'form-control', 'required' => true])
+            ->addError($errors['lastname'] ?? [])
             ->addLabelFor('login', "Login")
             ->addInput('text', 'login', ['class' => 'form-control', 'required' => true])
+            ->addError($errors['login'] ?? [])
             ->addLabelFor('password', "Mot de passe")
             ->addInput('password', 'password', ['class' => 'form-control', 'required' => true])
+            ->addError($errors['password'] ?? [])
+            ->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage'])
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addError($errorFile['image'] ?? [])
             ->addHidden('formName', 'signUp')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-        ;
+            ->endForm();
 
     }
 
-    public function signIn($token){
+    public function signIn($token)
+    {
 
         return $this->form->startForm('post', 'http://localhost/Authentication/signIn')
             ->addLabelFor('login', "Login")
@@ -42,8 +50,7 @@ class AuthentificationForm{
             ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
             ->addHidden('formName', 'signIn')
             ->addHidden('csrfToken', $token)
-            ->endForm()
-        ;
+            ->endForm();
 
     }
 

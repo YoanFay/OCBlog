@@ -4,21 +4,27 @@ namespace App\Src\Controller;
 
 use App\Src\Core\Bdd;
 use App\Src\Core\Form;
+use App\Src\Entity\File;
 use App\Src\Entity\User;
 use App\Src\Form\AuthentificationForm;
 use App\Src\Repository\RoleRepository;
 use App\Src\Repository\UserRepository;
+use App\Src\Service\UploadService;
+use App\Src\Validator\FileValidator;
+use App\Src\Validator\UserValidator;
 
-class Authentication extends Controller{
+class Authentication extends Controller
+{
 
-    public function signUp(){
-
-        $userRepository = new UserRepository();
+    public function signUp()
+    {
         $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
+        $testFile = [];
+        $validate = [];
         $request = new Request();
 
-        if ($this->valideForm($request, 'signUp', 'Authentication/signUp')){
+        if ($this->valideForm($request, 'signUp', 'Authentication/signUp')) {
 
             $role = $roleRepository->findOneBy(['code' => 'user']);
 
@@ -30,13 +36,40 @@ class Authentication extends Controller{
             $user->setPassword(password_hash($request->get('post', 'password'), PASSWORD_BCRYPT));
             $user->setRoleId($role->getId());
 
-            $validate = $userRepository->add($user);
+            if ($request->get('post', 'avatar')) {
+                $file = new File($request->get('file', 'image'));
 
-            if ($validate === true){
-                header('Location: /Authentication/signIn');
+                $fileValidator = new FileValidator($file);
+
+                $testFile = $fileValidator->validateImage();
+            } else {
+                $testFile = 'default';
             }
-            else{
-                var_dump($validate);
+
+            $userValidator = new UserValidator($user);
+
+            $validate = $userValidator->validate();
+
+            if ($validate === true) {
+
+                if ($testFile === true){
+                    if ($filename = UploadService::uploadUser($file)) {
+                        $user->setAvatar($filename);
+                    } else {
+                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                    }
+                }elseif ($testFile === 'default'){
+                    if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
+                        $user->setAvatar($filename);
+                    } else {
+                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                    }
+                }
+
+                $userRepository = new UserRepository();
+                $userRepository->add($user);
+
+                header('Location: /Authentication/signIn');
             }
         }
 
@@ -44,21 +77,22 @@ class Authentication extends Controller{
 
         Session::setToken($token);
 
-        $form = $authenticationForm->signUp($token);
+        $form = $authenticationForm->signUp($token, $testFile, $validate);
 
         $this->render('authentication/signUp', [
             'form' => $form->create()
         ]);
     }
 
-    public function signIn(){
+    public function signIn()
+    {
 
         $userRepository = new UserRepository();
         $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
         $request = new Request();
 
-        if ($this->valideForm($request, 'signIn', 'Authentication/signIn')){
+        if ($this->valideForm($request, 'signIn', 'Authentication/signIn')) {
 
             $login = $request->get('post', 'login');
             $password = $request->get('post', 'password');
@@ -66,7 +100,7 @@ class Authentication extends Controller{
             $user = $userRepository->findOneBy(['login' => $login]);
             $role = $roleRepository->find($user->getRoleId());
 
-            if (password_verify($password, $user->getPassword())){
+            if (password_verify($password, $user->getPassword())) {
                 Session::setAuth($user, $role);
                 header('Location: /');
             }
@@ -83,7 +117,8 @@ class Authentication extends Controller{
         ]);
     }
 
-    public function logout(){
+    public function logout()
+    {
         Session::logout();
         header('Location: /');
     }

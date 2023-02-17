@@ -3,32 +3,39 @@
 {% block main %}
 
     <div class="d-flex flex-column align-items-center mt-5">
-        {% if post.image is not null %}
-        <img src="/img/post/{{ post.image }}" width="200px">
-        {% endif %}
         <div class="card col-8 my-2">
             <div class="card-body">
-                <div class="row">
-                    {{ post.content }}
-                    <hr>
-                    <div class="d-flex flex-row-reverse">
-                        Posté le : {{ post.createdAt|date("d/m/Y") }}
-                        à {{ post.createdAt|date("H:i", "Europe/Paris") }}
+                <div class="d-flex flex-row align-items-center">
+                    <img src="/img/user/{{ post.avatar }}.png" class="me-3">
+                    <div class="d-flex flex-column justify-content-center">
+                        <p class="mb-0">{{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
+                        <p class="mb-0">Posté le : {{ post.createdAt|date("d/m/Y") }}
+                            à {{ post.createdAt|date("H:i", "Europe/Paris") }}</p>
                     </div>
                 </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <p class="d-flex align-items-center">{{ post.content }}</p>
+                    <div>
+                        {% if post.image is not null %}
+                            <img src="/img/post/{{ post.image }}" width="200px">
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
                 {% if user.user_id == post.userId or user.level > 60 %}
-                    <a href="/Post/deletePost/{{ post.id }}">
-                        <button class="btn btn-danger">Supprimer</button>
+                    <a href="/Post/deletePost/{{ post.id }}" class="text-decoration-none">
+                        <span class="material-symbols-outlined text-danger">delete</span>
                     </a>
                     {% if post.publishedAt is null %}
                     <a href="/Post/publishedPost/{{ post.id }}">
-                        <button class="btn btn-primary">Publier</button>
+                        <span class="material-symbols-outlined text-success">done</span>
                     </a>
                     {% endif %}
                 {% endif %}
                 {% if user.user_id == post.userId %}
                     <a href="/Post/updatePost/{{ post.id }}">
-                        <button class="btn btn-primary">Modifier</button>
+                        <span class="material-symbols-outlined">edit</span>
                     </a>
                 {% endif %}
             </div>

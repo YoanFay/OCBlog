@@ -50,7 +50,6 @@ class Post extends Controller
         $testComment = $commentValidator->validate();
 
         if ($testComment === true) {
-
             $commentRepository = new CommentRepository();
             $commentRepository->insert($comment);
 
@@ -101,7 +100,7 @@ class Post extends Controller
 
             $postRepository->softDelete($id);
 
-            Session::setFlash('success', 'L\'article à bien était supprimé');
+            Session::setFlash('success', "L'article à bien était supprimé");
 
             header('Location: /');
 
@@ -121,6 +120,7 @@ class Post extends Controller
 
     }
 
+    //TODO: Mettre à jour avec le nouveau système d'upload
     public function updatePost($id)
     {
 
@@ -178,7 +178,7 @@ class Post extends Controller
 
                 $postRepository->update($post);
 
-                Session::setFlash('success', 'L\'aticle à bien était modifié');
+                Session::setFlash('success', "L'article à bien était modifié");
                 header('Location: /');
             }
         }
@@ -246,7 +246,7 @@ class Post extends Controller
                     if ($filename = UploadService::uploadPost($file)) {
                         $post->setImage($filename);
                     } else {
-                        //TODO: Mettre une flash pour dire que ça à foiré
+                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 

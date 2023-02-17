@@ -19,7 +19,7 @@ class CommentValidator extends Validator
 
     public function validate()
     {
-        $this->content($this->comment->getContent());
+        $this->comment($this->comment->getContent());
 
         if ($this->error === []){
             return true;
@@ -28,13 +28,13 @@ class CommentValidator extends Validator
         return $this->error;
     }
 
-    public function content($parameter)
+    public function comment($parameter)
     {
         if ($this->validateIsNotEmpty($parameter) !== true){
-            $this->error['content'][] = "L'article ne peut pas être vide.";
+            $this->error['content'][] = "Le commentaire ne peut pas être vide.";
         }
         if ($this->validateIsString($parameter) !== true){
-            $this->error['content'][] = "L'article doit être une chaîne de caractère.";
+            $this->error['content'][] = "Le commentaire doit être une chaîne de caractère.";
         }
     }
 

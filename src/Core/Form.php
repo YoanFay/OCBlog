@@ -117,7 +117,7 @@ class Form{
     }
 
     public function addImage(string $type, $name){
-        $this->formCode .= "<img src='/img/$type/$name' width='100px'>";
+        $this->formCode .= "<img class='ms-3 mb-2 row' src='/img/$type/$name' width='100px'>";
 
         return $this;
     }

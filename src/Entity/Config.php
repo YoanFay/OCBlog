@@ -26,17 +26,17 @@ class Config{
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getImage(): string
+    public function getImage(): ?string
     {
         return $this->image;
     }
 
     /**
-     * @param string $image
+     * @param string|null $image
      */
-    public function setImage(string $image): void
+    public function setImage(?string $image): void
     {
         $this->image = $image;
     }
@@ -74,17 +74,17 @@ class Config{
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCv(): string
+    public function getCv(): ?string
     {
         return $this->cv;
     }
 
     /**
-     * @param string $cv
+     * @param string|null $cv
      */
-    public function setCv(string $cv): void
+    public function setCv(?string $cv): void
     {
         $this->cv = $cv;
     }
