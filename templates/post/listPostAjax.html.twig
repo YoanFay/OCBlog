@@ -1,17 +1,21 @@
 {% for post in posts %}
-    <div class="card col-8 my-2">
+    <div class="card col-8 my-2 cursor-click" onclick="onePost({{ post.id }})">
         <div class="card-body">
-            <div class="row">
-                <p class="cursor-click" onclick="onePost({{ post.id }})">
-                    {{ post.content }}
-                </p>
-                <hr>
-                <div class="d-flex {% if post.image is not null %} justify-content-between {% else %} flex-row-reverse {% endif %}">
+            <div class="d-flex flex-row align-items-center">
+                <img src="/img/user/{{ post.avatar }}.png" class="me-3">
+                <div class="d-flex flex-column justify-content-center">
+                    <p class="mb-0">{{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
+                    <p class="mb-0">Posté le : {{ post.createdAt|date("d/m/Y") }}
+                        à {{ post.createdAt|date("H:i", "Europe/Paris") }}</p>
+                </div>
+            </div>
+            <hr>
+            <div class="d-flex justify-content-between">
+                <p class="d-flex align-items-center">{{ post.content }}</p>
+                <div>
                     {% if post.image is not null %}
-                        <a class="linkImage cursor-click" onclick="showImage('{{ post.image }}')">Afficher l'image</a>
+                        <img src="/img/post/{{ post.image }}" width="200px">
                     {% endif %}
-                    Posté le : {{ post.createdAt|date("d/m/Y") }}
-                    à {{ post.createdAt|date("H:i", "Europe/Paris") }}
                 </div>
             </div>
         </div>

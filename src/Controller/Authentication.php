@@ -52,13 +52,13 @@ class Authentication extends Controller
 
             if ($validate === true) {
 
-                if ($testFile === true){
+                if ($testFile === true) {
                     if ($filename = UploadService::uploadUser($file)) {
                         $user->setAvatar($filename);
                     } else {
                         Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
-                }elseif ($testFile === 'default'){
+                } elseif ($testFile === 'default') {
                     if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
                         $user->setAvatar($filename);
                     } else {

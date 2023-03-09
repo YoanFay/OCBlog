@@ -4,7 +4,9 @@ namespace App\Src\Controller;
 
 use App\Src\Entity\File;
 use App\Src\Form\ConfigForm;
+use App\Src\Repository\CommentRepository;
 use App\Src\Repository\ConfigRepository;
+use App\Src\Repository\PostRepository;
 use App\Src\Service\UploadService;
 use App\Src\Validator\ConfigValidator;
 use App\Src\Validator\FileValidator;
@@ -15,14 +17,32 @@ class Admin extends Controller
     public function index()
     {
         $configRepository = new ConfigRepository();
+        $postRepository = new PostRepository();
+        $commentRepository = new CommentRepository();
         $config = $configRepository->findOne();
 
         if (Session::getAuth('level') < 60) {
             header('Location: /');
         }
 
+        $post = [
+            'all' => count($postRepository->findAll()),
+            'publish' => count($postRepository->findBy(['deleted_at' => "is null", "published_at" => "is not null"])),
+            'delete' => count($postRepository->findBy(['deleted_at' => "is not null"])),
+            'moderate' => count($postRepository->findBy(['deleted_at' => "is null", "published_at" => "is null"]))
+        ];
+
+        $comment = [
+            'all' => count($commentRepository->findAll()),
+            'publish' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"])),
+            'delete' => count($commentRepository->findBy(['deleted_at' => "is not null"])),
+            'moderate' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]))
+        ];
+
         $this->render('admin/index', [
             "config" => $config,
+            "post" => $post,
+            "comment" => $comment
         ]);
     }
 
@@ -39,7 +59,7 @@ class Admin extends Controller
         $testImage = [];
         $testCv = [];
 
-        if ($this->valideForm($request, 'updateConfig', 'Admin/updateConfig/'.$config->getId())) {
+        if ($this->valideForm($request, 'updateConfig', 'Admin/updateConfig/' . $config->getId())) {
 
             $config->setTitle($request->get('post', 'title'));
             $config->setCatchPhrase($request->get('post', 'catchPhrase'));
@@ -48,25 +68,25 @@ class Admin extends Controller
 
             $testConfig = $configValidator->validate();
 
-            if ($request->get('file', 'image')['size'] > 0){
+            if ($request->get('file', 'image')['size'] > 0) {
 
                 $image = new File($request->get('file', 'image'));
 
                 $fileValidator = new FileValidator($image);
 
                 $testImage = $fileValidator->validateImage();
-            }else{
+            } else {
                 $testImage = 'noChange';
             }
 
-            if ($request->get('file', 'cv')['size'] > 0){
+            if ($request->get('file', 'cv')['size'] > 0) {
 
                 $cv = new File($request->get('file', 'cv'));
 
                 $fileValidator = new FileValidator($cv);
 
                 $testCv = $fileValidator->validatePdf();
-            }else{
+            } else {
                 $testCv = 'noChange';
             }
 

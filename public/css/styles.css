@@ -1,10 +1,44 @@
-.background-body{
+/* GLOBAL */
+
+.main-centered {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* LAYOUT */
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main {
+    flex: 1;
+}
+
+.background-body {
     background-color: antiquewhite;
 }
 
-.cursor-click{
-    cursor: pointer ;
+/* NAV MENU */
+
+.nav-link {
+    color: #ffffff;
 }
+
+.nav-link:hover {
+    color: #4cd137;
+}
+
+/* CURSOR */
+
+.cursor-click {
+    cursor: pointer;
+}
+
+/* MODAL IMAGE */
 
 #modal {
     position: fixed;
@@ -27,4 +61,55 @@
 .linkImage {
     text-decoration: underline;
     color: blue;
+}
+
+/* AUTHENTICATION */
+
+.form-sign {
+    max-width: 330px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-sign .form-control {
+    position: relative;
+    box-sizing: border-box;
+    height: auto;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.form-sign .form-control:focus {
+    z-index: 2;
+}
+
+.form-sign input[type="text"] {
+    margin-bottom: 10px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-sign input[type="password"] {
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* IMG */
+
+.imgPost {
+    width: 200px;
+}
+
+/* CONTACT */
+
+.maxHeight {
+    min-height: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 767px) {
+    .imgPost {
+        width: 100px;
+    }
 }

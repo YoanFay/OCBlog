@@ -1,0 +1,14 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block mainClass %}main-centered{% endblock %}
+
+{% block main %}
+    <div class="card" style="width: 50%">
+        <div class="card-header">
+            <h1 class="h3 mb-3 font-weight-normal">Contact</h1>
+        </div>
+        <div class="card-body">
+            {{ form | raw }}
+        </div>
+    </div>
+{% endblock %}

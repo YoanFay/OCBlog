@@ -1,18 +1,39 @@
 {% extends "/layout/base.html.twig" %}
 
 {% block main %}
-    <div class="row col-12">
-    <div class="card col-4 mt-4 ms-4">
-        <div class="card-header">
-            <p>Info du site</p>
+    <div class="row col-12 d-flex justify-content-around">
+        <div class="card col-12 col-lg-3 mt-4 ms-4 p-0">
+            <div class="card-header">
+                <p class="h3">Information blog</p>
+            </div>
+            <div class="card-body">
+                <ul>Titre du site : {{ config.title }} </ul>
+                <ul>Phrase d'accroche : {{ config.catchPhrase }}</ul>
+                <ul>CV : <a href="pdf/config/{{ config.cv }}" target="_blank">{{ config.cv }}</a></ul>
+                <ul>Image du site :</ul>
+                <div class="d-flex justify-content-center">
+                <img class="" src="/img/config/{{ config.image }}" style="width: 45%;">
+                </div>
+            </div>
         </div>
-        <div class="card-body">
-            <ul>Titre du site : {{ config.title }} </ul>
-            <ul>Phrase d'accroche : {{ config.catchPhrase }}</ul>
-            <ul>Image du site : <a class="linkImage cursor-click" onclick="showImage('{{ config.image }}')">{{ config.image }}</a></ul>
-            <ul>CV : <a href="pdf/{{ config.cv }}" target="_blank">{{ config.cv }}</a></ul>
+
+        <div class="card col-12 col-lg-3 mt-4 ms-4 p-0">
+            <div class="card-header">
+                <p class="h3">Statistique article</p>
+            </div>
+            <div class="card-body d-flex align-items-center">
+                <canvas id="myChartPost" class="chartjs"></canvas>
+            </div>
         </div>
-    </div>
+
+        <div class="card col-12 col-lg-3 mt-4 ms-4 p-0">
+            <div class="card-header">
+                <p class="h3">Statistique commentaire</p>
+            </div>
+            <div class="card-body d-flex align-items-center">
+                <canvas id="myChartComment" class="chartjs"></canvas>
+            </div>
+        </div>
     </div>
 
     <div id="modal" class="d-none">
@@ -25,6 +46,7 @@
 {% endblock %}
 
 {% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         function showImage(image) {
             $("#imageModal").attr('src', '/img/config/' + image);
@@ -32,11 +54,92 @@
             $("#overlay").removeClass("d-none");
         }
 
-        function closeImage(){
+        function closeImage() {
             $("#modal").addClass('d-none');
             $("#overlay").addClass("d-none");
         }
 
         $("#close-modal-button").click(closeImage());
+    </script>
+
+    <script>
+        //TODO: COULEUR MOINS VIVE
+        var ctxPost = document.getElementById('myChartPost').getContext('2d');
+        var myChartPost = new Chart(ctxPost, {
+            type: 'pie',
+            data: {
+                labels: ['Article publié', 'Article en attente de modération', 'Article supprimé'],
+                datasets: [{
+                    data: [{{ post.publish }}, {{ post.moderate }}, {{ post.delete }}],
+                    backgroundColor: [
+                        'rgba(60, 179, 113, 0.8)',
+                        'rgba(255, 165, 0, 0.8)',
+                        'rgba(240, 0, 0, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(60, 179, 113, 1)',
+                        'rgba(255, 165, 0, 1)',
+                        'rgba(240, 0, 0, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: "Nombre total d'article : {{ post.all }}",
+                        position: 'bottom'
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    },
+                }
+            }
+        });
+
+        var ctxComment = document.getElementById('myChartComment').getContext('2d');
+        var myChartComment = new Chart(ctxComment, {
+            type: 'pie',
+            data: {
+                labels: ['Commentaire publié', 'Commentaire en attente de modération', 'Commentaire supprimé'],
+                datasets: [{
+                    data: [{{ comment.publish }}, {{ comment.moderate }}, {{ comment.delete }}],
+                    backgroundColor: [
+                        'rgba(60, 179, 113, 0.8)',
+                        'rgba(255, 165, 0, 0.8)',
+                        'rgba(240, 0, 0, 0.8)'
+                    ],
+                    borderColor: [
+                        'rgba(60, 179, 113, 1)',
+                        'rgba(255, 165, 0, 1)',
+                        'rgba(240, 0, 0, 0.8)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top'
+                    },
+                    title: {
+                        display: true,
+                        text: "Nombre total de commentaire : {{ comment.all }}",
+                        position: 'bottom'
+                    },
+                    animation: {
+                        animateScale: true,
+                        animateRotate: true
+                    },
+                }
+            }
+        });
     </script>
 {% endblock %}

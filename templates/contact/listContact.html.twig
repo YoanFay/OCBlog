@@ -1,0 +1,21 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+    <div class="row col-12 p-4 h-100">
+        <div class="card col-3 my-2 mx-2 p-2">
+            {% for contact in contacts %}
+                <div class="card my-2">
+                    <div class="card-header">
+                        {{ contact.name }}
+                    </div>
+                    <div class="card-body">
+                        {{ contact.message|length > 50 ? contact.message|slice(0, 50) ~ '...' : contact.message }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="card col-8 my-2 mx-2">
+
+        </div>
+    </div>
+{% endblock %}

@@ -1,30 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Core/Upload.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Form/ConfigForm.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Validator/ConfigValidator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Validator/UserValidator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/update.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/saveactions_settings.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Controller/Contact.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Core/Mail.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Entity/Contact.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Form/ContactForm.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Repository/ContactRepository.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/Validator/ContactValidator.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/contact/contact.html.twig" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/templates/contact/listContact.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/OCBlog.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/OCBlog.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/9468c050-987a-4785-a44c-722b19da2a3e.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/9468c050-987a-4785-a44c-722b19da2a3e.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/img/config/photo_Yoan_Fayolle.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/pdf/CV_Yoan_Fayolle.pdf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Homepage.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Config.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Config.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/User.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/User.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Request.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Request.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Session.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Form/AuthentificationForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AuthentificationForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PostForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PostForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/CommentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CommentRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/UploadService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/CommentValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/CommentValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/FileValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/FileValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/admin/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/admin/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/authentication/signIn.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/authentication/signIn.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/authentication/signUp.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/authentication/signUp.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/comment/listModerateCommentPostAjax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/comment/listModerateCommentPostAjax.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/comment/moderateComment.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/comment/moderateComment.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/layout/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/post/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/post/listModeratePostAjax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/listModeratePostAjax.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/post/listPostAjax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/listPostAjax.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/post/moderate.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/moderate.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/templates/post/onePost.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/onePost.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_files.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_files.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.json" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/installed.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/installed.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/composer/platform_check.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/platform_check.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,6 +77,10 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
     </include_path>
   </component>
   <component name="ProjectId" id="2FAG8YO5XpNhFn0rJgs6T0Q2uZK" />
@@ -59,38 +91,43 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "H:/UwAmp/www/OCBlog/templates/admin",
-    "nodejs_package_manager_path": "npm",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/UwAmp/www/OCBlog/templates/contact&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;settings.saveactions&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\UwAmp\www\OCBlog\templates\contact" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
       <recent name="H:\UwAmp\www\OCBlog\templates\admin" />
       <recent name="H:\UwAmp\www\OCBlog\src\Form" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
       <recent name="H:\UwAmp\www\OCBlog\templates\comment" />
-      <recent name="H:\UwAmp\www\OCBlog\templates\post" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="H:\UwAmp\www\OCBlog\templates\contact" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Core" />
       <recent name="H:\UwAmp\www\OCBlog\src\Form" />
       <recent name="H:\UwAmp\www\OCBlog\src\Form\Post" />
       <recent name="H:\UwAmp\www\OCBlog\public\pdf" />
-      <recent name="H:\UwAmp\www\OCBlog" />
-      <recent name="H:\UwAmp\www\OCBlog\public" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.init.php">
@@ -139,7 +176,13 @@
       <workItem from="1675366487681" duration="11164000" />
       <workItem from="1675932492367" duration="17025000" />
       <workItem from="1676014131008" duration="6318000" />
-      <workItem from="1676615959866" duration="6279000" />
+      <workItem from="1676615959866" duration="11910000" />
+      <workItem from="1677141107851" duration="28549000" />
+      <workItem from="1677228415392" duration="8665000" />
+      <workItem from="1677242731014" duration="4674000" />
+      <workItem from="1677778674325" duration="5590000" />
+      <workItem from="1677827172053" duration="4209000" />
+      <workItem from="1678349256762" duration="481000" />
     </task>
     <servers />
   </component>

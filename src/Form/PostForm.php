@@ -69,7 +69,7 @@ class PostForm
             ->addError($errors['category'] ?? []);
 
         if ($image) {
-            $updateForm->addImage('posts', $image);
+            $updateForm->addImage('post', $image);
         }
 
         $updateForm->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage']);

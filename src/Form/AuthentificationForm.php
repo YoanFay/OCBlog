@@ -17,7 +17,7 @@ class AuthentificationForm
     public function signUp($token, $errorFile, $errors)
     {
 
-        return $this->form->startForm('post')
+        return $this->form->startForm('post', 'http://localhost/Authentication/signUp', ['class' => 'form-sign'])
             ->addLabelFor('firstname', "Prénom")
             ->addInput('text', 'firstname', ['class' => 'form-control col-6', 'id' => 'firstname', 'required' => true])
             ->addError($errors['firstname'] ?? [])
@@ -42,12 +42,12 @@ class AuthentificationForm
     public function signIn($token)
     {
 
-        return $this->form->startForm('post', 'http://localhost/Authentication/signIn')
+        return $this->form->startForm('post', 'http://localhost/Authentication/signIn', ['class' => 'form-sign'])
             ->addLabelFor('login', "Login")
             ->addInput('text', 'login', ['class' => 'form-control', 'required' => true])
             ->addLabelFor('password', "Mot de passe")
             ->addInput('password', 'password', ['class' => 'form-control', 'required' => true])
-            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary btn-block mt-2'])
             ->addHidden('formName', 'signIn')
             ->addHidden('csrfToken', $token)
             ->endForm();

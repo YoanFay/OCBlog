@@ -28,9 +28,9 @@
                         <span class="material-symbols-outlined text-danger">delete</span>
                     </a>
                     {% if post.publishedAt is null %}
-                    <a href="/Post/publishedPost/{{ post.id }}">
-                        <span class="material-symbols-outlined text-success">done</span>
-                    </a>
+                        <a href="/Post/publishedPost/{{ post.id }}">
+                            <span class="material-symbols-outlined text-success">done</span>
+                        </a>
                     {% endif %}
                 {% endif %}
                 {% if user.user_id == post.userId %}
@@ -43,42 +43,47 @@
     </div>
 
     <div class="d-flex flex-column align-items-center mt-5">
-    <p class="h3">Commentaires</p>
+        <p class="h3">Commentaires</p>
     </div>
 
-    <div class="d-flex flex-column align-items-center mt-5">
-    <div class="card col-8 my-2">
-        <div class="card-body">
-            {{ form | raw}}
-        </div>
-    </div>
-    </div>
-
-    {% for comment in comments %}
     <div class="d-flex flex-column align-items-center mt-5">
         <div class="card col-8 my-2">
             <div class="card-body">
-                <div class="row">
-                    {{ comment.content }}
-                    <hr>
-                    <div class="d-flex flex-row-reverse">
-                        Posté le : {{ comment.created_at|date("d/m/Y") }}
-                        à {{ comment.created_at|date("H:i", "Europe/Paris") }}
-                    </div>
-                </div>
-                    {% if user.user_id == comment.userId or user.level > 60 %}
-                        <a href="/Comment/deleteComment/{{ comment.id }}">
-                            <button class="btn btn-danger">Supprimer</button>
-                        </a>
-                    {% endif %}
-                    {% if user.user_id == comment.userId %}
-                        <a href="/Comment/updateComment/{{ comment.id }}">
-                            <button class="btn btn-primary">Modifier</button>
-                        </a>
-                    {% endif %}
+                {{ form | raw }}
             </div>
         </div>
     </div>
+
+    {% for comment in comments %}
+        <div class="d-flex flex-column align-items-center mt-5">
+            <div class="card col-8 my-2">
+                <div class="card-body">
+                    <div class="d-flex flex-row align-items-center">
+                        <img src="/img/user/{{ comment.avatar }}.png" class="me-3">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p class="mb-0">{{ comment.firstname }} {{ comment.lastname|slice(0, 1) }}</p>
+                            <p class="mb-0">Posté le : {{ comment.createdAt|date("d/m/Y") }}
+                                à {{ comment.createdAt|date("H:i", "Europe/Paris") }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <p class="d-flex align-items-center">{{ comment.content }}</p>
+                    </div>
+                    <hr>
+                    {% if user.user_id == comment.userId or user.level > 60 %}
+                        <a href="/Post/deletePost/{{ comment.id }}" class="text-decoration-none">
+                            <span class="material-symbols-outlined text-danger">delete</span>
+                        </a>
+                        {% if comment.publishedAt is null %}
+                            <a href="/Post/publishedPost/{{ comment.id }}">
+                                <span class="material-symbols-outlined text-success">done</span>
+                            </a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     {% endfor %}
 
 {% endblock %}

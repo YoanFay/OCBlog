@@ -7,7 +7,8 @@ use App\Src\Repository\CommentRepository;
 use App\Src\Repository\PostRepository;
 use App\Src\Validator\CommentValidator;
 
-class Comment extends Controller {
+class Comment extends Controller
+{
 
     public function listModerateCommentAjax($postId)
     {
@@ -22,7 +23,8 @@ class Comment extends Controller {
         ]);
     }
 
-    public function moderateComment($postId){
+    public function moderateComment($postId)
+    {
 
         if (Session::getAuth('level') < 60) {
             header('Location: /');
@@ -31,7 +33,7 @@ class Comment extends Controller {
         $postRepository = new PostRepository();
         $commentRepository = new CommentRepository();
         $post = $postRepository->find($postId);
-        $comments = $commentRepository->findBy(['post_id' => $post->getId(), 'validated_at' => "is null", 'deleted_at' => "is null"], ['created_at' => 'DESC']);
+        $comments = $commentRepository->findBy(['post_id' => $postId, 'validated_at' => "is null", 'deleted_at' => "is null"], ['created_at' => 'DESC']);
 
         $this->render('comment/moderateComment', [
             "post" => $post,
@@ -57,7 +59,7 @@ class Comment extends Controller {
 
             Session::setFlash('success', 'Le commentaire à bien était supprimé');
 
-            header('Location: /Post/OnePost/'.$comment->getPostId());
+            header('Location: /Post/OnePost/' . $comment->getPostId());
 
         }
 
@@ -159,5 +161,5 @@ class Comment extends Controller {
             'form' => $form->create(),
         ]);
     }
-    
+
 }
