@@ -35,31 +35,32 @@ class Post extends Controller
 
         $request = new Request();
 
-        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$id)) {
+        if ($this->valideForm($request, 'addComment', 'Post/onePost/' . $id)) {
 
-        $comment = new CommentEntity("default", $id);
+            $comment = new CommentEntity("default", $id);
 
-        $comment->setContent($request->get('post', 'content'));
+            $comment->setContent($request->get('post', 'content'));
 
-        if (Session::getAuth('level') === 99) {
-            $comment->setValidatedAt($comment->getCreatedAt());
+            if (Session::getAuth('level') === 99) {
+                $comment->setValidatedAt($comment->getCreatedAt());
+            }
+
+            $commentValidator = new CommentValidator($comment);
+
+            $testComment = $commentValidator->validate();
+
+            if ($testComment === true) {
+                $commentRepository = new CommentRepository();
+                $commentRepository->insert($comment);
+
+                Session::setFlash('success', "Le commentaire a bien été envoyé");
+            }
         }
 
-        $commentValidator = new CommentValidator($comment);
-
-        $testComment = $commentValidator->validate();
-
-        if ($testComment === true) {
-
-            $commentRepository = new CommentRepository();
-            $commentRepository->insert($comment);
-
-            Session::setFlash('success', "Le commentaire a bien été envoyé");
-        }
-    }
         $postRepository = new PostRepository();
         $commentRepository = new CommentRepository();
         $post = $postRepository->find($id);
+
         $comments = $commentRepository->findBy(['post_id' => $post->getId(), 'validated_at' => "is not null", 'deleted_at' => 'is null'], ['created_at' => 'DESC']);
 
         $commentForm = new CommentForm();
@@ -87,11 +88,11 @@ class Post extends Controller
         }
 
         $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($id);
 
         if ($this->valideForm($request, 'deletePost', 'Post/deletePost/' . $id)) {
 
-            $postRepository = new PostRepository();
-            $post = $postRepository->find($id);
 
             $file = "/img/post/" . $post->getImage();
             if (file_exists($file)) {
@@ -101,7 +102,7 @@ class Post extends Controller
 
             $postRepository->softDelete($id);
 
-            Session::setFlash('success', 'L\'article à bien était supprimé');
+            Session::setFlash('success', "L'article à bien était supprimé");
 
             header('Location: /');
 
@@ -117,13 +118,13 @@ class Post extends Controller
 
         $this->render('post/delete', [
             'form' => $form->create(),
+            'post' => $post
         ]);
 
     }
 
     public function updatePost($id)
     {
-
         $user = Session::getAuth();
         $postRepository = new PostRepository();
         $post = $postRepository->find($id);
@@ -148,37 +149,35 @@ class Post extends Controller
                 $post->setPublishedAt(Null);
             }
 
-            if ($request->get('file', 'image')['name']) {
+            if ($request->get('file', 'image')['size'] > 0) {
 
-                $file = "img/post/" . $post->getImage();
-                if (file_exists($file)) {
-                    unlink($file);
-                    $post->setImage(Null);
-                }
+                $image = new File($request->get('file', 'image'));
 
-                $array = explode('.', $request->get('file', 'image')['name']);
-                $file_ext = strtolower(end($array));
-                $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()) . $post->getUserId() . '.' . $file_ext;
-                $post->setImage($filename);
-            } elseif ($request->get('post', 'deleteImage') === "on") {
-                $file = "img/post/" . $post->getImage();
-                if (file_exists($file)) {
-                    unlink($file);
-                    $post->setImage(Null);
-                }
+                $fileValidator = new FileValidator($image);
+
+                $testImage = $fileValidator->validateImage();
+            } else {
+                $testImage = 'noChange';
             }
 
             $postValidator = new PostValidator($post);
 
             $testPost = $postValidator->validate();
 
-            if ($testPost === true) {
+            if ($testPost === true && ($testImage === true || $testImage === 'noChange')) {
 
-                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/post/" . $post->getImage());
+                if ($testImage !== 'noChange' && $image->getName()) {
+
+                    if ($filename = UploadService::uploadConfigImage($image)) {
+                        $post->setImage($filename);
+                    } else {
+                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                    }
+                }
 
                 $postRepository->update($post);
 
-                Session::setFlash('success', 'L\'aticle à bien était modifié');
+                Session::setFlash('success', "L'article à bien était modifié");
                 header('Location: /');
             }
         }
@@ -246,7 +245,7 @@ class Post extends Controller
                     if ($filename = UploadService::uploadPost($file)) {
                         $post->setImage($filename);
                     } else {
-                        //TODO: Mettre une flash pour dire que ça à foiré
+                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 
@@ -309,12 +308,10 @@ class Post extends Controller
         }
 
         $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($id);
 
         if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/' . $id)) {
-
-            $postRepository = new PostRepository();
-
-            $post = $postRepository->find($id);
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
@@ -334,6 +331,7 @@ class Post extends Controller
 
         $this->render('post/publish', [
             'form' => $form->create(),
+            'post' => $post
         ]);
 
     }

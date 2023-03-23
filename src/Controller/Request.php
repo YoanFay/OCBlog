@@ -2,7 +2,8 @@
 
 namespace App\Src\Controller;
 
-class Request{
+class Request
+{
 
     private $post;
     private $get;
@@ -14,26 +15,30 @@ class Request{
         $this->post = $_POST;
         $this->get = $_GET;
         $this->server = $_SERVER;
+        $this->env = $_ENV;
         $this->file = $_FILES;
     }
 
-    public function issetPost(){
-        if ($this->post !== []){
+    public function issetPost()
+    {
+        if ($this->post !== []) {
             return true;
         }
 
         return false;
     }
 
-    public function issetGet(){
-        if ($this->get !== []){
+    public function issetGet()
+    {
+        if ($this->get !== []) {
             return true;
         }
 
         return false;
     }
 
-    public function get(string $method, string $key){
-        return $this->$method[$key]??NULL;
+    public function get(string $method, string $key)
+    {
+        return $this->$method[$key] ?? NULL;
     }
 }

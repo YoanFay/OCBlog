@@ -28,4 +28,24 @@ class ConfigRepository{
         }
 
     }
+
+    public function update(Config $config)
+    {
+
+        $req = 'UPDATE config SET title = :title, image = :image, catch_phrase = :catch_phrase, cv = :cv WHERE id = :id';
+
+        $configInfo = [
+            'id' => $config->getId(),
+            'title' => $config->getTitle(),
+            'catch_phrase' => $config->getCatchPhrase(),
+            'image' => $config->getImage(),
+            'cv' => $config->getCv()
+        ];
+
+        try {
+            $this->bdd->query($req, $configInfo);
+        }catch (Exception $e){
+            return $e;
+        }
+    }
 }

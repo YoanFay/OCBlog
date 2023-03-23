@@ -1,15 +1,18 @@
 {% extends "/layout/base.html.twig" %}
 
 {% block main %}
-
-    <div class="d-flex flex-column align-items-center mt-5">
-        <div class="card col-8 my-2">
+    <div class="container my-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h1>Confirmation de publication</h1>
+            </div>
             <div class="card-body">
-                <div class="row">
-                    {{ form | raw}}
+                <p>Voulez-vous vraiment publier cet article :</p>
+                <div class="border border-secondary rounded p-3 mb-3">
+                    {{ post.content }}
                 </div>
+                {{ form|raw }}
             </div>
         </div>
     </div>
-
 {% endblock %}

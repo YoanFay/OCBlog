@@ -37,8 +37,8 @@ class PostForm
     {
 
         return $this->form->startForm('post', '/Post/deletePost/' . $id)
-            ->addText('Voulez-vous supprimer ce post ?')
-            ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
+            ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger me-2'])
+            ->addReturn('/Post/onePost/' . $id)
             ->addHidden('formName', 'deletePost')
             ->addHidden('csrfToken', $token)
             ->endForm();
@@ -49,8 +49,8 @@ class PostForm
     {
 
         return $this->form->startForm('post', '/Post/publishedPost/' . $id)
-            ->addText('Voulez-vous publié ce post ?')
-            ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary'])
+            ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary me-2'])
+            ->addReturn('/Post/onePost/' . $id)
             ->addHidden('formName', 'publishPost')
             ->addHidden('csrfToken', $token)
             ->endForm();
@@ -69,7 +69,7 @@ class PostForm
             ->addError($errors['category'] ?? []);
 
         if ($image) {
-            $updateForm->addImage('posts', $image);
+            $updateForm->addImage('post', $image);
         }
 
         $updateForm->addInput('file', 'image', ['class' => 'form-control my-3', 'id' => 'formImage']);

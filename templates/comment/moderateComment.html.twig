@@ -5,12 +5,21 @@
     <div class="d-flex flex-column align-items-center mt-5">
         <div class="card col-8 my-2">
             <div class="card-body">
-                <div class="row">
-                    {{ post.content }}
-                    <hr>
-                    <div class="d-flex flex-row-reverse">
-                        Posté le : {{ post.createdAt|date("d/m/Y") }}
-                        à {{ post.createdAt|date("H:i", "Europe/Paris") }}
+                <div class="d-flex flex-row align-items-center">
+                    <img src="/img/user/{{ post.avatar }}.png" class="me-3">
+                    <div class="d-flex flex-column justify-content-center">
+                        <p class="mb-0">{{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
+                        <p class="mb-0">Posté le : {{ post.createdAt|date("d/m/Y") }}
+                            à {{ post.createdAt|date("H:i", "Europe/Paris") }}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="d-flex justify-content-between">
+                    <p class="d-flex align-items-center">{{ post.content }}</p>
+                    <div>
+                        {% if post.image is not null %}
+                            <img src="/img/post/{{ post.image }}" width="200px">
+                        {% endif %}
                     </div>
                 </div>
             </div>
@@ -25,21 +34,26 @@
         <div class="d-flex flex-column align-items-center mt-5">
             <div class="card col-8 my-2">
                 <div class="card-body">
-                    <div class="row">
-                        {{ comment.content }}
-                        <hr>
-                        <div class="d-flex flex-row-reverse">
-                            Posté le : {{ comment.created_at|date("d/m/Y") }}
-                            à {{ comment.created_at|date("H:i", "Europe/Paris") }}
+                    <div class="d-flex flex-row align-items-center">
+                        <img src="/img/user/{{ comment.avatar }}.png" class="me-3">
+                        <div class="d-flex flex-column justify-content-center">
+                            <p class="mb-0">{{ comment.firstname }} {{ comment.lastname|slice(0, 1) }}</p>
+                            <p class="mb-0">Posté le : {{ comment.createdAt|date("d/m/Y") }}
+                                à {{ comment.createdAt|date("H:i", "Europe/Paris") }}</p>
                         </div>
                     </div>
+                    <hr>
+                    <div class="d-flex justify-content-between">
+                        <p class="d-flex align-items-center">{{ comment.content }}</p>
+                    </div>
+                    <hr>
                     {% if user.user_id == comment.userId or user.level > 60 %}
-                        <a href="/Comment/deleteComment/{{ comment.id }}">
-                            <button class="btn btn-danger">Supprimer</button>
+                        <a href="/Comment/deleteComment/{{ comment.id }}" class="text-decoration-none">
+                            <span class="material-symbols-outlined text-danger">delete</span>
                         </a>
                         {% if comment.publishedAt is null %}
                             <a href="/Comment/publishedComment/{{ comment.id }}">
-                                <button class="btn btn-primary">Publier</button>
+                                <span class="material-symbols-outlined text-success">done</span>
                             </a>
                         {% endif %}
                     {% endif %}

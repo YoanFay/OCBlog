@@ -61,7 +61,17 @@ class PostRepository
             $req .= ' WHERE ';
 
             foreach ($parameters as $key => $parameter) {
-                $req .= "$key = '$parameter'";
+
+                switch ($parameter){
+                    case "is not null":
+                        $req .= "$key IS NOT NULL";
+                        break;
+                    case "is null":
+                        $req .= "$key IS NULL";
+                        break;
+                    default:
+                        $req .= "$key = '$parameter'";
+                }
 
                 $row++;
 
@@ -94,7 +104,7 @@ class PostRepository
 
     public function findPublishedPostByCategory($category_id){
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY created_at DESC';
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at DESC";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -105,7 +115,7 @@ class PostRepository
 
     public function findNotPublishedPostByCategory($category_id){
 
-        $req = 'SELECT * FROM post WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY created_at ASC';
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -130,7 +140,7 @@ class PostRepository
     public function findLastPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY created_at DESC LIMIT 3';
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE p.published_at IS NOT NULL AND p.deleted_at IS NULL ORDER BY p.created_at DESC LIMIT 3";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -143,7 +153,7 @@ class PostRepository
     public function findNotPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY created_at ASC';
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY p.created_at ASC";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -156,7 +166,7 @@ class PostRepository
     public function findPublishedPost()
     {
 
-        $req = 'SELECT * FROM post WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY created_at DESC';
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY p.created_at DESC";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -169,7 +179,7 @@ class PostRepository
     public function findNotPublishedCommentPost()
     {
 
-        $req = 'SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS "nbr" FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at';
+        $req = "SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS 'nbr', u.avatar as 'avatar' FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -181,7 +191,7 @@ class PostRepository
 
     public function findNotPublishedCommentPostByCategory($category_id){
 
-        $req = 'SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS "nbr" FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id';
+        $req = "SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS 'nbr', u.avatar as 'avatar' FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -212,7 +222,7 @@ class PostRepository
 
     public function find(int $id){
 
-        $req = "SELECT * FROM post WHERE id = ".$id;
+        $req = "SELECT p.*, user.avatar, user.firstname, user.lastname FROM post as p INNER JOIN user ON p.user_id = user.id WHERE p.id = ".$id;
 
         if($post = $this->bdd->select($req, $this->class)) {
             return $post[0];

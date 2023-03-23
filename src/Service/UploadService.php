@@ -2,24 +2,44 @@
 
 namespace App\Src\Service;
 
+use App\Src\Core\Upload;
+
 class UploadService
 {
 
-    private const image_post_path = "img/post/";
-
-    //TODO: Faire un Core/Upload quand j'en aurais besoin
     static public function uploadPost($file)
     {
+        $upload = new Upload($file, 'post');
 
-        $filename = uniqid("post_") . "." . pathinfo($file->getName(), PATHINFO_EXTENSION);
+        return $upload->addFile();
+    }
 
-        try {
-            move_uploaded_file($file->getTmpName(), self::image_post_path . $filename);
-        } catch (\Exception $e) {
-            return false;
-        }
+    static public function uploadUser($file)
+    {
+        $upload = new Upload($file, 'user');
 
-        return $filename;
+        return $upload->addFile();
+    }
+
+    static public function uploadConfigImage($file)
+    {
+        $upload = new Upload($file, 'config');
+
+        return $upload->addFile();
+    }
+
+    static public function uploadConfigCv($file)
+    {
+        $upload = new Upload($file, 'config');
+
+        return $upload->addPdf();
+    }
+
+    static public function uploadDefaultUser($firstname, $lastname)
+    {
+       $upload = new Upload(null, 'user');
+
+       return $upload->addFileByUrl('https://ui-avatars.com/api/?name='.$firstname.'+'.$lastname.'&background=random&format=png');
     }
 
 }

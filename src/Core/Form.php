@@ -2,11 +2,13 @@
 
 namespace App\Src\Core;
 
-class Form{
+class Form
+{
 
     private $formCode = '';
 
-    public function create(){
+    public function create()
+    {
         return $this->formCode;
     }
 
@@ -17,9 +19,9 @@ class Form{
         $courts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus'];
 
         foreach ($attributes as $attribute => $valeur) {
-            if (in_array($attribute, $courts) && $valeur === true){
+            if (in_array($attribute, $courts) && $valeur === true) {
                 $str .= " $attribute";
-            }else{
+            } else {
                 $str .= " $attribute='$valeur'";
             }
         }
@@ -31,7 +33,7 @@ class Form{
     {
         $this->formCode .= "<form action='$action' method='$method'";
 
-        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttribute($attributes) . '>' : '>';
 
         return $this;
     }
@@ -42,42 +44,42 @@ class Form{
         return $this;
     }
 
-    public function addInput(string $type, string $name, array $attributes = []):self
+    public function addInput(string $type, string $name, array $attributes = []): self
     {
         $this->formCode .= "<input type='$type' name='$name'";
 
-        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttribute($attributes) . '>' : '>';
 
         return $this;
     }
 
-    public function addLabelFor(string $for, string $text, array $attributes = []):self
+    public function addLabelFor(string $for, string $text, array $attributes = []): self
     {
         $this->formCode .= "<label for='$for'";
 
-        $this->formCode .= $attributes?$this->addAttribute($attributes) : '';
+        $this->formCode .= $attributes ? $this->addAttribute($attributes) : '';
 
         $this->formCode .= ">$text</label>";
 
         return $this;
     }
 
-    public function addTextArea(string $nom, string $text = "", array $attributes = []):self
+    public function addTextArea(string $nom, string $text = "", array $attributes = []): self
     {
         $this->formCode .= "<textarea name='$nom'";
 
-        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttribute($attributes) . '>' : '>';
 
         $this->formCode .= "$text</textarea>";
 
         return $this;
     }
 
-    public function addSelect(string $nom, array $options, array $attributes = []):self
+    public function addSelect(string $nom, array $options, array $attributes = []): self
     {
         $this->formCode .= "<select name='$nom'";
 
-        $this->formCode .= $attributes?$this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes ? $this->addAttribute($attributes) . '>' : '>';
 
         foreach ($options as $key => $option) {
             $this->formCode .= "<option value='$key'>$option</option>";
@@ -88,7 +90,7 @@ class Form{
         return $this;
     }
 
-    public function addError(array $errors = []):self
+    public function addError(array $errors = []): self
     {
         foreach ($errors as $key => $error) {
             $this->formCode .= "<p class='d-flex align-items-center text-danger'><span class='material-symbols-outlined me-2'>warning</span>$error</p>";
@@ -97,27 +99,37 @@ class Form{
         return $this;
     }
 
-    public function addText(string $text):self
+    public function addText(string $text): self
     {
         $this->formCode .= "<p class='d-flex align-items-center'>$text</p>";
 
         return $this;
     }
 
-    public function addHidden(string $name, string $value){
+    public function addHidden(string $name, string $value)
+    {
         $this->formCode .= "<input type='hidden'  name='$name' value='$value' />";
 
         return $this;
     }
 
-    public function addCheckbox(string $name,$text){
+    public function addReturn($path)
+    {
+        $this->formCode .= "<a href='$path' class='btn btn-primary'>Retour</a>";
+
+        return $this;
+    }
+
+    public function addCheckbox(string $name, $text)
+    {
         $this->formCode .= "<div class='d-flex flex-row justify-content-start mb-2'><input type='checkbox' name='$name' id='$name' class='me-2' /><label for='$name'>$text</label></div>";
 
         return $this;
     }
 
-    public function addImage(string $type, $name){
-        $this->formCode .= "<img src='/img/$type/$name' width='100px'>";
+    public function addImage(string $type, $name)
+    {
+        $this->formCode .= "<img class='ms-3 mb-2 row' src='/img/$type/$name' width='100px'>";
 
         return $this;
     }

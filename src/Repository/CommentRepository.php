@@ -33,10 +33,23 @@ class CommentRepository{
         $this->bdd->query($req, $commentInfo);
     }
 
+    public function findAll()
+    {
+
+        $req = 'SELECT * FROM comment ORDER BY created_at DESC ';
+
+        if ($comments = $this->bdd->select($req, $this->class)) {
+            return $comments;
+        } else {
+            return NULL;
+        }
+
+    }
+
     public function findBy(array $parameters = [], array $sorts = [])
     {
 
-        $req = 'SELECT * FROM comment';
+        $req = 'SELECT c.*, u.avatar, u.firstname, u.lastname FROM comment c INNER JOIN user u on c.user_id = u.id';
 
         $row = 0;
         $length = count($parameters);

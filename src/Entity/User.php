@@ -9,11 +9,11 @@ class User{
     private $login;
     private $password;
     private $created_at;
+    private $avatar;
     private $role_id;
 
     public function __construct(){
         $this->created_at = new \DateTime();
-
     }
 
     /**
@@ -120,5 +120,21 @@ class User{
     public function setRoleId(int $role_id): void
     {
         $this->role_id = $role_id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getAvatar(): string
+    {
+        return $this->avatar;
+    }
+
+    /**
+     * @param string $avatar
+     */
+    public function setAvatar(string $avatar): void
+    {
+        $this->avatar = $avatar;
     }
 }
