@@ -4,7 +4,8 @@ namespace App\Src\Entity;
 
 use App\Src\Controller\Session;
 
-class Post{
+class Post
+{
 
     private $id;
     private $content;
@@ -18,13 +19,15 @@ class Post{
     private $user_id;
     private const excerpt_size = 70;
 
-    public function __construct($init = false){
-        if($init == "default"){
+    public function __construct($init = false)
+    {
+        if ($init == "default") {
             $this->default();
         }
     }
 
-    public function default(){
+    public function default()
+    {
         $this->image = null;
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
         $this->updated_at = null;
@@ -106,7 +109,7 @@ class Post{
     }
 
     /**
-     * @param mixed $publishedAt
+     * @param mixed|null $publishedAt
      */
     public function setPublishedAt($publishedAt): void
     {
@@ -122,7 +125,7 @@ class Post{
     }
 
     /**
-     * @param mixed $updatedAt
+     * @param mixed|null $updatedAt
      */
     public function setUpdatedAt($updatedAt): void
     {
@@ -138,7 +141,7 @@ class Post{
     }
 
     /**
-     * @param mixed $deletedAt
+     * @param mixed|null $deletedAt
      */
     public function setDeletedAt($deletedAt): void
     {

@@ -2,22 +2,27 @@
 
 
 {% block main %}
-    <div class="card">
-<div class="card-body">
-    {{ form | raw}}
-    <p id="errorImage" class="d-none text-danger mt-2 mb-0">Le fichier doit être dans l'un des format suivant : .jpeg, .jpg ou .png</p>
-</div>
+
+    <div class="d-flex flex-column align-items-center mt-5">
+        <div class="card col-8 my-2">
+            <div class="card-body">
+                <div class="row">
+                    {{ form | raw }}
+                </div>
+            </div>
+        </div>
     </div>
+
 {% endblock %}
 
-{% block script%}
+{% block script %}
     <script>
         $("#formImage").change(function () {
             var fileExtension = ['jpeg', 'jpg', 'png'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 $('#formSubmit').addClass('disabled');
                 $('#errorImage').removeClass('d-none');
-            }else{
+            } else {
                 $('#formSubmit').removeClass('disabled');
                 $('#errorImage').addClass('d-none');
             }

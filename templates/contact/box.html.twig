@@ -1,0 +1,23 @@
+{% for contact in contacts %}
+    <div class="card m-2"
+         onclick='SelectContact(
+                 "{{ contact.name }}",
+                 "{{ contact.message|escape('js') }}",
+                 "{{ contact.mail }}",
+                 "{{ contact.createdAt|date('d-m-Y') }} {{ contact.createdAt|date("H:i", "Europe/Paris") }}",
+         {{ contact.id }}
+         {% if contact.process %}
+                 , "Traité par {{ contact.user }} le {{ contact.processAt|date('d-m-Y') }} {{ contact.processAt|date("H:i", "Europe/Paris") }}"
+         {% endif %}
+         {% if contact.process == "answer" %}
+                 , "{{ contact.answer|escape('js') }}"
+         {% endif %}
+                 )'>
+        <div class="card-header">
+            {{ contact.name }}
+        </div>
+        <div class="card-body">
+            {{ contact.message|length > 50 ? contact.message|slice(0, 50) ~ '...' : contact.message }}
+        </div>
+    </div>
+{% endfor %}

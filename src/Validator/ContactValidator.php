@@ -31,6 +31,17 @@ class ContactValidator extends Validator
         return $this->error;
     }
 
+    public function validateAnswer()
+    {
+        $this->answer($this->contact->getName());
+
+        if ($this->error === []) {
+            return true;
+        }
+
+        return $this->error;
+    }
+
     public function name($parameter)
     {
         if ($this->validateIsNotEmpty($parameter) !== true) {
@@ -58,6 +69,16 @@ class ContactValidator extends Validator
         }
         if ($this->validateIsString($parameter) !== true) {
             $this->error['message'][] = "Le message doit être une chaîne de caractère.";
+        }
+    }
+
+    public function answer($parameter)
+    {
+        if ($this->validateIsNotEmpty($parameter) !== true) {
+            $this->error['answer'][] = "Le message ne peut pas être vide.";
+        }
+        if ($this->validateIsString($parameter) !== true) {
+            $this->error['answer'][] = "Le message doit être une chaîne de caractère.";
         }
     }
 

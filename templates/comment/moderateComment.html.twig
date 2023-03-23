@@ -48,11 +48,11 @@
                     </div>
                     <hr>
                     {% if user.user_id == comment.userId or user.level > 60 %}
-                        <a href="/Post/deletePost/{{ comment.id }}" class="text-decoration-none">
+                        <a href="/Comment/deleteComment/{{ comment.id }}" class="text-decoration-none">
                             <span class="material-symbols-outlined text-danger">delete</span>
                         </a>
                         {% if comment.publishedAt is null %}
-                            <a href="/Post/publishedPost/{{ comment.id }}">
+                            <a href="/Comment/publishedComment/{{ comment.id }}">
                                 <span class="material-symbols-outlined text-success">done</span>
                             </a>
                         {% endif %}

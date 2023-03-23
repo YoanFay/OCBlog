@@ -15,6 +15,7 @@ class Request
         $this->post = $_POST;
         $this->get = $_GET;
         $this->server = $_SERVER;
+        $this->env = $_ENV;
         $this->file = $_FILES;
     }
 

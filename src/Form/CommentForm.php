@@ -28,26 +28,27 @@ class CommentForm
 
     }
 
-    public function deleteComment($id, $token)
+    public function deleteComment($id, $token, $idPost)
     {
 
         return $this->form->startForm('post', '/Comment/deleteComment/' . $id)
-            ->addText('Voulez-vous supprimer ce commentaire ?')
-            ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger'])
+            ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger me-2'])
+            ->addReturn('/Comment/moderateComment/' . $idPost)
             ->addHidden('formName', 'deleteComment')
             ->addHidden('csrfToken', $token)
             ->endForm();
 
     }
 
-    public function updateComment($errors, $id, $content, $token)
+    public function updateComment($errors, $id, $content, $token, $return)
     {
 
         $updateForm = $this->form->startForm('post', '/Comment/updateComment/' . $id)
             ->addLabelFor('content', "Contenue")
             ->addTextArea('content', "$content", ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content'] ?? [])
-            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary me-2'])
+            ->addReturn($return)
             ->addHidden('formName', 'updateComment')
             ->addHidden('csrfToken', $token)
             ->endForm();
@@ -56,12 +57,12 @@ class CommentForm
 
     }
 
-    public function publishComment($id, $token)
+    public function publishComment($id, $token, $idPost)
     {
 
         return $this->form->startForm('post', '/Comment/publishedComment/' . $id)
-            ->addText('Voulez-vous publié ce commentaire ?')
-            ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary'])
+            ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary me-2'])
+            ->addReturn('/Comment/moderateComment/' . $idPost)
             ->addHidden('formName', 'publishComment')
             ->addHidden('csrfToken', $token)
             ->endForm();

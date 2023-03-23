@@ -15,7 +15,7 @@ class ConfigForm
         $this->form = new Form();
     }
 
-    public function updateComment($errors, $errorsImage, $errorsCv, Config $config, $token)
+    public function updateConfig($errors, $errorsImage, $errorsCv, Config $config, $token)
     {
 
         $updateForm = $this->form->startForm('post', '/Admin/updateConfig/' . $config->getId(), ['enctype' => 'multipart/form-data'])
@@ -37,7 +37,8 @@ class ConfigForm
             ->addLabelFor('cv', "CV")
             ->addInput('file', 'cv', ['class' => 'form-control my-3', 'id' => 'formImage'])
             ->addError($errorsCv['cv'] ?? [])
-            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary'])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary me-2'])
+            ->addReturn('/Admin')
             ->addHidden('formName', 'updateConfig')
             ->addHidden('csrfToken', $token)
             ->endForm();

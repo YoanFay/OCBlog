@@ -10,19 +10,6 @@ use App\Src\Validator\CommentValidator;
 class Comment extends Controller
 {
 
-    public function listModerateCommentAjax($postId)
-    {
-        $commentRepository = new CommentRepository();
-
-        $commments = $commentRepository->findNotPublishedComment($postId);
-
-        $this->render('post/listModerateCommente', [
-            //"post" => $post,
-            "commments" => $commments,
-            "user" => Session::getAuth(),
-        ]);
-    }
-
     public function moderateComment($postId)
     {
 
@@ -49,11 +36,10 @@ class Comment extends Controller
         }
 
         $request = new Request();
+        $commentRepository = new CommentRepository();
+        $comment = $commentRepository->find($id);
 
         if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/' . $id)) {
-
-            $commentRepository = new CommentRepository();
-            $comment = $commentRepository->find($id);
 
             $commentRepository->softDelete($id);
 
@@ -69,10 +55,11 @@ class Comment extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->deleteComment($id, $token);
+        $form = $commentForm->deleteComment($id, $token, $comment->getPostId());
 
         $this->render('comment/delete', [
             'form' => $form->create(),
+            'comment' => $comment
         ]);
     }
 
@@ -83,12 +70,11 @@ class Comment extends Controller
         }
 
         $request = new Request();
+        $commentRepository = new CommentRepository();
+        $comment = $commentRepository->find($id);
 
         if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/' . $id)) {
 
-            $commentRepository = new CommentRepository();
-
-            $comment = $commentRepository->find($id);
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
 
@@ -104,10 +90,11 @@ class Comment extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->publishComment($id, $token);
+        $form = $commentForm->publishComment($id, $token, $comment->getPostId());
 
         $this->render('comment/publish', [
             'form' => $form->create(),
+            'comment' => $comment
         ]);
 
     }
@@ -155,7 +142,7 @@ class Comment extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->updateComment($testComment, $id, $comment->getContent(), $token);
+        $form = $commentForm->updateComment($testComment, $id, $comment->getContent(), $token, $comment->getPostId());
 
         $this->render('comment/update', [
             'form' => $form->create(),

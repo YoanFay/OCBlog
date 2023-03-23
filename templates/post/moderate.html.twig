@@ -5,13 +5,15 @@
     <div class="d-flex flex-column align-items-center mt-5">
         <ul class="nav nav-tabs">
             <li class="nav-item border">
-                <a class="nav-link text-dark border border-dark cursor-click active" data-toggle="tab" data-tab-value="#listModeratePost" id="postTabs" onclick="change(1)">Articles</a>
+                <a class="nav-link text-dark border border-dark cursor-click active" data-toggle="tab"
+                   data-tab-value="#listModeratePost" id="postTabs" onclick="change(1)">Articles</a>
             </li>
             <li class="nav-item border">
-                <a class="nav-link text-dark border border-dark cursor-click" data-toggle="tab" data-tab-value="#listModerateComment" id="commentTabs" onclick="change(2)">Commentaires</a>
+                <a class="nav-link text-dark border border-dark cursor-click" data-toggle="tab"
+                   data-tab-value="#listModerateComment" id="commentTabs" onclick="change(2)">Commentaires</a>
             </li>
         </ul>
-        <select class="form-control mt-5" style="width: 15%;" id="selectCategory">
+        <select class="form-control mt-5" id="selectCategory">
             <option value="0" selected>Tout</option>
             {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -24,14 +26,6 @@
 
     <div class="d-flex flex-column align-items-center mt-5 d-none ongletDiv" id="listModerateComment" data-tab-info>
     </div>
-
-    <div id="modal" class="d-none">
-        <div class="modal-content">
-            <img id="imageModal" src="" width="500px">
-        </div>
-    </div>
-
-    <div id="overlay" class="d-none" onclick="closeImage()"></div>
 
 {% endblock %}
 
@@ -98,14 +92,13 @@
     </script>
 
     <script type="text/javascript">
-        function change(id){
-            if (id === 1){
+        function change(id) {
+            if (id === 1) {
                 $('#listModeratePost').addClass('active').removeClass('d-none');
                 $('#listModerateComment').removeClass('active').addClass('d-none');
                 $('#commentTabs').removeClass('active');
                 $('#postTabs').addClass('active');
-            }
-            else{
+            } else {
                 $('#listModeratePost').removeClass('active').addClass('d-none');
                 $('#listModerateComment').addClass('active').removeClass('d-none');
                 $('#postTabs').removeClass('active');

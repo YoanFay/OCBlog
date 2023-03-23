@@ -10,6 +10,10 @@ class Contact
     private $mail;
     private $message;
     private $created_at;
+    private $process;
+    private $process_at;
+    private $process_by;
+    private $answer;
 
     public function __construct($init = false)
     {
@@ -101,6 +105,70 @@ class Contact
     public function setCreatedAt($created_at): void
     {
         $this->created_at = $created_at;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProcess(): ?string
+    {
+        return $this->process;
+    }
+
+    /**
+     * @param string|null $process
+     */
+    public function setProcess(string $process): void
+    {
+        $this->process = $process;
+    }
+
+    /**
+     * @return mixed|null
+     */
+    public function getProcessAt()
+    {
+        return $this->process_at;
+    }
+
+    /**
+     * @param mixed|null $process_at
+     */
+    public function setProcessAt($process_at): void
+    {
+        $this->process_at = $process_at;
+    }
+
+    /**
+     * @return int|null
+     */
+    public function getProcessBy(): ?int
+    {
+        return $this->process_by;
+    }
+
+    /**
+     * @param int|null $process_by
+     */
+    public function setProcessBy(int $process_by): void
+    {
+        $this->process_by = $process_by;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAnswer(): ?string
+    {
+        return $this->answer;
+    }
+
+    /**
+     * @param string|null $answer
+     */
+    public function setAnswer($answer): void
+    {
+        $this->answer = $answer;
     }
 
 }

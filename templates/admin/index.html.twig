@@ -12,7 +12,13 @@
                 <ul>CV : <a href="pdf/config/{{ config.cv }}" target="_blank">{{ config.cv }}</a></ul>
                 <ul>Image du site :</ul>
                 <div class="d-flex justify-content-center">
-                <img class="" src="/img/config/{{ config.image }}" style="width: 45%;">
+                    <img class="" src="/img/config/{{ config.image }}" style="width: 45%;">
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <a href="/Admin/updateConfig" class="btn btn-primary">
+                        Modifier information
+                    </a>
                 </div>
             </div>
         </div>
@@ -63,7 +69,6 @@
     </script>
 
     <script>
-        //TODO: COULEUR MOINS VIVE
         var ctxPost = document.getElementById('myChartPost').getContext('2d');
         var myChartPost = new Chart(ctxPost, {
             type: 'pie',
@@ -72,14 +77,14 @@
                 datasets: [{
                     data: [{{ post.publish }}, {{ post.moderate }}, {{ post.delete }}],
                     backgroundColor: [
-                        'rgba(60, 179, 113, 0.8)',
-                        'rgba(255, 165, 0, 0.8)',
-                        'rgba(240, 0, 0, 0.8)'
+                        'rgba(46,138,87,0.8)',
+                        'rgb(245,196,10)',
+                        'rgba(213,4,4,0.8)'
                     ],
                     borderColor: [
-                        'rgba(60, 179, 113, 1)',
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(240, 0, 0, 0.8)'
+                        'rgba(46,138,87,0.8)',
+                        'rgb(245,196,10)',
+                        'rgba(213,4,4,0.8)'
                     ],
                     borderWidth: 1
                 }]
@@ -111,14 +116,14 @@
                 datasets: [{
                     data: [{{ comment.publish }}, {{ comment.moderate }}, {{ comment.delete }}],
                     backgroundColor: [
-                        'rgba(60, 179, 113, 0.8)',
-                        'rgba(255, 165, 0, 0.8)',
-                        'rgba(240, 0, 0, 0.8)'
+                        'rgba(46,138,87,0.8)',
+                        'rgb(245,196,10)',
+                        'rgba(213,4,4,0.8)'
                     ],
                     borderColor: [
-                        'rgba(60, 179, 113, 1)',
-                        'rgba(255, 165, 0, 1)',
-                        'rgba(240, 0, 0, 0.8)'
+                        'rgba(46,138,87,0.8)',
+                        'rgb(245,196,10)',
+                        'rgba(213,4,4,0.8)'
                     ],
                     borderWidth: 1
                 }]

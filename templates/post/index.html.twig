@@ -1,27 +1,19 @@
 {% extends "/layout/base.html.twig" %}
 
 {% block main %}
-<div class="d-flex flex-column align-items-center mt-5">
-    <a href="/Post/add">
-        <button class="btn btn-primary">Ajouter un article</button>
-    </a>
-    <select class="form-control mt-5" style="width: 15%;" id="selectCategory">
-        <option value="0" selected>Tout</option>
-        {% for category in categories %}
-        <option value="{{ category.id }}">{{ category.name }}</option>
-        {% endfor %}
-    </select>
-</div>
+    <div class="d-flex flex-column align-items-center mt-5">
+        <a href="/Post/add">
+            <button class="btn btn-primary">Ajouter un article</button>
+        </a>
+        <select class="form-control mt-5" id="selectCategory">
+            <option value="0" selected>Tout</option>
+            {% for category in categories %}
+                <option value="{{ category.id }}">{{ category.name }}</option>
+            {% endfor %}
+        </select>
+    </div>
     <div class="d-flex flex-column align-items-center mt-5" id="listPost">
     </div>
-
-    <div id="modal" class="d-none">
-        <div class="modal-content">
-            <img id="imageModal" src="" width="500px">
-        </div>
-    </div>
-
-    <div id="overlay" class="d-none" onclick="closeImage()"></div>
 
 {% endblock %}
 
@@ -38,31 +30,31 @@
             $("#overlay").removeClass("d-none");
         }
 
-        function closeImage(){
+        function closeImage() {
             $("#modal").addClass('d-none');
             $("#overlay").addClass("d-none");
         }
 
         $("#close-modal-button").click(closeImage());
 
-        function listPostAjax(id = 0){
+        function listPostAjax(id = 0) {
             $('#listPost').html('<div class="spinner-border" role="status"><span class="sr-only"></span></div>');
             $.ajax({
                 url: "/Post/listPostAjax",
                 type: "POST",
                 data: {category: id},
-                success: function(response) {
+                success: function (response) {
                     $('#listPost').html(response);
                 }
             });
         }
 
-        $('document').ready(function (){
+        $('document').ready(function () {
             listPostAjax();
             $('#selectCategory').val('0');
         });
 
-        $("#selectCategory").change(function(){
+        $("#selectCategory").change(function () {
             var selectedOption = $(this).val();
             listPostAjax(selectedOption)
         });

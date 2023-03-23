@@ -88,11 +88,11 @@ class Post extends Controller
         }
 
         $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($id);
 
         if ($this->valideForm($request, 'deletePost', 'Post/deletePost/' . $id)) {
 
-            $postRepository = new PostRepository();
-            $post = $postRepository->find($id);
 
             $file = "/img/post/" . $post->getImage();
             if (file_exists($file)) {
@@ -118,6 +118,7 @@ class Post extends Controller
 
         $this->render('post/delete', [
             'form' => $form->create(),
+            'post' => $post
         ]);
 
     }
@@ -307,12 +308,10 @@ class Post extends Controller
         }
 
         $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($id);
 
         if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/' . $id)) {
-
-            $postRepository = new PostRepository();
-
-            $post = $postRepository->find($id);
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
@@ -332,6 +331,7 @@ class Post extends Controller
 
         $this->render('post/publish', [
             'form' => $form->create(),
+            'post' => $post
         ]);
 
     }

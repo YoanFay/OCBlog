@@ -31,4 +31,15 @@ class ContactForm
             ->addHidden('formName', 'contact')
             ->addHidden('csrfToken', $token);
     }
+
+    public function answer($errors, $token, $id)
+    {
+        return $this->form->startForm('post', '/contact/answerContact/' . $id)
+            ->addLabelFor('answer', "Réponse :")
+            ->addTextArea('answer', "", ['class' => 'form-control my-3', 'required' => true, 'id' => 'message', 'rows' => 5])
+            ->addError($errors['answer'] ?? [])
+            ->addInput('submit', 'validate', ['value' => 'Valider', 'class' => 'btn btn-primary', 'id' => 'formSubmit'])
+            ->addHidden('formName', 'answer')
+            ->addHidden('csrfToken', $token);
+    }
 }

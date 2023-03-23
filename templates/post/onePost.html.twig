@@ -18,7 +18,7 @@
                     <p class="d-flex align-items-center">{{ post.content }}</p>
                     <div>
                         {% if post.image is not null %}
-                            <img src="/img/post/{{ post.image }}" width="200px">
+                            <img class="imgPost" src="/img/post/{{ post.image }}">
                         {% endif %}
                     </div>
                 </div>
@@ -72,14 +72,19 @@
                     </div>
                     <hr>
                     {% if user.user_id == comment.userId or user.level > 60 %}
-                        <a href="/Post/deletePost/{{ comment.id }}" class="text-decoration-none">
+                        <a href="/Comment/deleteComment/{{ comment.id }}" class="text-decoration-none">
                             <span class="material-symbols-outlined text-danger">delete</span>
                         </a>
-                        {% if comment.publishedAt is null %}
-                            <a href="/Post/publishedPost/{{ comment.id }}">
+                        {% if comment.validatedAt is null %}
+                            <a href="/Comment/publishedComment/{{ comment.id }}">
                                 <span class="material-symbols-outlined text-success">done</span>
                             </a>
                         {% endif %}
+                    {% endif %}
+                    {% if user.user_id == comment.userId %}
+                        <a href="/Comment/updateComment/{{ comment.id }}">
+                            <span class="material-symbols-outlined text-success">edit</span>
+                        </a>
                     {% endif %}
                 </div>
             </div>
