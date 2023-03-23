@@ -65,40 +65,23 @@ class Admin extends Controller
         $configRepository = new ConfigRepository();
         $config = $configRepository->findOne();
         $request = new Request();
-        $testConfig = [];
-        $testImage = [];
-        $testCv = [];
 
         if ($this->valideForm($request, 'updateConfig', 'Admin/updateConfig/' . $config->getId())) {
 
-            $config->setTitle($request->get('post', 'title'));
-            $config->setCatchPhrase($request->get('post', 'catchPhrase'));
+            $config
+                ->setTitle($request->get('post', 'title'))
+                ->setCatchPhrase($request->get('post', 'catchPhrase'));
 
             $configValidator = new ConfigValidator($config);
-
             $testConfig = $configValidator->validate();
 
-            if ($request->get('file', 'image')['size'] > 0) {
+            $image = new File($request->get('file', 'image'));
+            $fileValidator = new FileValidator($image);
+            $testImage = ($request->get('file', 'image')['size'] > 0) ? $fileValidator->validateImage() : 'noChange';
 
-                $image = new File($request->get('file', 'image'));
-
-                $fileValidator = new FileValidator($image);
-
-                $testImage = $fileValidator->validateImage();
-            } else {
-                $testImage = 'noChange';
-            }
-
-            if ($request->get('file', 'cv')['size'] > 0) {
-
-                $cv = new File($request->get('file', 'cv'));
-
-                $fileValidator = new FileValidator($cv);
-
-                $testCv = $fileValidator->validatePdf();
-            } else {
-                $testCv = 'noChange';
-            }
+            $cv = new File($request->get('file', 'cv'));
+            $fileValidator = new FileValidator($cv);
+            $testCv = ($request->get('file', 'cv')['size'] > 0) ? $fileValidator->validatePdf() : 'noChange';
 
             if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
 
@@ -132,7 +115,7 @@ class Admin extends Controller
         $token = uniqid(rand(), true);
         Session::setToken($token);
 
-        $form = $configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);
+        $form = $configForm->updateConfig($testConfig ?? [], $testImage ?? [], $testCv ?? [], $config, $token);
 
         $this->render('admin/update', [
             'form' => $form->create(),

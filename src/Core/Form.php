@@ -92,7 +92,7 @@ class Form
 
     public function addError(array $errors = []): self
     {
-        foreach ($errors as $key => $error) {
+        foreach ($errors as $error) {
             $this->formCode .= "<p class='d-flex align-items-center text-danger'><span class='material-symbols-outlined me-2'>warning</span>$error</p>";
         }
 
