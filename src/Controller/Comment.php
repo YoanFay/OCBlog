@@ -19,7 +19,7 @@ class Comment extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $postRepository = new PostRepository();
@@ -42,7 +42,7 @@ class Comment extends Controller
     {
         $user = Session::getAuth();
         if (!$user) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -55,7 +55,7 @@ class Comment extends Controller
 
             Session::setFlash('success', 'Le commentaire à bien était supprimé');
 
-            header('Location: /Post/OnePost/' . $comment->getPostId());
+            $this->redirectTo('/Post/OnePost/' . $comment->getPostId());
 
         }
 
@@ -81,7 +81,7 @@ class Comment extends Controller
     public function publishedComment($id)
     {
         if (!Session::getAuth()) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -95,7 +95,7 @@ class Comment extends Controller
 
             Session::setFlash('success', "L'article a bien été publié");
 
-            header('Location: /');
+            $this->redirectTo('/');
 
         }
 
@@ -125,7 +125,7 @@ class Comment extends Controller
         $commentRepository = new CommentRepository();
         $comment = $commentRepository->find($id);
         if (!$user || $user['user_id'] !== $comment->getUserId()) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -152,7 +152,7 @@ class Comment extends Controller
                 $commentRepository->update($comment);
 
                 Session::setFlash('success', 'Le commentaire à bien était modifié');
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 

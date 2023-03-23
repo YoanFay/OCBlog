@@ -38,7 +38,7 @@ class Contact extends Controller
 
                 $contactRepository->insert($contact);
                 Session::setFlash('success', "Demande de contact envoyé");
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 
@@ -62,7 +62,7 @@ class Contact extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $this->render('contact/listContact');
@@ -77,7 +77,7 @@ class Contact extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -104,10 +104,10 @@ class Contact extends Controller
                 if ($mailService->send()) {
                     $contactRepository->update($contact);
                     Session::setFlash('success', "Demande de contact envoyé");
-                    header('Location: /');
+                    $this->redirectTo('/');
                 } else {
                     Session::setFlash('danger', "Demande de contact non envoyé");
-                    header('Location: /Contact/answerContact/' . $id);
+                    $this->redirectTo('/Contact/answerContact/' . $id);
                 }
 
             }
@@ -134,7 +134,7 @@ class Contact extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $contactRepository = new ContactRepository();
@@ -146,7 +146,7 @@ class Contact extends Controller
 
         $contactRepository->update($contact);
         Session::setFlash('success', "Demande de contact archivé");
-        header('Location: /Contact/listContact');
+        $this->redirectTo('/Contact/listContact');
     }
 
     /**

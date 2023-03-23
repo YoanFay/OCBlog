@@ -74,7 +74,7 @@ class Authentication extends Controller
                 $userRepository = new UserRepository();
                 $userRepository->add($user);
 
-                header('Location: /Authentication/signIn');
+                $this->redirectTo('/Authentication/signIn');
             }
         }
 
@@ -112,7 +112,7 @@ class Authentication extends Controller
 
             if (password_verify($password, $user->getPassword())) {
                 Session::setAuth($user, $role);
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 
@@ -130,6 +130,6 @@ class Authentication extends Controller
     public function logout()
     {
         Session::logout();
-        header('Location: /');
+        $this->redirectTo('/');
     }
 }

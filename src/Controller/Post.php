@@ -99,7 +99,7 @@ class Post extends Controller
 
         $user = Session::getAuth();
         if (!$user) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -119,7 +119,7 @@ class Post extends Controller
 
             Session::setFlash('success', "L'article à bien était supprimé");
 
-            header('Location: /');
+            $this->redirectTo('/');
 
         }
 
@@ -149,7 +149,7 @@ class Post extends Controller
         $postRepository = new PostRepository();
         $post = $postRepository->find($id);
         if (!$user || $user['user_id'] !== $post->getUserId()) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -198,7 +198,7 @@ class Post extends Controller
                 $postRepository->update($post);
 
                 Session::setFlash('success', "L'article à bien était modifié");
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 
@@ -236,7 +236,7 @@ class Post extends Controller
     {
         $user = Session::getAuth();
         if (!$user) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
         $request = new Request();
         $testPost = [];
@@ -279,7 +279,7 @@ class Post extends Controller
 
                 Session::setFlash('success', "L'article a bien été envoyé");
 
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 
@@ -317,7 +317,7 @@ class Post extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $categoryRepository = new CategoryRepository();
@@ -339,7 +339,7 @@ class Post extends Controller
     {
 
         if (!Session::getAuth()) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
         $request = new Request();
@@ -352,7 +352,7 @@ class Post extends Controller
 
             Session::setFlash('success', "L'article a bien été publié");
 
-            header('Location: /');
+            $this->redirectTo('/');
 
         }
 

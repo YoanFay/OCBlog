@@ -43,7 +43,19 @@ abstract class Controller
     }
 
     /**
+     * Fonction pour rediriger vers une url
+     *
+     * @return null
+     */
+    public function redirectTo($url)
+    {
+        header('Location: ' . $url);
+    }
+
+    /**
      * Affiche la page sélectionner
+     *
+     * @return null
      */
     public function render($fichier, array $donnees = [])
     {

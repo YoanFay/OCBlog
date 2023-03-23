@@ -27,31 +27,21 @@ class Admin extends Controller
         $config = $configRepository->findOne();
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
 
-        $allPosts = $postRepository->findAll();
-        $publishPosts = $postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]);
-        $deletePosts = $postRepository->findBy(['deleted_at' => "is not null"]);
-        $moderatePosts = $postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]);
-
         $post = [
-            'all' => $allPosts ? count($allPosts) : 0,
-            'publish' => $publishPosts ? count($publishPosts) : 0,
-            'delete' => $deletePosts ? count($deletePosts) : 0,
-            'moderate' => $moderatePosts ? count($moderatePosts) : 0
+            'all' => count($postRepository->findAll() ?? []),
+            'publish' => count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? []),
+            'delete' => count($postRepository->findBy(['deleted_at' => "is not null"]) ?? []),
+            'moderate' => count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? [])
         ];
 
-        $allComment = $commentRepository->findAll();
-        $publishComment = $commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]);
-        $deleteComment = $commentRepository->findBy(['deleted_at' => "is not null"]);
-        $moderateComment = $commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]);
-
         $comment = [
-            'all' => $allComment ? count($allComment) : 0,
-            'publish' => $publishComment ? count($publishComment) : 0,
-            'delete' => $deleteComment ? count($deleteComment) : 0,
-            'moderate' => $moderateComment ? count($moderateComment) : 0
+            'all' => count($commentRepository->findAll() ?? []),
+            'publish' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? []),
+            'delete' => count($commentRepository->findBy(['deleted_at' => "is not null"]) ?? []),
+            'moderate' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? [])
         ];
 
         $this->render('admin/index', [
@@ -70,7 +60,7 @@ class Admin extends Controller
     {
 
         if (Session::getAuth('level') < 60) {
-            header('Location: /');
+            $this->redirectTo('/');
         }
         $configRepository = new ConfigRepository();
         $config = $configRepository->findOne();
@@ -133,7 +123,7 @@ class Admin extends Controller
                 $configRepository->update($config);
 
                 Session::setFlash('success', "Les informations ont bien été modifiées");
-                header('Location: /');
+                $this->redirectTo('/');
             }
         }
 

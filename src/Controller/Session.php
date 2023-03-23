@@ -10,8 +10,7 @@ class Session extends Controller
      */
     static public function getAuth(string $key = null)
     {
-        var_dump($_SESSION['auth']);
-        var_dump(filter_input(INPUT_SESSION, 'auth'));
+
         if (!isset($_SESSION['auth'])) {
             return null;
         }
