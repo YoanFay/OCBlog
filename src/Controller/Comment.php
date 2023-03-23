@@ -10,6 +10,11 @@ use App\Src\Validator\CommentValidator;
 class Comment extends Controller
 {
 
+    /**
+     * Affichage des commentaires à modérer
+     *
+     * @return void
+     */
     public function moderateComment($postId)
     {
 
@@ -28,6 +33,11 @@ class Comment extends Controller
         ]);
     }
 
+    /**
+     * Page de confirmation pour supprimer un commentaire
+     *
+     * @return void
+     */
     public function deleteComment($id)
     {
         $user = Session::getAuth();
@@ -63,6 +73,11 @@ class Comment extends Controller
         ]);
     }
 
+    /**
+     * Page de confirmation pour publier un commentaire
+     *
+     * @return void
+     */
     public function publishedComment($id)
     {
         if (!Session::getAuth()) {
@@ -99,6 +114,11 @@ class Comment extends Controller
 
     }
 
+    /**
+     * Formulaire pour modifier un commentaire
+     *
+     * @return void
+     */
     public function updateComment($id)
     {
         $user = Session::getAuth();

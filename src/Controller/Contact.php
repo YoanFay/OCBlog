@@ -10,6 +10,11 @@ use App\Src\Validator\ContactValidator;
 class Contact extends Controller
 {
 
+    /**
+     * Formulaire pour faire une demande de contact
+     *
+     * @return void
+     */
     public function index()
     {
         $contactForm = new ContactForm();
@@ -48,6 +53,11 @@ class Contact extends Controller
         ]);
     }
 
+    /**
+     * Page pour voir toutes les demandes de contact
+     *
+     * @return void
+     */
     public function listContact()
     {
 
@@ -58,6 +68,11 @@ class Contact extends Controller
         $this->render('contact/listContact');
     }
 
+    /**
+     * Formulaire pour répondre aux demandes de contact
+     *
+     * @return void
+     */
     public function answerContact(int $id)
     {
 
@@ -110,6 +125,11 @@ class Contact extends Controller
         ]);
     }
 
+    /**
+     * Formulaire pour archiver les demandes de contact
+     *
+     * @return void
+     */
     public function archiveContact(int $id)
     {
 
@@ -129,6 +149,11 @@ class Contact extends Controller
         header('Location: /Contact/listContact');
     }
 
+    /**
+     * Fonction qui définit ce qui sera afficher dans la liste des demandes de contact
+     *
+     * @return void
+     */
     public function choiceBox($choice)
     {
 

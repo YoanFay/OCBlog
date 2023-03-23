@@ -16,6 +16,11 @@ use App\Src\Validator\UserValidator;
 class Authentication extends Controller
 {
 
+    /**
+     * Formulaire d'inscription
+     *
+     * @return void
+     */
     public function signUp()
     {
         $roleRepository = new RoleRepository();
@@ -84,6 +89,11 @@ class Authentication extends Controller
         ]);
     }
 
+    /**
+     * Formulaire de connexion
+     *
+     * @return void
+     */
     public function signIn()
     {
 

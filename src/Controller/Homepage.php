@@ -17,6 +17,8 @@ use App\Src\Validator\ContactValidator;
 class Homepage extends Controller
 {
     /**
+     * Page d'accueil
+     *
      * @return void
      */
     public function index()

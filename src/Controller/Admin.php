@@ -14,6 +14,11 @@ use App\Src\Validator\FileValidator;
 class Admin extends Controller
 {
 
+    /**
+     * Affiche les informations de la page d'accueil ainsi que quelque statistique
+     *
+     * @return void
+     */
     public function index()
     {
         $configRepository = new ConfigRepository();
@@ -56,6 +61,11 @@ class Admin extends Controller
         ]);
     }
 
+    /**
+     * Formulaire permettant de modifier les informations de la page d'accueil
+     *
+     * @return void
+     */
     public function updateConfig()
     {
 

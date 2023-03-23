@@ -28,6 +28,11 @@ abstract class Controller
         $this->dotenv->load();
     }
 
+    /**
+     * Vérifie que le formulaire est valide
+     *
+     * @return void
+     */
     public function valideForm(Request $request, string $formName, string $referer)
     {
         if ($request->issetPost() && $request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/' . $referer) {
@@ -37,6 +42,9 @@ abstract class Controller
         return false;
     }
 
+    /**
+     * Affiche la page sélectionner
+     */
     public function render($fichier, array $donnees = [])
     {
 

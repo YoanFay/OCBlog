@@ -18,6 +18,11 @@ use App\Src\Entity\Post as PostEntity;
 class Post extends Controller
 {
 
+    /**
+     * Page pour voir les articles
+     *
+     * @return void
+     */
     public function index()
     {
         $categoryRepository = new CategoryRepository();
@@ -29,6 +34,11 @@ class Post extends Controller
         ]);
     }
 
+    /**
+     * Page pour voir un article
+     *
+     * @return void
+     */
     public function onePost($id)
     {
         $testComment = [];
@@ -79,6 +89,11 @@ class Post extends Controller
         ]);
     }
 
+    /**
+     * Page de confirmation pour supprimer un article
+     *
+     * @return void
+     */
     public function deletePost($id)
     {
 
@@ -123,6 +138,11 @@ class Post extends Controller
 
     }
 
+    /**
+     * Formulaire pour modifier un article
+     *
+     * @return void
+     */
     public function updatePost($id)
     {
         $user = Session::getAuth();
@@ -207,6 +227,11 @@ class Post extends Controller
         ]);
     }
 
+    /**
+     * Formulaire pour ajouter un article
+     *
+     * @return void
+     */
     public function add()
     {
         $user = Session::getAuth();
@@ -283,6 +308,11 @@ class Post extends Controller
 
     }
 
+    /**
+     * Page pour voir les articles non publiés
+     *
+     * @return void
+     */
     public function listPostNotValidate()
     {
 
@@ -300,6 +330,11 @@ class Post extends Controller
 
     }
 
+    /**
+     * Page de confirmation pour publier un article
+     *
+     * @return void
+     */
     public function publishedPost($id)
     {
 
@@ -336,6 +371,11 @@ class Post extends Controller
 
     }
 
+    /**
+     * Fonction pour sélectionner les articles publiés selon leur catégorie
+     *
+     * @return void
+     */
     public function listPostAjax()
     {
         $request = new Request();
@@ -355,6 +395,11 @@ class Post extends Controller
         ]);
     }
 
+    /**
+     * Fonction pour sélectionner les articles non publiés selon leur catégorie
+     *
+     * @return void
+     */
     public function listModeratePostAjax()
     {
         $request = new Request();
@@ -374,6 +419,11 @@ class Post extends Controller
         ]);
     }
 
+    /**
+     * Fonction pour sélectionner les commentaires non publiés par articles selon leur catégorie
+     *
+     * @return void
+     */
     public function listModerateCommentPostAjax()
     {
         $request = new Request();

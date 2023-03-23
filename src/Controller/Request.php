@@ -19,6 +19,11 @@ class Request
         $this->file = $_FILES;
     }
 
+    /**
+     * Fonction qui vérifie qu'il y a des données en post
+     *
+     * @return boolean
+     */
     public function issetPost()
     {
         if ($this->post !== []) {
@@ -28,6 +33,11 @@ class Request
         return false;
     }
 
+    /**
+     * Fonction qui vérifie qu'il y a des données en get
+     *
+     * @return boolean
+     */
     public function issetGet()
     {
         if ($this->get !== []) {
@@ -37,6 +47,9 @@ class Request
         return false;
     }
 
+    /**
+     * Fonction qui retourne les données stockée dans la request
+     */
     public function get(string $method, string $key)
     {
         return $this->$method[$key] ?? NULL;
