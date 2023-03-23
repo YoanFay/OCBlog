@@ -5,8 +5,11 @@ namespace App;
 class Autoloader
 {
 
+
     /**
      * Fonction Register de l'Autoloader
+     *
+     * @return null
      */
     public static function register()
     {
@@ -16,11 +19,16 @@ class Autoloader
                 'autoload',
             ]
         );
+
+        //end
     }
 
 
     /**
      * Autoload
+     *
+     * @param $class
+     * @return null
      */
     public static function autoload($class)
     {
@@ -42,8 +50,10 @@ class Autoloader
         $class = str_replace(__NAMESPACE__ . '\\', '', $class);
         $file = __DIR__ . '\\' . $class . '.php';
 
-        if (is_file($file)) {
-            include_once $file;
+        if (filetype($file) !== false) {
+            include $file;
         }
+
+
     }
 }

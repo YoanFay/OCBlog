@@ -31,11 +31,11 @@ abstract class Controller
     /**
      * Vérifie que le formulaire est valide
      *
-     * @return void
+     * @return bool
      */
     public function valideForm(Request $request, string $formName, string $referer)
     {
-        if ($request->issetPost() && $request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/' . $referer) {
+        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/' . $referer) {
             return true;
         }
 

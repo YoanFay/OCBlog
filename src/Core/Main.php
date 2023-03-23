@@ -15,7 +15,7 @@ class Main
         $params = [];
         $request = new Request();
 
-        if ($request->issetGet()) {
+        if ($request->get('get', 'p') !== NULL) {
             $params = explode('/', $request->get('get', 'p'));
         }
 
