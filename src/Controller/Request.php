@@ -8,7 +8,7 @@ class Request
 
     public function __construct()
     {
-        $this->file = $_FILES;
+        $this->file = &$_FILES;
     }
 
     /**
