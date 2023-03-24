@@ -58,7 +58,7 @@ main {
   z-index: 2;
 }
 
-.signInput {
+.sign-input {
   margin-bottom: 10px;
 }
 
@@ -99,7 +99,7 @@ main {
   overflow-y: scroll;
 }
 
-#divAnswer {
+#div-answer {
   max-height: 200px;
   overflow-y: scroll;
 }
@@ -114,7 +114,7 @@ main {
 }
 
 @media screen and (max-width: 767px) {
-  .imgPost {
+  .img-post {
     width: 100px;
   }
 

@@ -36,7 +36,7 @@
                 </div>
                 <p class="d-flex flex-row-reverse" id="processInfo"></p>
 
-                <div class="border border-secondary rounded p-3 d-none" id="divAnswer">
+                <div class="border border-secondary rounded p-3 d-none" id="div-answer">
                     <h4>Réponse</h4>
                     <p class="card-text" id="answerText"></p>
                 </div>
@@ -74,7 +74,7 @@
             }
 
             if (answer) {
-                $('#divAnswer').removeClass('d-none');
+                $('#div-answer').removeClass('d-none');
                 $('#answerText').html(answer);
                 $('#mail').addClass('answer');
             }
@@ -121,7 +121,7 @@
                     $('#mailDate').html('');
                     $('#processInfo').html('');
                     $('#answerText').html('');
-                    $('#divAnswer').addClass('d-none');
+                    $('#div-answer').addClass('d-none');
                     $('#mail').addClass('d-none');
                     $('#answer-btn').addClass('d-none').attr('href', '');
                     $('#archive-btn').addClass('d-none').attr('href', '');

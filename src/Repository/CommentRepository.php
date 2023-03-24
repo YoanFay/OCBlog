@@ -4,18 +4,37 @@ namespace App\Src\Repository;
 
 use App\Src\Core\Bdd;
 use App\Src\Entity\Comment;
+use Exception;
 
 class CommentRepository
 {
 
+    /**
+     * @var Bdd
+     */
     private $bdd;
+
+    /**
+     * @var string
+     */
     private $class = Comment::class;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->bdd = new BDD();
+
+        //end
     }
 
+
+    /**
+     * @param Comment $comment
+     * @return void
+     */
     public function insert(Comment $comment)
     {
 
@@ -34,6 +53,9 @@ class CommentRepository
         $this->bdd->query($req, $commentInfo);
     }
 
+    /**
+     * @return array|null
+     */
     public function findAll()
     {
 
@@ -47,67 +69,54 @@ class CommentRepository
 
     }
 
+    /**
+     * @param array $parameters
+     * @param array $sorts
+     * @return array|null
+     */
     public function findBy(array $parameters = [], array $sorts = [])
     {
-
         $req = 'SELECT c.*, u.avatar, u.firstname, u.lastname FROM comment c INNER JOIN user u on c.user_id = u.id';
 
-        $row = 0;
-        $length = count($parameters);
-
-        if ($parameters !== []) {
+        if (!empty($parameters)) {
             $req .= ' WHERE ';
-
+            $clauses = [];
             foreach ($parameters as $key => $parameter) {
-
                 switch ($parameter) {
                     case "is not null":
-                        $req .= "$key IS NOT NULL";
+                        $clauses[] = "$key IS NOT NULL";
                         break;
                     case "is null":
-                        $req .= "$key IS NULL";
+                        $clauses[] = "$key IS NULL";
                         break;
                     default:
-                        $req .= "$key = '$parameter'";
-                }
-
-                $row++;
-
-                if ($row !== $length) {
-                    $req .= " AND ";
+                        $clauses[] = "$key = '$parameter'";
                 }
             }
+            $req .= implode(" AND ", $clauses);
         }
 
-        $row = 0;
-        $length = count($sorts);
-
-        if ($sorts !== []) {
+        if (!empty($sorts)) {
             $req .= ' ORDER BY ';
-
+            $clauses = [];
             foreach ($sorts as $key => $sort) {
-                $req .= "$key $sort";
-
-                $row++;
-
-                if ($row !== $length) {
-                    $req .= ", ";
-                }
+                $clauses[] = "$key $sort";
             }
+            $req .= implode(", ", $clauses);
         }
 
-        if ($comments = $this->bdd->select($req, $this->class)) {
-            return $comments;
-        } else {
-            return NULL;
-        }
+        return $this->bdd->select($req, $this->class);
 
     }
 
-    public function find(int $id)
+    /**
+     * @param int $idComment
+     * @return mixed|null
+     */
+    public function find(int $idComment)
     {
 
-        $req = "SELECT * FROM comment WHERE id = " . $id;
+        $req = "SELECT * FROM comment WHERE id = " . $idComment;
 
         if ($comment = $this->bdd->select($req, $this->class)) {
             return $comment[0];
@@ -116,9 +125,13 @@ class CommentRepository
         }
     }
 
-    public function softDelete(int $id)
+    /**
+     * @param int $idComment
+     * @return Exception|void
+     */
+    public function softDelete(int $idComment)
     {
-        $req = 'UPDATE comment SET deleted_at = "' . date_format(new \DateTime(), 'Y-m-d H:i:s') . '" WHERE id = ' . $id;
+        $req = 'UPDATE comment SET deleted_at = "' . date_format(new \DateTime(), 'Y-m-d H:i:s') . '" WHERE id = ' . $idComment;
 
         try {
             $this->bdd->query($req);
@@ -127,6 +140,10 @@ class CommentRepository
         }
     }
 
+    /**
+     * @param Comment $comment
+     * @return Exception|void
+     */
     public function update(Comment $comment)
     {
 
