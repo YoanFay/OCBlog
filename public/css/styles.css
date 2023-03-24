@@ -1,156 +1,127 @@
 /* GLOBAL */
 
 .main-centered {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 /* LAYOUT */
 
 body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 main {
-    flex: 1;
+  flex: 1;
 }
 
 .background-body {
-    background-color: antiquewhite;
+  background-color: #FAEBD7FF;
 }
 
 /* NAV MENU */
 
 .nav-link {
-    color: #ffffff;
+  color: #fff;
 }
 
 .nav-link:hover {
-    color: #4cd137;
+  color: #4cd137;
 }
 
 /* CURSOR */
 
 .cursor-click {
-    cursor: pointer;
-}
-
-/* MODAL IMAGE */
-
-#modal {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 12;
-}
-
-#overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 10;
-}
-
-.linkImage {
-    text-decoration: underline;
-    color: blue;
+  cursor: pointer;
 }
 
 /* AUTHENTICATION */
 
 .form-sign {
-    max-width: 330px;
-    padding: 15px;
-    margin: 0 auto;
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
 }
 
 .form-sign .form-control {
-    position: relative;
-    box-sizing: border-box;
-    height: auto;
-    padding: 10px;
-    font-size: 16px;
+  position: relative;
+  box-sizing: border-box;
+  height: auto;
+  padding: 10px;
+  font-size: 16px;
 }
 
 .form-sign .form-control:focus {
-    z-index: 2;
+  z-index: 2;
 }
 
-.form-sign input[type="text"] {
-    margin-bottom: 10px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+.form-sign input[type='text'] {
+  margin-bottom: 10px;
 }
 
-.form-sign input[type="password"] {
-    margin-bottom: 10px;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
+.form-sign input[type='password'] {
+  margin-bottom: 10px;
 }
 
 /* IMG */
 
 .imgPost {
-    width: 200px;
+  width: 200px;
 }
 
 /* POST */
 
 #selectCategory {
-    width: 15%;
+  width: 15%;
 }
 
 /* CONTACT */
 
 #maxHeight {
-    height: calc(100vh - 320px);
-    max-height: calc(100vh - 320px);
-    display: grid;
-    padding: 20px;
-    gap: 20px;
-    grid-template-columns: 1fr 3fr;
+  height: calc(100vh - 320px);
+  max-height: calc(100vh - 320px);
+  display: grid;
+  padding: 20px;
+  gap: 20px;
+  grid-template-columns: 1fr 3fr;
 }
 
 #contactList {
-    overflow-y: scroll;
+  overflow-y: scroll;
 }
 
 #contactInfo {
-    max-height: 350px;
-    overflow-y: scroll;
+  max-height: 350px;
+  overflow-y: scroll;
 }
 
 .answer #contactInfo {
-    max-height: 200px;
-    overflow-y: scroll;
+  max-height: 200px;
+  overflow-y: scroll;
 }
 
 #divAnswer {
-    max-height: 200px;
-    overflow-y: scroll;
+  max-height: 200px;
+  overflow-y: scroll;
 }
 
 #answerBtn, #archiveBtn {
-    text-decoration: none;
+  text-decoration: none;
 }
 
 .maxNone {
-    display: none !important;
+  display: none;
 }
 
 @media screen and (max-width: 767px) {
-    .imgPost {
-        width: 100px;
-    }
+  .imgPost {
+    width: 100px;
+  }
 
-    #selectCategory {
-        width: 50%;
-    }
+  #selectCategory {
+    width: 50%;
+  }
 }

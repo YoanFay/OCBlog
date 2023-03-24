@@ -5,7 +5,8 @@ namespace App\Src\Repository;
 use App\Src\Core\Bdd;
 use App\Src\Entity\Comment;
 
-class CommentRepository{
+class CommentRepository
+{
 
     private $bdd;
     private $class = Comment::class;
@@ -59,7 +60,7 @@ class CommentRepository{
 
             foreach ($parameters as $key => $parameter) {
 
-                switch ($parameter){
+                switch ($parameter) {
                     case "is not null":
                         $req .= "$key IS NOT NULL";
                         break;
@@ -103,23 +104,25 @@ class CommentRepository{
 
     }
 
-    public function find(int $id){
+    public function find(int $id)
+    {
 
-        $req = "SELECT * FROM comment WHERE id = ".$id;
+        $req = "SELECT * FROM comment WHERE id = " . $id;
 
-        if($comment = $this->bdd->select($req, $this->class)) {
+        if ($comment = $this->bdd->select($req, $this->class)) {
             return $comment[0];
-        }else{
+        } else {
             return NULL;
         }
     }
 
-    public function softDelete(int $id){
-        $req = 'UPDATE comment SET deleted_at = "'.date_format(new \DateTime(), 'Y-m-d H:i:s').'" WHERE id = '.$id;
+    public function softDelete(int $id)
+    {
+        $req = 'UPDATE comment SET deleted_at = "' . date_format(new \DateTime(), 'Y-m-d H:i:s') . '" WHERE id = ' . $id;
 
         try {
             $this->bdd->query($req);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return $e;
         }
     }
@@ -138,7 +141,7 @@ class CommentRepository{
 
         try {
             $this->bdd->query($req, $commentInfo);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return $e;
         }
     }

@@ -41,7 +41,7 @@
                     <p class="card-text" id="answerText"></p>
                 </div>
             </div>
-            <div class="d-flex flex-column flex-lg-row" id="divBtn">
+            <div class="flex-column flex-lg-row" id="divBtn">
                 <div>
                     <a class="d-none mx-lg-2 m-2 btn btn-primary" id="answerBtn" href="">Répondre
                     </a>
@@ -91,7 +91,7 @@
 
                     switch (choice) {
                         case 1:
-                            $('#divBtn').removeClass('maxNone');
+                            $('#divBtn').removeClass('maxNone').addClass('d-flex');
                             $('#archiveBtn').removeClass('maxNone');
 
                             $('#notProcessTabs').addClass('active')
@@ -100,14 +100,14 @@
 
                             break;
                         case 2:
-                            $('#divBtn').addClass('maxNone');
+                            $('#divBtn').addClass('maxNone').removeClass('d-flex');
 
                             $('#notProcessTabs').removeClass('active')
                             $('#answerTabs').addClass('active')
                             $('#archiveTabs').removeClass('active')
                             break;
                         case 3:
-                            $('#divBtn').removeClass('maxNone');
+                            $('#divBtn').removeClass('maxNone').addClass('d-flex');
                             $('#archiveBtn').addClass('maxNone');
 
                             $('#notProcessTabs').removeClass('active')
