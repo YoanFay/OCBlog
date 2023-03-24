@@ -1,1 +1,1 @@
-<?phpuse App\Autoloader;use App\Src\Core\Main;include('../Autoloader.php');Autoloader::register();$app = new Main();$app->start();
+<?phpuse App\Autoloader;use App\Src\Core\Main;require_once '../Autoloader.php';Autoloader::register();$app = new Main();$app->start();

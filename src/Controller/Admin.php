@@ -14,6 +14,7 @@ use App\Src\Validator\FileValidator;
 class Admin extends Controller
 {
 
+
     /**
      * Affiche les informations de la page d'accueil ainsi que quelque statistique
      *
@@ -31,25 +32,28 @@ class Admin extends Controller
         }
 
         $post = [
-            'all' => count($postRepository->findAll() ?? []),
-            'publish' => count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? []),
-            'delete' => count($postRepository->findBy(['deleted_at' => "is not null"]) ?? []),
-            'moderate' => count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? [])
+            'all' => (count($postRepository->findAll() ?? [])),
+            'publish' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? [])),
+            'delete' => (count($postRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
+            'moderate' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? [])),
         ];
 
         $comment = [
-            'all' => count($commentRepository->findAll() ?? []),
-            'publish' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? []),
-            'delete' => count($commentRepository->findBy(['deleted_at' => "is not null"]) ?? []),
-            'moderate' => count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? [])
+            'all' => (count($commentRepository->findAll() ?? [])),
+            'publish' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? [])),
+            'delete' => (count($commentRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
+            'moderate' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? [])),
         ];
 
-        $this->render('admin/index', [
-            "config" => $config,
-            "post" => $post,
-            "comment" => $comment
-        ]);
+        $this->render('admin/index',
+            [
+                "config" => $config,
+                "post" => $post,
+                "comment" => $comment
+            ]
+        );
     }
+
 
     /**
      * Formulaire permettant de modifier les informations de la page d'accueil
@@ -75,36 +79,24 @@ class Admin extends Controller
             $configValidator = new ConfigValidator($config);
             $testConfig = $configValidator->validate();
 
-            $image = new File($request->get('file', 'image'));
-            $fileValidator = new FileValidator($image);
-            $testImage = ($request->get('file', 'image')['size'] > 0) ? $fileValidator->validateImage() : 'noChange';
-
-            $cv = new File($request->get('file', 'cv'));
-            $fileValidator = new FileValidator($cv);
-            $testCv = ($request->get('file', 'cv')['size'] > 0) ? $fileValidator->validatePdf() : 'noChange';
+            $testImage = $testCv = 'noChange';
+            if ($request->get('file', 'image')['size'] > 0) {
+                $fileValidator = new FileValidator(new File($request->get('file', 'image')));
+                $testImage = $fileValidator->validateImage();
+            }
+            if ($request->get('file', 'cv')['size'] > 0) {
+                $fileValidator = new FileValidator(new File($request->get('file', 'cv')));
+                $testCv = $fileValidator->validatePdf();
+            }
 
             if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
-
-                if ($testImage !== 'noChange' && $image->getName()) {
-
-                    if ($filename = UploadService::uploadConfigImage($image)) {
-                        $config->setImage($filename);
-                    } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                    }
+                if ($testImage !== 'noChange' && $filename = UploadService::uploadConfigImage(new File($request->get('file', 'image')))) {
+                    $config->setImage($filename);
                 }
-
-                if ($testCv !== 'noChange' && $cv->getName()) {
-
-                    if ($filename = UploadService::uploadConfigCv($cv)) {
-                        $config->setCv($filename);
-                    } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert du pdf");
-                    }
+                if ($testCv !== 'noChange' && $filename = UploadService::uploadConfigCv(new File($request->get('file', 'cv')))) {
+                    $config->setCv($filename);
                 }
-
-                $configRepository->update($config);
-
+                (new ConfigRepository())->update($config);
                 Session::setFlash('success', "Les informations ont bien été modifiées");
                 $this->redirectTo('/');
             }

@@ -18,6 +18,7 @@ use App\Src\Entity\Post as PostEntity;
 class Post extends Controller
 {
 
+
     /**
      * Page pour voir les articles
      *
@@ -28,10 +29,14 @@ class Post extends Controller
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
-        $this->render('post/index', [
-            "categories" => $categories,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/index',
+            [
+                "categories" => $categories,
+                "user" => Session::getAuth(),
+            ]
+        );
+
     }
 
     /**
@@ -39,15 +44,14 @@ class Post extends Controller
      *
      * @return void
      */
-    public function onePost($id)
+    public function onePost($idPost)
     {
         $testComment = [];
 
         $request = new Request();
 
-        if ($this->valideForm($request, 'addComment', 'Post/onePost/' . $id)) {
-
-            $comment = new CommentEntity("default", $id);
+        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$idPost)) {
+            $comment = new CommentEntity("default", $idPost);
 
             $comment->setContent($request->get('post', 'content'));
 
@@ -65,11 +69,12 @@ class Post extends Controller
 
                 Session::setFlash('success', "Le commentaire a bien été envoyé");
             }
+            //endif
         }
 
         $postRepository = new PostRepository();
         $commentRepository = new CommentRepository();
-        $post = $postRepository->find($id);
+        $post = $postRepository->find($idPost);
 
         $comments = $commentRepository->findBy(['post_id' => $post->getId(), 'validated_at' => "is not null", 'deleted_at' => 'is null'], ['created_at' => 'DESC']);
 
@@ -79,14 +84,17 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->addComment($id, $testComment, $token);
+        $form = $commentForm->addComment($idPost, $testComment, $token);
 
-        $this->render('post/onePost', [
-            "post" => $post,
-            "comments" => $comments,
-            "user" => Session::getAuth(),
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/onePost',
+            [
+                "post" => $post,
+                "comments" => $comments,
+                "user" => Session::getAuth(),
+                'form' => $form->create(),
+            ]
+        );
     }
 
     /**
@@ -94,28 +102,27 @@ class Post extends Controller
      *
      * @return void
      */
-    public function deletePost($id)
+    public function deletePost($idPost)
     {
 
         $user = Session::getAuth();
-        if (!$user) {
+        if ($user === FALSE) {
             $this->redirectTo('/');
         }
 
         $request = new Request();
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id);
+        $post = $postRepository->find($idPost);
 
-        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/' . $id)) {
+        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/'.$idPost)) {
 
-
-            $file = "/img/post/" . $post->getImage();
+            $file = "/img/post/".$post->getImage();
             if (file_exists($file)) {
                 unlink($file);
                 $post->setImage(Null);
             }
 
-            $postRepository->softDelete($id);
+            $postRepository->softDelete($idPost);
 
             Session::setFlash('success', "L'article à bien était supprimé");
 
@@ -129,13 +136,15 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->deletePost($id, $token);
+        $form = $postForm->deletePost($idPost, $token);
 
-        $this->render('post/delete', [
-            'form' => $form->create(),
-            'post' => $post
-        ]);
-
+        $this->render(
+            'post/delete',
+            [
+                'form' => $form->create(),
+                'post' => $post
+            ]
+        );
     }
 
     /**
@@ -143,12 +152,12 @@ class Post extends Controller
      *
      * @return void
      */
-    public function updatePost($id)
+    public function updatePost($idPost)
     {
         $user = Session::getAuth();
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id);
-        if (!$user || $user['user_id'] !== $post->getUserId()) {
+        $post = $postRepository->find($idPost);
+        if ($user === FALSE || $user['user_id'] !== $post->getUserId()) {
             $this->redirectTo('/');
         }
 
@@ -156,12 +165,12 @@ class Post extends Controller
 
         $testPost = [];
 
-        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/' . $id)) {
+        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost)) {
 
-            $post->setContent($request->get('post', 'content'));
-            $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
-            $post->setCategoryId($request->get('post', 'category'));
-            $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $post->setContent($request->get('post', 'content'))
+                ->setExcerpt(substr($request->get('post', 'content'), 0, 70))
+                ->setCategoryId($request->get('post', 'category'))
+                ->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
 
             if (Session::getAuth('level') === 99) {
                 $post->setPublishedAt($post->getUpdatedAt());
@@ -169,49 +178,33 @@ class Post extends Controller
                 $post->setPublishedAt(Null);
             }
 
+            $testImage = 'noChange';
             if ($request->get('file', 'image')['size'] > 0) {
-
                 $image = new File($request->get('file', 'image'));
-
                 $fileValidator = new FileValidator($image);
-
                 $testImage = $fileValidator->validateImage();
-            } else {
-                $testImage = 'noChange';
             }
 
-            $postValidator = new PostValidator($post);
-
-            $testPost = $postValidator->validate();
+            $testPost = (new PostValidator($post))->validate();
 
             if ($testPost === true && ($testImage === true || $testImage === 'noChange')) {
 
-                if ($testImage !== 'noChange' && $image->getName()) {
-
-                    if ($filename = UploadService::uploadConfigImage($image)) {
-                        $post->setImage($filename);
-                    } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                    }
+                if ($testImage !== 'noChange' && $image->getName() && $filename = UploadService::uploadConfigImage($image)) {
+                    $post->setImage($filename);
+                } elseif ($testImage !== 'noChange') {
+                    Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                 }
-
-                $postRepository->update($post);
-
-                Session::setFlash('success', "L'article à bien était modifié");
-                $this->redirectTo('/');
             }
+
+            $postRepository->update($post);
+
+            Session::setFlash('success', "L'article à bien était modifié");
+            $this->redirectTo('/');
         }
 
-        $categoryRepository = new CategoryRepository();
-
-        $categories = $categoryRepository->findAll();
-
         $categoryTab = [];
-
-        foreach ($categories as $category) {
-            $categoryTab += [
-                $category->getId() => $category->getName(),
-            ];
+        foreach ((new CategoryRepository())->findAll() as $category) {
+            $categoryTab[$category->getId()] = $category->getName();
         }
 
         $postForm = new PostForm();
@@ -220,11 +213,14 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->updatePost($categoryTab, $testPost, $id, $post->getContent(), $token, $post->getImage());
+        $form = $postForm->updatePost($categoryTab, $testPost, $idPost, $post->getContent(), $token, $post->getImage());
 
-        $this->render('post/update', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/update',
+            [
+                'form' => $form->create(),
+            ]
+        );
     }
 
     /**
@@ -238,12 +234,12 @@ class Post extends Controller
         if (!$user) {
             $this->redirectTo('/');
         }
+
         $request = new Request();
         $testPost = [];
         $testFile = [];
 
         if ($this->valideForm($request, 'addPost', 'Post/add')) {
-
             $post = new PostEntity("default");
 
             $post->setContent($request->get('post', 'content'));
@@ -264,9 +260,7 @@ class Post extends Controller
             $testFile = $fileValidator->validateImage();
 
             if ($testPost === true && $testFile === true) {
-
                 if ($file->getName()) {
-
                     if ($filename = UploadService::uploadPost($file)) {
                         $post->setImage($filename);
                     } else {
@@ -302,9 +296,12 @@ class Post extends Controller
 
         $form = $postForm->addPost($categoryTab, $testPost, $testFile, $token);
 
-        $this->render('post/add', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/add',
+            [
+                'form' => $form->create(),
+            ]
+        );
 
     }
 
@@ -323,10 +320,13 @@ class Post extends Controller
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
-        $this->render('post/moderate', [
-            "categories" => $categories,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/moderate',
+            [
+                "categories" => $categories,
+                "user" => Session::getAuth(),
+            ]
+        );
 
     }
 
@@ -335,18 +335,18 @@ class Post extends Controller
      *
      * @return void
      */
-    public function publishedPost($id)
+    public function publishedPost($idPost)
     {
 
-        if (!Session::getAuth()) {
+        if (Session::getAuth() === FALSE) {
             $this->redirectTo('/');
         }
 
         $request = new Request();
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id);
+        $post = $postRepository->find($idPost);
 
-        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/' . $id)) {
+        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/'.$idPost)) {
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
@@ -362,12 +362,15 @@ class Post extends Controller
 
         Session::setToken($token);
 
-        $form = $postForm->publishPost($id, $token);
+        $form = $postForm->publishPost($idPost, $token);
 
-        $this->render('post/publish', [
-            'form' => $form->create(),
-            'post' => $post
-        ]);
+        $this->render(
+            'post/publish',
+            [
+                'form' => $form->create(),
+                'post' => $post
+            ]
+        );
 
     }
 
@@ -380,7 +383,7 @@ class Post extends Controller
     {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? 0;
+        $category_id = ($request->get('post', 'category') ?? 0);
 
 
         if ($category_id == 0) {
@@ -389,10 +392,13 @@ class Post extends Controller
             $posts = $postRepository->findPublishedPostByCategory($category_id);
         }
 
-        $this->render('post/listPostAjax', [
-            "posts" => $posts,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/listPostAjax',
+            [
+                "posts" => $posts,
+                "user" => Session::getAuth(),
+            ]
+        );
     }
 
     /**
@@ -413,10 +419,13 @@ class Post extends Controller
             $posts = $postRepository->findNotPublishedPostByCategory($category_id);
         }
 
-        $this->render('post/listModeratePostAjax', [
-            "posts" => $posts,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/listModeratePostAjax',
+            [
+                "posts" => $posts,
+                "user" => Session::getAuth(),
+            ]
+        );
     }
 
     /**
@@ -436,9 +445,12 @@ class Post extends Controller
             $posts = $postRepository->findNotPublishedCommentPostByCategory($category_id);
         }
 
-        $this->render('comment/listModerateCommentPostAjax', [
-            "posts" => $posts,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'comment/listModerateCommentPostAjax',
+            [
+                "posts" => $posts,
+                "user" => Session::getAuth(),
+            ]
+        );
     }
 }

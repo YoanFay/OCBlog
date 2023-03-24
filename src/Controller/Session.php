@@ -10,12 +10,13 @@ class Session extends Controller
      */
     static public function getAuth(string $key = null)
     {
+        $session = $_SESSION;
 
-        if (!isset($_SESSION['auth'])) {
+        if (!isset($session['auth'])) {
             return null;
         }
 
-        return $key ? $_SESSION['auth'][$key] : $_SESSION['auth'];
+        return $key ? $session['auth'][$key] : $session['auth'];
     }
 
     /**
@@ -23,10 +24,12 @@ class Session extends Controller
      */
     static public function setAuth($user, $role)
     {
-        $_SESSION['auth']['user_id'] = $user->getId();
-        $_SESSION['auth']['role_id'] = $role->getId();
-        $_SESSION['auth']['role'] = $role->getCode();
-        $_SESSION['auth']['level'] = $role->getLevel();
+        $session['auth']['user_id'] = $user->getId();
+        $session['auth']['role_id'] = $role->getId();
+        $session['auth']['role'] = $role->getCode();
+        $session['auth']['level'] = $role->getLevel();
+
+        $_SESSION['auth'] = $session['auth'];
     }
 
     /**
@@ -42,8 +45,10 @@ class Session extends Controller
      */
     static public function setFlash(string $type, string $message): void
     {
-        $_SESSION['flash']['type'] = $type;
-        $_SESSION['flash']['message'] = $message;
+        $session['flash']['type'] = $type;
+        $session['flash']['message'] = $message;
+
+        $_SESSION['flash'] = $session['flash'];
     }
 
     /**
@@ -51,12 +56,13 @@ class Session extends Controller
      */
     static public function getFlash(string $key = null)
     {
+        $session = $_SESSION;
 
-        if (!isset($_SESSION['flash'])) {
+        if (!isset($session['flash'])) {
             return null;
         }
 
-        return $key ? $_SESSION['flash'][$key] : $_SESSION['flash'];
+        return $key ? $session['flash'][$key] : $session['flash'];
     }
 
     /**
