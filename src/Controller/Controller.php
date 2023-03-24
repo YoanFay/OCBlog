@@ -18,13 +18,13 @@ abstract class Controller
         require_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
         session_start();
 
-        $this->loader = new FilesystemLoader('../templates');
+        $this->loader=new FilesystemLoader('../templates');
 
-        $this->twig = new Environment($this->loader);
+        $this->twig=new Environment($this->loader);
 
         $this->twig->addGlobal('user', Session::getAuth());
 
-        $this->dotenv = Dotenv::createImmutable('..\\');
+        $this->dotenv=Dotenv::createImmutable('..\\');
         $this->dotenv->load();
     }
 
@@ -35,7 +35,8 @@ abstract class Controller
      */
     public function valideForm(Request $request, string $formName, string $referer)
     {
-        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/' . $referer) {
+
+        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
             return true;
         }
 
@@ -49,7 +50,7 @@ abstract class Controller
      */
     public function redirectTo($url)
     {
-        header('Location: ' . $url);
+        header('Location: '.$url);
     }
 
     /**
@@ -57,11 +58,11 @@ abstract class Controller
      *
      * @return null
      */
-    public function render($fichier, array $donnees = [])
+    public function render($fichier, array $donnees=[])
     {
 
         extract($donnees);
 
-        $this->twig->display($fichier . '.html.twig', $donnees);
+        $this->twig->display($fichier.'.html.twig', $donnees);
     }
 }

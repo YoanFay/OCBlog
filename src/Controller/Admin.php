@@ -22,36 +22,41 @@ class Admin extends Controller
      */
     public function index()
     {
-        $configRepository = new ConfigRepository();
-        $postRepository = new PostRepository();
-        $commentRepository = new CommentRepository();
-        $config = $configRepository->findOne();
+        $configRepository=new ConfigRepository();
+        $postRepository=new PostRepository();
+        $commentRepository=new CommentRepository();
+        $config=$configRepository->findOne();
 
         if (Session::getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
-        $post = [
-            'all' => (count($postRepository->findAll() ?? [])),
-            'publish' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? [])),
-            'delete' => (count($postRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
-            'moderate' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? [])),
-        ];
-
-        $comment = [
-            'all' => (count($commentRepository->findAll() ?? [])),
-            'publish' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? [])),
-            'delete' => (count($commentRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
-            'moderate' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? [])),
-        ];
-
-        $this->render('admin/index',
+        $post=
             [
-                "config" => $config,
-                "post" => $post,
-                "comment" => $comment
+                'all'=>(count($postRepository->findAll() ?? [])),
+                'publish'=>(count($postRepository->findBy(['deleted_at'=>"is null", 'published_at'=>"is not null"]) ?? [])),
+                'delete'=>(count($postRepository->findBy(['deleted_at'=>"is not null"]) ?? [])),
+                'moderate'=>(count($postRepository->findBy(['deleted_at'=>"is null", 'published_at'=>"is null"]) ?? [])),
+            ];
+
+        $comment=
+            [
+                'all'=>(count($commentRepository->findAll() ?? [])),
+                'publish'=>(count($commentRepository->findBy(['deleted_at'=>"is null", "validated_at"=>"is not null"]) ?? [])),
+                'delete'=>(count($commentRepository->findBy(['deleted_at'=>"is not null"]) ?? [])),
+                'moderate'=>(count($commentRepository->findBy(['deleted_at'=>"is null", "validated_at"=>"is null"]) ?? [])),
+            ];
+
+        $this->render(
+            'admin/index',
+            [
+                "config"=>$config,
+                "post"=>$post,
+                "comment"=>$comment
             ]
         );
+
+        //end index()
     }
 
 
@@ -66,53 +71,57 @@ class Admin extends Controller
         if (Session::getAuth('level') < 60) {
             $this->redirectTo('/');
         }
-        $configRepository = new ConfigRepository();
-        $config = $configRepository->findOne();
-        $request = new Request();
+        $configRepository=new ConfigRepository();
+        $config=$configRepository->findOne();
 
-        if ($this->valideForm($request, 'updateConfig', 'Admin/updateConfig/' . $config->getId())) {
+        $request=new Request();
+        $configForm=new ConfigForm();
 
-            $config
-                ->setTitle($request->get('post', 'title'))
-                ->setCatchPhrase($request->get('post', 'catchPhrase'));
-
-            $configValidator = new ConfigValidator($config);
-            $testConfig = $configValidator->validate();
-
-            $testImage = $testCv = 'noChange';
-            if ($request->get('file', 'image')['size'] > 0) {
-                $fileValidator = new FileValidator(new File($request->get('file', 'image')));
-                $testImage = $fileValidator->validateImage();
-            }
-            if ($request->get('file', 'cv')['size'] > 0) {
-                $fileValidator = new FileValidator(new File($request->get('file', 'cv')));
-                $testCv = $fileValidator->validatePdf();
-            }
-
-            if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
-                if ($testImage !== 'noChange' && $filename = UploadService::uploadConfigImage(new File($request->get('file', 'image')))) {
-                    $config->setImage($filename);
-                }
-                if ($testCv !== 'noChange' && $filename = UploadService::uploadConfigCv(new File($request->get('file', 'cv')))) {
-                    $config->setCv($filename);
-                }
-                (new ConfigRepository())->update($config);
-                Session::setFlash('success', "Les informations ont bien été modifiées");
-                $this->redirectTo('/');
-            }
+        if (!$this->valideForm($request, 'updateConfig', 'Admin/updateConfig')) {
+            $token=uniqid(rand(), true);
+            Session::setToken($token);
+            $form=$configForm->updateConfig([], [], [], $config, $token);
+            $this->render('admin/update', ['form'=>$form->create()]);
+            return;
         }
 
-        $configForm = new ConfigForm();
 
-        $token = uniqid(rand(), true);
-        Session::setToken($token);
+        $config->setTitle($request->get('post', 'title'));
+        $config->setCatchPhrase($request->get('post', 'catchPhrase'));
 
-        $form = $configForm->updateConfig($testConfig ?? [], $testImage ?? [], $testCv ?? [], $config, $token);
+        $configValidator=new ConfigValidator($config);
+        $testConfig=$configValidator->validate();
 
-        $this->render('admin/update', [
-            'form' => $form->create(),
-        ]);
+        $testImage=$testCv='noChange';
 
+        if ($request->get('file', 'image')['size'] > 0) {
+            $fileValidator=new FileValidator(new File($request->get('file', 'image')));
+            $testImage=$fileValidator->validateImage();
+        }
+
+        if ($request->get('file', 'cv')['size'] > 0) {
+            $fileValidator=new FileValidator(new File($request->get('file', 'cv')));
+            $testCv=$fileValidator->validatePdf();
+        }
+
+        if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
+            if ($testImage !== 'noChange' && $filename=UploadService::uploadConfigImage(new File($request->get('file', 'image')))) {
+                $config->setImage($filename);
+            }
+
+            if ($testCv !== 'noChange' && $filename=UploadService::uploadConfigCv(new File($request->get('file', 'cv')))) {
+                $config->setCv($filename);
+            }
+
+            $configRepository->update($config);
+            Session::setFlash('success', "Les informations ont bien été modifiées");
+            $this->redirectTo('/');
+        } else {
+            $token=uniqid(rand(), true);
+            Session::setToken($token);
+            $form=$configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);
+            $this->render('admin/update', ['form'=>$form->create()]);
+        }
     }
 
 }
