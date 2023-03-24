@@ -19,7 +19,7 @@ main {
 }
 
 .background-body {
-  background-color: #FAEBD7FF;
+  background-color: #faebd7ff;
 }
 
 /* NAV MENU */
@@ -58,29 +58,25 @@ main {
   z-index: 2;
 }
 
-.form-sign input[type='text'] {
-  margin-bottom: 10px;
-}
-
-.form-sign input[type='password'] {
+.signInput {
   margin-bottom: 10px;
 }
 
 /* IMG */
 
-.imgPost {
+.img-post {
   width: 200px;
 }
 
 /* POST */
 
-#selectCategory {
+#select-category {
   width: 15%;
 }
 
 /* CONTACT */
 
-#maxHeight {
+#max-height {
   height: calc(100vh - 320px);
   max-height: calc(100vh - 320px);
   display: grid;
@@ -89,16 +85,16 @@ main {
   grid-template-columns: 1fr 3fr;
 }
 
-#contactList {
+#contact-list {
   overflow-y: scroll;
 }
 
-#contactInfo {
+#contact-info {
   max-height: 350px;
   overflow-y: scroll;
 }
 
-.answer #contactInfo {
+.answer #contact-info {
   max-height: 200px;
   overflow-y: scroll;
 }
@@ -108,11 +104,12 @@ main {
   overflow-y: scroll;
 }
 
-#answerBtn, #archiveBtn {
+#answer-btn,
+#archive-btn {
   text-decoration: none;
 }
 
-.maxNone {
+.max-none {
   display: none;
 }
 
@@ -121,7 +118,7 @@ main {
     width: 100px;
   }
 
-  #selectCategory {
+  #select-category {
     width: 50%;
   }
 }

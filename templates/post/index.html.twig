@@ -5,7 +5,7 @@
         <a href="/Post/add">
             <button class="btn btn-primary">Ajouter un article</button>
         </a>
-        <select class="form-control mt-5" id="selectCategory">
+        <select class="form-control mt-5" id="select-category">
             <option value="0" selected>Tout</option>
             {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -51,10 +51,10 @@
 
         $('document').ready(function () {
             listPostAjax();
-            $('#selectCategory').val('0');
+            $('#select-category').val('0');
         });
 
-        $("#selectCategory").change(function () {
+        $("#select-category").change(function () {
             var selectedOption = $(this).val();
             listPostAjax(selectedOption)
         });
