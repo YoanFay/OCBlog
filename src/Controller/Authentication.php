@@ -2,8 +2,6 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Core\Bdd;
-use App\Src\Core\Form;
 use App\Src\Entity\File;
 use App\Src\Entity\User;
 use App\Src\Form\AuthentificationForm;
@@ -15,6 +13,7 @@ use App\Src\Validator\UserValidator;
 
 class Authentication extends Controller
 {
+
 
     /**
      * Formulaire d'inscription
@@ -29,8 +28,7 @@ class Authentication extends Controller
         $validate = [];
         $request = new Request();
 
-        if ($this->valideForm($request, 'signUp', 'Authentication/signUp')) {
-
+        if ($this->valideForm($request, 'signUp', 'Authentication/signUp') === TRUE) {
             $role = $roleRepository->findOneBy(['code' => 'user']);
 
             $user = new User();
@@ -40,15 +38,15 @@ class Authentication extends Controller
             $user->setLogin($request->get('post', 'login'));
             $user->setPassword(password_hash($request->get('post', 'password'), PASSWORD_BCRYPT));
             $user->setRoleId($role->getId());
+            $testFile = 'default';
+            $file = null;
 
-            if ($request->get('post', 'avatar')) {
+            if ($request->get('post', 'avatar') === TRUE) {
                 $file = new File($request->get('file', 'image'));
 
                 $fileValidator = new FileValidator($file);
 
                 $testFile = $fileValidator->validateImage();
-            } else {
-                $testFile = 'default';
             }
 
             $userValidator = new UserValidator($user);
@@ -56,14 +54,13 @@ class Authentication extends Controller
             $validate = $userValidator->validate();
 
             if ($validate === true) {
-
                 if ($testFile === true) {
                     if ($filename = UploadService::uploadUser($file)) {
                         $user->setAvatar($filename);
                     } else {
                         Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
-                } elseif ($testFile === 'default') {
+                } else if ($testFile === 'default') {
                     if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
                         $user->setAvatar($filename);
                     } else {
@@ -75,6 +72,7 @@ class Authentication extends Controller
                 $userRepository->add($user);
 
                 $this->redirectTo('/Authentication/signIn');
+                //end if
             }
         }
 
@@ -84,9 +82,14 @@ class Authentication extends Controller
 
         $form = $authenticationForm->signUp($token, $testFile, $validate);
 
-        $this->render('authentication/signUp', [
-            'form' => $form->create()
-        ]);
+        $this->render(
+            'authentication/signUp',
+            [
+                'form' => $form->create()
+            ]
+        );
+
+        //end signUp()
     }
 
     /**
@@ -102,15 +105,14 @@ class Authentication extends Controller
         $authenticationForm = new AuthentificationForm();
         $request = new Request();
 
-        if ($this->valideForm($request, 'signIn', 'Authentication/signIn')) {
-
+        if ($this->valideForm($request, 'signIn', 'Authentication/signIn') === TRUE) {
             $login = $request->get('post', 'login');
             $password = $request->get('post', 'password');
 
             $user = $userRepository->findOneBy(['login' => $login]);
             $role = $roleRepository->find($user->getRoleId());
 
-            if (password_verify($password, $user->getPassword())) {
+            if (password_verify($password, $user->getPassword()) === TRUE) {
                 Session::setAuth($user, $role);
                 $this->redirectTo('/');
             }
@@ -122,11 +124,19 @@ class Authentication extends Controller
 
         $form = $authenticationForm->signIn($token);
 
-        $this->render('authentication/signIn', [
-            'form' => $form->create()
-        ]);
+        $this->render(
+            'authentication/signIn',
+            [
+                'form' => $form->create()
+            ]
+        );
     }
 
+    /**
+     * Fonction de déconnexion
+     *
+     * @return void
+     */
     public function logout()
     {
         Session::logout();
