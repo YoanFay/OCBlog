@@ -2,13 +2,37 @@
 
 namespace App\Src\Entity;
 
-class File{
+class File
+{
+
+    /**
+     * @return string
+     */
     private $name;
+
+    /**
+     * @return string
+     */
     private $type;
+
+    /**
+     * @return string
+     */
     private $tmp_name;
+
+    /**
+     * @return string
+     */
     private $error;
+
+    /**
+     * @return string
+     */
     private $size;
 
+    /**
+     * @param mixed $file    parameter
+     */
     public function __construct($file)
     {
         $this->name = $file['name'];
@@ -27,7 +51,7 @@ class File{
     }
 
     /**
-     * @param string $name
+     * @param string $name    parameter
      */
     public function setName(string $name): void
     {
@@ -43,7 +67,7 @@ class File{
     }
 
     /**
-     * @param string $type
+     * @param string $type    parameter
      */
     public function setType(string $type): void
     {
@@ -59,7 +83,7 @@ class File{
     }
 
     /**
-     * @param string $tmp_name
+     * @param string $tmp_name    parameter
      */
     public function setTmpName(string $tmp_name): void
     {
@@ -75,7 +99,7 @@ class File{
     }
 
     /**
-     * @param string $error
+     * @param string $error    parameter
      */
     public function setError(string $error): void
     {
@@ -91,7 +115,7 @@ class File{
     }
 
     /**
-     * @param int $size
+     * @param int $size    parameter
      */
     public function setSize(int $size): void
     {

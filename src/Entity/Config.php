@@ -2,11 +2,32 @@
 
 namespace App\Src\Entity;
 
-class Config{
+class Config
+{
+
+    /**
+     * @var
+     */
     private $id;
+
+    /**
+     * @var
+     */
     private $image;
+
+    /**
+     * @var
+     */
     private $catch_phrase;
+
+    /**
+     * @var
+     */
     private $title;
+
+    /**
+     * @var
+     */
     private $cv;
 
     /**
@@ -18,7 +39,7 @@ class Config{
     }
 
     /**
-     * @param int $id
+     * @param int $id    parameter
      */
     public function setId(int $id): void
     {
@@ -34,7 +55,7 @@ class Config{
     }
 
     /**
-     * @param string|null $image
+     * @param string|null $image    parameter
      */
     public function setImage(?string $image): void
     {
@@ -50,7 +71,7 @@ class Config{
     }
 
     /**
-     * @param string $catchPhrase
+     * @param string $catch_phrase    parameter
      */
     public function setCatchPhrase(string $catch_phrase): void
     {
@@ -66,7 +87,7 @@ class Config{
     }
 
     /**
-     * @param string $title
+     * @param string $title    parameter
      */
     public function setTitle(string $title): void
     {
@@ -82,7 +103,7 @@ class Config{
     }
 
     /**
-     * @param string|null $cv
+     * @param string|null $cv    parameter
      */
     public function setCv(?string $cv): void
     {

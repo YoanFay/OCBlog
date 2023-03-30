@@ -4,28 +4,70 @@ namespace App\Src\Entity;
 
 use App\Src\Controller\Session;
 
-class Comment{
+class Comment
+{
 
+    /**
+     * @var
+     */
     private $id;
+
+    /**
+     * @var
+     */
     private $content;
+
+    /**
+     * @var
+     */
     private $created_at;
+
+    /**
+     * @var
+     */
     private $validated_at;
+
+    /**
+     * @var
+     */
     private $updated_at;
+
+    /**
+     * @var
+     */
     private $deleted_at;
+
+    /**
+     * @var
+     */
     private $post_id;
+
+    /**
+     * @var
+     */
     private $user_id;
 
-    public function __construct($init = false, $idPost = null){
-        if($init == "default"){
+    /**
+     * @param bool $init    parameter
+     * @param int|null $idPost    parameter
+     */
+    public function __construct(bool $init = false, int $idPost = null)
+    {
+        if ($init == "default") {
             $this->default($idPost);
         }
     }
 
-    public function default($idPost){
+    /**
+     * @param int $id    parameter
+     * @return void
+     */
+    public function default(int $id)
+    {
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
         $this->updated_at = null;
         $this->deleted_at = null;
-        $this->post_id = $idPost;
+        $this->post_id = $id;
         $this->user_id = Session::getAuth('user_id');
     }
 
@@ -38,7 +80,7 @@ class Comment{
     }
 
     /**
-     * @param int $id
+     * @param int $id    parameter
      */
     public function setId(int $id): void
     {
@@ -54,7 +96,7 @@ class Comment{
     }
 
     /**
-     * @param string $content
+     * @param string $content    parameter
      */
     public function setContent(string $content): void
     {
@@ -70,7 +112,7 @@ class Comment{
     }
 
     /**
-     * @param mixed $created_at
+     * @param mixed $created_at    parameter
      */
     public function setCreatedAt($created_at): void
     {
@@ -86,7 +128,7 @@ class Comment{
     }
 
     /**
-     * @param mixed $validated_at
+     * @param mixed $validated_at    parameter
      */
     public function setValidatedAt($validated_at): void
     {
@@ -102,7 +144,7 @@ class Comment{
     }
 
     /**
-     * @param mixed $updated_at
+     * @param mixed $updated_at    parameter
      */
     public function setUpdatedAt($updated_at): void
     {
@@ -118,7 +160,7 @@ class Comment{
     }
 
     /**
-     * @param mixed $deleted_at
+     * @param mixed $deleted_at    parameter
      */
     public function setDeletedAt($deleted_at): void
     {
@@ -134,7 +176,7 @@ class Comment{
     }
 
     /**
-     * @param int $post_id
+     * @param int $post_id    parameter
      */
     public function setPostId(int $post_id): void
     {
@@ -150,7 +192,7 @@ class Comment{
     }
 
     /**
-     * @param int $user_id
+     * @param int $user_id    parameter
      */
     public function setUserId(int $user_id): void
     {

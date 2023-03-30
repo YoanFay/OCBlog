@@ -7,25 +7,71 @@ use App\Src\Controller\Session;
 class Post
 {
 
-    private $id;
-    private $content;
-    private $image;
-    private $created_at;
-    private $published_at;
-    private $updated_at;
-    private $deleted_at;
-    private $excerpt;
-    private $category_id;
-    private $user_id;
     private const excerpt_size = 70;
 
-    public function __construct($init = false)
+    /**
+     * @var
+     */
+    private $id;
+
+    /**
+     * @var
+     */
+    private $content;
+
+    /**
+     * @var
+     */
+    private $image;
+    /**
+     * @var
+     */
+    private $created_at;
+
+    /**
+     * @var
+     */
+    private $published_at;
+
+    /**
+     * @var
+     */
+    private $updated_at;
+
+    /**
+     * @var
+     */
+    private $deleted_at;
+
+    /**
+     * @var
+     */
+    private $excerpt;
+
+    /**
+     * @var
+     */
+    private $category_id;
+
+    /**
+     * @var
+     */
+    private $user_id;
+
+    /**
+     * @param bool $init
+     */
+    public function __construct(bool $init = false)
     {
         if ($init == "default") {
             $this->default();
         }
     }
+    //end __construct
 
+    /**
+     * @return void
+     */
     public function default()
     {
         $this->image = null;
@@ -44,7 +90,7 @@ class Post
     }
 
     /**
-     * @param int $id
+     * @param int $id    parameter
      */
     public function setId(int $id): void
     {
@@ -60,7 +106,7 @@ class Post
     }
 
     /**
-     * @param string $content
+     * @param string $content    parameter
      */
     public function setContent(string $content): void
     {
@@ -77,7 +123,7 @@ class Post
     }
 
     /**
-     * @param string|null $image
+     * @param string|null $image    parameter
      */
     public function setImage(?string $image): void
     {
@@ -93,7 +139,7 @@ class Post
     }
 
     /**
-     * @param mixed $createdAt
+     * @param mixed $createdAt    parameter
      */
     public function setCreatedAt($createdAt): void
     {
@@ -109,7 +155,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $publishedAt
+     * @param mixed|null $publishedAt    parameter
      */
     public function setPublishedAt($publishedAt): void
     {
@@ -125,7 +171,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $updatedAt
+     * @param mixed|null $updatedAt    parameter
      */
     public function setUpdatedAt($updatedAt): void
     {
@@ -141,7 +187,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $deletedAt
+     * @param mixed|null $deletedAt    parameter
      */
     public function setDeletedAt($deletedAt): void
     {
@@ -157,7 +203,7 @@ class Post
     }
 
     /**
-     * @param string $excerpt
+     * @param string $excerpt    parameter
      */
     public function setExcerpt(string $excerpt): void
     {
@@ -173,7 +219,7 @@ class Post
     }
 
     /**
-     * @param int $categoryId
+     * @param int $categoryId    parameter
      */
     public function setCategoryId(int $categoryId): void
     {
@@ -189,7 +235,7 @@ class Post
     }
 
     /**
-     * @param int $userId
+     * @param int $userId    parameter
      */
     public function setUserId(int $userId): void
     {

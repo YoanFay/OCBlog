@@ -2,10 +2,27 @@
 
 namespace App\Src\Entity;
 
-class Role{
+class Role
+{
+
+    /**
+     * @return string
+     */
     private $id;
+
+    /**
+     * @return string
+     */
     private $name;
+
+    /**
+     * @return string
+     */
     private $code;
+
+    /**
+     * @return string
+     */
     private $level;
 
     /**
@@ -17,7 +34,7 @@ class Role{
     }
 
     /**
-     * @param int $id
+     * @param int $id    parameter
      */
     public function setId(int $id): void
     {
@@ -33,7 +50,7 @@ class Role{
     }
 
     /**
-     * @param string $name
+     * @param string $name    parameter
      */
     public function setName(string $name): void
     {
@@ -49,7 +66,7 @@ class Role{
     }
 
     /**
-     * @param string $code
+     * @param string $code    parameter
      */
     public function setCode(string $code): void
     {
@@ -65,7 +82,7 @@ class Role{
     }
 
     /**
-     * @param int $level
+     * @param int $level    parameter
      */
     public function setLevel(int $level): void
     {
