@@ -10,12 +10,12 @@ use App\Src\Validator\CommentValidator;
 class Comment extends Controller
 {
 
+
     /**
-     * Affichage des commentaires à modérer
-     *
+     * @param int $postId    parameter
      * @return void
      */
-    public function moderateComment($postId)
+    public function moderateComment(int $postId)
     {
 
         if (Session::getAuth('level') < 60) {
@@ -27,18 +27,24 @@ class Comment extends Controller
         $post = $postRepository->find($postId);
         $comments = $commentRepository->findBy(['post_id' => $postId, 'validated_at' => "is null", 'deleted_at' => "is null"], ['created_at' => 'DESC']);
 
-        $this->render('comment/moderateComment', [
-            "post" => $post,
-            "comments" => $comments
-        ]);
+        $this->render(
+            'comment/moderateComment',
+            [
+                "post" => $post,
+                "comments" => $comments
+            ]
+        );
+
     }
+    //end listModerateCommentAjax()
+
 
     /**
      * Page de confirmation pour supprimer un commentaire
      *
      * @return void
      */
-    public function deleteComment($id)
+    public function deleteComment($idComment)
     {
         $user = Session::getAuth();
         if (!$user) {
@@ -47,15 +53,15 @@ class Comment extends Controller
 
         $request = new Request();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
+        $comment = $commentRepository->find($idComment);
 
-        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/' . $id)) {
+        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/'.$idComment)) {
 
-            $commentRepository->softDelete($id);
+            $commentRepository->softDelete($idComment);
 
             Session::setFlash('success', 'Le commentaire à bien était supprimé');
 
-            $this->redirectTo('/Post/OnePost/' . $comment->getPostId());
+            $this->redirectTo('/Post/OnePost/'.$comment->getPostId());
 
         }
 
@@ -65,12 +71,15 @@ class Comment extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->deleteComment($id, $token, $comment->getPostId());
+        $form = $commentForm->deleteComment($idComment, $token, $comment->getPostId());
 
-        $this->render('comment/delete', [
-            'form' => $form->create(),
-            'comment' => $comment
-        ]);
+        $this->render(
+            'comment/delete',
+            [
+                'form' => $form->create(),
+                'comment' => $comment
+            ]
+        );
     }
 
     /**
@@ -80,7 +89,7 @@ class Comment extends Controller
      */
     public function publishedComment($id)
     {
-        if (!Session::getAuth()) {
+        if (Session::getAuth() === FALSE) {
             $this->redirectTo('/');
         }
 
@@ -88,7 +97,7 @@ class Comment extends Controller
         $commentRepository = new CommentRepository();
         $comment = $commentRepository->find($id);
 
-        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/' . $id)) {
+        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/'.$id)) {
 
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
@@ -107,10 +116,13 @@ class Comment extends Controller
 
         $form = $commentForm->publishComment($id, $token, $comment->getPostId());
 
-        $this->render('comment/publish', [
-            'form' => $form->create(),
-            'comment' => $comment
-        ]);
+        $this->render(
+            'comment/publish',
+            [
+                'form' => $form->create(),
+                'comment' => $comment
+            ]
+        );
 
     }
 
@@ -119,12 +131,12 @@ class Comment extends Controller
      *
      * @return void
      */
-    public function updateComment($id)
+    public function updateComment($idComment)
     {
         $user = Session::getAuth();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
-        if (!$user || $user['user_id'] !== $comment->getUserId()) {
+        $comment = $commentRepository->find($idComment);
+        if ($user === FALSE || $user['user_id'] !== $comment->getUserId()) {
             $this->redirectTo('/');
         }
 
@@ -132,15 +144,14 @@ class Comment extends Controller
 
         $testComment = [];
 
-        if ($this->valideForm($request, 'updateComment', 'Comment/updateComment/' . $id)) {
+        if ($this->valideForm($request, 'updateComment', 'Comment/updateComment/'.$idComment) === TRUE) {
 
             $comment->setContent($request->get('post', 'content'));
             $comment->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $comment->setValidatedAt(Null);
 
             if (Session::getAuth('level') === 99) {
                 $comment->setValidatedAt($comment->getUpdatedAt());
-            } else {
-                $comment->setValidatedAt(Null);
             }
 
             $commentValidator = new CommentValidator($comment);
@@ -148,12 +159,12 @@ class Comment extends Controller
             $testComment = $commentValidator->validate();
 
             if ($testComment === true) {
-
                 $commentRepository->update($comment);
 
                 Session::setFlash('success', 'Le commentaire à bien était modifié');
                 $this->redirectTo('/');
             }
+            //end if
         }
 
         $commentForm = new CommentForm();
@@ -162,11 +173,14 @@ class Comment extends Controller
 
         Session::setToken($token);
 
-        $form = $commentForm->updateComment($testComment, $id, $comment->getContent(), $token, $comment->getPostId());
+        $form = $commentForm->updateComment($testComment, $idComment, $comment->getContent(), $token, $comment->getPostId());
 
-        $this->render('comment/update', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'comment/update',
+            [
+                'form' => $form->create(),
+            ]
+        );
     }
 
 }
