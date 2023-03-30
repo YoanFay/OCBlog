@@ -72,8 +72,8 @@ class Authentication extends Controller
                 $userRepository->add($user);
 
                 $this->redirectTo('/Authentication/signIn');
-                //end if
             }
+            //end if
         }
 
         $token = uniqid(rand(), true);

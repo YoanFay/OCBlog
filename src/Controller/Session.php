@@ -12,7 +12,7 @@ class Session extends Controller
     /**
      * Fonction qui retourne l'utilisateur s'il y en a un
      *
-     * @param string|null $key
+     * @param string|null $key    parameter
      * @return mixed|null
      */
     public static function getAuth(string $key = null)
@@ -25,15 +25,15 @@ class Session extends Controller
 
         return $key ? $session['auth'][$key] : $session['auth'];
 
-        // end getAuth()
     }
+    //end getAuth()
 
 
     /**
      * Fonction qui enregistre l'utilisateur
      *
-     * @param User $user parameter
-     * @param Role $role parameter
+     * @param User $user    parameter
+     * @param Role $role    parameter
      * @return void
      */
     public static function setAuth(User $user, Role $role)
@@ -62,8 +62,8 @@ class Session extends Controller
     /**
      * Fonction qui paramètre une flash
      *
-     * @param string $type parameter
-     * @param string $message parameter
+     * @param string $type    parameter
+     * @param string $message    parameter
      * @return void
      */
     public static function setFlash(string $type, string $message): void
@@ -81,7 +81,7 @@ class Session extends Controller
     /**
      * Fonction qui affiche une flash dans le footer s'il y en a
      *
-     * @param string|null $key parameter
+     * @param string|null $key    parameter
      * @return mixed|null
      */
     public static function getFlash(string $key = null)
@@ -108,7 +108,7 @@ class Session extends Controller
     /**
      * Fonction qui paramètre le token pour les formulaires
      *
-     * @param string $token parameter
+     * @param string $token    parameter
      * @return void
      */
     public static function setToken(string $token): void
