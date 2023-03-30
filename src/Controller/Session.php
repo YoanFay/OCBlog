@@ -2,6 +2,9 @@
 
 namespace App\Src\Controller;
 
+use App\Src\Entity\Role;
+use App\Src\Entity\User;
+
 class Session extends Controller
 {
 
@@ -12,9 +15,9 @@ class Session extends Controller
      * @param string|null $key
      * @return mixed|null
      */
-    static public function getAuth(string $key=null)
+    public static function getAuth(string $key = null)
     {
-        $session=$_SESSION;
+        $session = $_SESSION;
 
         if (isset($session['auth']) === FALSE) {
             return null;
@@ -22,27 +25,28 @@ class Session extends Controller
 
         return $key ? $session['auth'][$key] : $session['auth'];
 
-        //end getAuth()
+        // end getAuth()
     }
+
 
     /**
      * Fonction qui enregistre l'utilisateur
      *
-     * @param $user
-     * @param $role
+     * @param User $user parameter
+     * @param Role $role parameter
      * @return void
      */
-    static public function setAuth($user, $role)
+    public static function setAuth(User $user, Role $role)
     {
-        $auth=
-            [
-                'user_id'=>$user->getId(),
-                'role_id'=>$role->getId(),
-                'role'=>$role->getCode(),
-                'level'=>$role->getLevel(),
-            ];
+        $auth
+            = [
+            'user_id' => $user->getId(),
+            'role_id' => $role->getId(),
+            'role' => $role->getCode(),
+            'level' => $role->getLevel(),
+        ];
 
-        $_SESSION['auth']=$auth;
+        $_SESSION['auth'] = $auth;
     }
 
     /**
@@ -50,7 +54,7 @@ class Session extends Controller
      *
      * @return void
      */
-    static public function logout(): void
+    public static function logout(): void
     {
         unset($_SESSION['auth']);
     }
@@ -58,33 +62,33 @@ class Session extends Controller
     /**
      * Fonction qui paramètre une flash
      *
-     * @param string $type
-     * @param string $message
+     * @param string $type parameter
+     * @param string $message parameter
      * @return void
      */
-    static public function setFlash(string $type, string $message): void
+    public static function setFlash(string $type, string $message): void
     {
 
-        $flash=
-            [
-                'type'=>$type,
-                'message'=>$message,
-            ];
+        $flash
+            = [
+            'type' => $type,
+            'message' => $message,
+        ];
 
-        $_SESSION['flash']=$flash;
+        $_SESSION['flash'] = $flash;
     }
 
     /**
      * Fonction qui affiche une flash dans le footer s'il y en a
      *
-     * @param string|null $key
+     * @param string|null $key parameter
      * @return mixed|null
      */
-    static public function getFlash(string $key=null)
+    public static function getFlash(string $key = null)
     {
-        $session=$_SESSION;
+        $session = $_SESSION;
 
-        if (!isset($session['flash'])) {
+        if (isset($session['flash']) === FALSE) {
             return null;
         }
 
@@ -96,7 +100,7 @@ class Session extends Controller
      *
      * @return void
      */
-    static public function resetFlash(): void
+    public static function resetFlash(): void
     {
         unset($_SESSION['flash']);
     }
@@ -104,12 +108,12 @@ class Session extends Controller
     /**
      * Fonction qui paramètre le token pour les formulaires
      *
-     * @param string $token
+     * @param string $token parameter
      * @return void
      */
-    static public function setToken(string $token): void
+    public static function setToken(string $token): void
     {
-        $_SESSION['token']=$token;
+        $_SESSION['token'] = $token;
     }
 
     /**
@@ -117,7 +121,7 @@ class Session extends Controller
      *
      * @return mixed|null
      */
-    static public function getToken()
+    public static function getToken()
     {
         return ($_SESSION['token'] ?? null);
     }

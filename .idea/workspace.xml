@@ -6,11 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/css/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/public/css/styles.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/contact/listContact.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/contact/listContact.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/moderate.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/moderate.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Session.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -148,7 +144,7 @@
       <workItem from="1679155337027" duration="125000" />
       <workItem from="1679556825109" duration="19131000" />
       <workItem from="1679643153029" duration="21821000" />
-      <workItem from="1680190642020" duration="2031000" />
+      <workItem from="1680190642020" duration="2936000" />
     </task>
     <servers />
   </component>
