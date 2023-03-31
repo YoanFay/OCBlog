@@ -5,14 +5,8 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Core\Bdd;
-use App\Src\Core\Mail;
-use App\Src\Entity\Contact;
-use App\Src\Form\ContactForm;
 use App\Src\Repository\ConfigRepository;
-use App\Src\Repository\ContactRepository;
 use App\Src\Repository\PostRepository;
-use App\Src\Validator\ContactValidator;
 
 class Homepage extends Controller
 {

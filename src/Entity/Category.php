@@ -28,7 +28,7 @@ class Category
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -44,7 +44,7 @@ class Category
     }
 
     /**
-     * @param string $name    parameter
+     * @param string $name parameter
      */
     public function setName(string $name): void
     {
@@ -60,7 +60,7 @@ class Category
     }
 
     /**
-     * @param string $code    parameter
+     * @param string $code parameter
      */
     public function setCode(string $code): void
     {

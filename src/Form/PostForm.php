@@ -22,10 +22,10 @@ class PostForm
     }
 
     /**
-     * @param array $categoryTab parameter
-     * @param array $errors parameter
-     * @param array $errorsFile parameter
-     * @param string $token parameter
+     * @param array  $categoryTab parameter
+     * @param array  $errors      parameter
+     * @param array  $errorsFile  parameter
+     * @param string $token       parameter
      * @return Form
      */
     public function addPost(array $categoryTab, array $errors, array $errorsFile, string $token): Form
@@ -48,7 +48,7 @@ class PostForm
     }
 
     /**
-     * @param int $id parameter
+     * @param int    $id    parameter
      * @param string $token parameter
      * @return Form
      */
@@ -65,7 +65,7 @@ class PostForm
     }
 
     /**
-     * @param int $id parameter
+     * @param int    $id    parameter
      * @param string $token parameter
      * @return Form
      */
@@ -82,12 +82,12 @@ class PostForm
     }
 
     /**
-     * @param array $categoryTab parameter
-     * @param array $errors parameter
-     * @param int $id parameter
-     * @param string $content parameter
-     * @param string $token parameter
-     * @param string $image parameter
+     * @param array  $categoryTab parameter
+     * @param array  $errors      parameter
+     * @param int    $id          parameter
+     * @param string $content     parameter
+     * @param string $token       parameter
+     * @param string $image       parameter
      * @return Form
      */
     public function updatePost(array $categoryTab, array $errors, int $id, string $content, string $token, string $image): Form

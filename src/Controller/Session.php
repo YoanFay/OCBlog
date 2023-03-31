@@ -66,7 +66,7 @@ class Session
 
     /**
      * @param string $key
-     * @param mixed $content
+     * @param mixed  $content
      * @return void
      */
     public function setSession(string $key, $content)
@@ -96,7 +96,7 @@ class Session
     /**
      * Fonction qui paramètre une flash
      *
-     * @param string $type parameter
+     * @param string $type    parameter
      * @param string $message parameter
      * @return void
      */

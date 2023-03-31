@@ -23,11 +23,11 @@ class ConfigForm
     }
 
     /**
-     * @param array $errors parameter
-     * @param array $errorsImage parameter
-     * @param array $errorsCv parameter
-     * @param Config $config parameter
-     * @param string $token parameter
+     * @param array  $errors      parameter
+     * @param array  $errorsImage parameter
+     * @param array  $errorsCv    parameter
+     * @param Config $config      parameter
+     * @param string $token       parameter
      * @return Form
      */
     public function updateConfig(array $errors, array $errorsImage, array $errorsCv, Config $config, string $token): Form

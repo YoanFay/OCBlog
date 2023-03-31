@@ -23,8 +23,8 @@ class ContactForm
     }
 
     /**
-     * @param array $errors parameter
-     * @param string $token parameter
+     * @param array  $errors parameter
+     * @param string $token  parameter
      * @return Form
      */
     public function contact(array $errors, string $token): Form
@@ -45,9 +45,9 @@ class ContactForm
     }
 
     /**
-     * @param array $errors parameter
-     * @param string $token parameter
-     * @param int $id parameter
+     * @param array  $errors parameter
+     * @param string $token  parameter
+     * @param int    $id     parameter
      * @return Form
      */
     public function answer(array $errors, string $token, int $id): Form

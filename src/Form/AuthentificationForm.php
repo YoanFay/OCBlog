@@ -22,9 +22,9 @@ class AuthentificationForm
     }
 
     /**
-     * @param string $token parameter
-     * @param array $errorFile parameter
-     * @param array $errors parameter
+     * @param string $token     parameter
+     * @param array  $errorFile parameter
+     * @param array  $errors    parameter
      * @return Form
      */
     public function signUp(string $token, array $errorFile, array $errors): Form

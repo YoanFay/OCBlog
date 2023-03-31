@@ -62,7 +62,7 @@ class User
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -78,7 +78,7 @@ class User
     }
 
     /**
-     * @param string $lastname    parameter
+     * @param string $lastname parameter
      */
     public function setLastname(string $lastname): void
     {
@@ -94,7 +94,7 @@ class User
     }
 
     /**
-     * @param string $firstname    parameter
+     * @param string $firstname parameter
      */
     public function setFirstname(string $firstname): void
     {
@@ -110,7 +110,7 @@ class User
     }
 
     /**
-     * @param string $login    parameter
+     * @param string $login parameter
      */
     public function setLogin(string $login): void
     {
@@ -126,7 +126,7 @@ class User
     }
 
     /**
-     * @param string $password    parameter
+     * @param string $password parameter
      */
     public function setPassword(string $password): void
     {
@@ -139,7 +139,7 @@ class User
     }
 
     /**
-     * @param mixed $created_at    parameter
+     * @param mixed $created_at parameter
      * @return void
      */
     public function setCreatedAt($created_at): void
@@ -156,7 +156,7 @@ class User
     }
 
     /**
-     * @param int $role_id    parameter
+     * @param int $role_id parameter
      */
     public function setRoleId(int $role_id): void
     {
@@ -172,7 +172,7 @@ class User
     }
 
     /**
-     * @param string $avatar    parameter
+     * @param string $avatar parameter
      */
     public function setAvatar(string $avatar): void
     {

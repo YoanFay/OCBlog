@@ -78,7 +78,7 @@ class Contact
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -94,7 +94,7 @@ class Contact
     }
 
     /**
-     * @param string $name    parameter
+     * @param string $name parameter
      */
     public function setName(string $name): void
     {
@@ -110,7 +110,7 @@ class Contact
     }
 
     /**
-     * @param string $mail    parameter
+     * @param string $mail parameter
      */
     public function setMail(string $mail): void
     {
@@ -126,7 +126,7 @@ class Contact
     }
 
     /**
-     * @param string $message    parameter
+     * @param string $message parameter
      */
     public function setMessage(string $message): void
     {
@@ -142,7 +142,7 @@ class Contact
     }
 
     /**
-     * @param mixed $created_at    parameter
+     * @param mixed $created_at parameter
      */
     public function setCreatedAt($created_at): void
     {
@@ -158,7 +158,7 @@ class Contact
     }
 
     /**
-     * @param string|null $process    parameter
+     * @param string|null $process parameter
      */
     public function setProcess(string $process): void
     {
@@ -174,7 +174,7 @@ class Contact
     }
 
     /**
-     * @param mixed|null $process_at    parameter
+     * @param mixed|null $process_at parameter
      */
     public function setProcessAt($process_at): void
     {
@@ -190,7 +190,7 @@ class Contact
     }
 
     /**
-     * @param int|null $process_by    parameter
+     * @param int|null $process_by parameter
      */
     public function setProcessBy(int $process_by): void
     {
@@ -206,7 +206,7 @@ class Contact
     }
 
     /**
-     * @param string|null $answer    parameter
+     * @param string|null $answer parameter
      */
     public function setAnswer($answer): void
     {

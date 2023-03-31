@@ -39,7 +39,7 @@ class Config
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -55,7 +55,7 @@ class Config
     }
 
     /**
-     * @param string|null $image    parameter
+     * @param string|null $image parameter
      */
     public function setImage(?string $image): void
     {
@@ -71,7 +71,7 @@ class Config
     }
 
     /**
-     * @param string $catch_phrase    parameter
+     * @param string $catch_phrase parameter
      */
     public function setCatchPhrase(string $catch_phrase): void
     {
@@ -87,7 +87,7 @@ class Config
     }
 
     /**
-     * @param string $title    parameter
+     * @param string $title parameter
      */
     public function setTitle(string $title): void
     {
@@ -103,7 +103,7 @@ class Config
     }
 
     /**
-     * @param string|null $cv    parameter
+     * @param string|null $cv parameter
      */
     public function setCv(?string $cv): void
     {

@@ -34,7 +34,7 @@ class Role
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -50,7 +50,7 @@ class Role
     }
 
     /**
-     * @param string $name    parameter
+     * @param string $name parameter
      */
     public function setName(string $name): void
     {
@@ -66,7 +66,7 @@ class Role
     }
 
     /**
-     * @param string $code    parameter
+     * @param string $code parameter
      */
     public function setCode(string $code): void
     {
@@ -82,7 +82,7 @@ class Role
     }
 
     /**
-     * @param int $level    parameter
+     * @param int $level parameter
      */
     public function setLevel(int $level): void
     {

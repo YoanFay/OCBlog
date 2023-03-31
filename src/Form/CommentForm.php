@@ -22,9 +22,9 @@ class CommentForm
     }
 
     /**
-     * @param int $postId parameter
-     * @param array $errors parameter
-     * @param string $token parameter
+     * @param int    $postId parameter
+     * @param array  $errors parameter
+     * @param string $token  parameter
      * @return Form
      */
     public function addComment(int $postId, array $errors, string $token): Form
@@ -42,9 +42,9 @@ class CommentForm
     }
 
     /**
-     * @param int $id parameter
-     * @param string $token parameter
-     * @param int $idPost parameter
+     * @param int    $id     parameter
+     * @param string $token  parameter
+     * @param int    $idPost parameter
      * @return Form
      */
     public function deleteComment(int $id, string $token, int $idPost): Form
@@ -60,11 +60,11 @@ class CommentForm
     }
 
     /**
-     * @param array $errors parameter
-     * @param int $id parameter
+     * @param array  $errors  parameter
+     * @param int    $id      parameter
      * @param string $content parameter
-     * @param string $token parameter
-     * @param string $return parameter
+     * @param string $token   parameter
+     * @param string $return  parameter
      * @return Form
      */
     public function updateComment(array $errors, int $id, string $content, string $token, string $return): Form
@@ -83,9 +83,9 @@ class CommentForm
     }
 
     /**
-     * @param int $id parameter
-     * @param string $token parameter
-     * @param int $idPost parameter
+     * @param int    $id     parameter
+     * @param string $token  parameter
+     * @param int    $idPost parameter
      * @return Form
      */
     public function publishComment(int $id, string $token, int $idPost): Form

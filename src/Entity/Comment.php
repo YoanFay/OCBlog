@@ -48,7 +48,7 @@ class Comment
     private $user_id;
 
     /**
-     * @param bool $init parameter
+     * @param bool     $init   parameter
      * @param int|null $idPost parameter
      */
     public function __construct(bool $init = false, int $idPost = null)

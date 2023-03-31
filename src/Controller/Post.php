@@ -446,7 +446,7 @@ class Post extends Controller
         }
 
         $this->render(
-        'comment/listModerateCommentPostAjax',
+            'comment/listModerateCommentPostAjax',
             [
                 "posts" => $posts,
                 "user" => $this->session->getAuth(),

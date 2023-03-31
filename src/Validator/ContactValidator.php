@@ -47,20 +47,6 @@ class ContactValidator extends Validator
     }
 
     /**
-     * @return array|bool
-     */
-    public function validateAnswer()
-    {
-        $this->answer($this->contact->getName());
-
-        if ($this->error === []) {
-            return true;
-        }
-
-        return $this->error;
-    }
-
-    /**
      * @param string $parameter parameter
      * @return void
      */
@@ -100,6 +86,20 @@ class ContactValidator extends Validator
         if ($this->validateIsString($parameter) !== true) {
             $this->error['message'][] = "Le message doit être une chaîne de caractère.";
         }
+    }
+
+    /**
+     * @return array|bool
+     */
+    public function validateAnswer()
+    {
+        $this->answer($this->contact->getName());
+
+        if ($this->error === []) {
+            return true;
+        }
+
+        return $this->error;
     }
 
     /**
