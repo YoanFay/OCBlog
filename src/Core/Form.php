@@ -18,13 +18,14 @@ class Form
     {
         return $this->formCode;
 
-        // End create()
+        //end create()
     }
 
+
     /**
-     * @param string $method parameter
-     * @param string $action parameter
-     * @param array $attributes parameter
+     * @param string $method     parameter
+     * @param string $action     parameter
+     * @param array  $attributes parameter
      * @return $this
      */
     public function startForm(string $method = 'post', string $action = '#', array $attributes = []): self
@@ -67,9 +68,9 @@ class Form
     }
 
     /**
-     * @param string $type parameter
-     * @param string $name parameter
-     * @param array $attributes parameter
+     * @param string $type       parameter
+     * @param string $name       parameter
+     * @param array  $attributes parameter
      * @return $this
      */
     public function addInput(string $type, string $name, array $attributes = []): self
@@ -82,9 +83,9 @@ class Form
     }
 
     /**
-     * @param string $for parameter
-     * @param string $text parameter
-     * @param array $attributes parameter
+     * @param string $for        parameter
+     * @param string $text       parameter
+     * @param array  $attributes parameter
      * @return $this
      */
     public function addLabelFor(string $for, string $text, array $attributes = []): self
@@ -99,9 +100,9 @@ class Form
     }
 
     /**
-     * @param string $nom parameter
-     * @param string $text parameter
-     * @param array $attributes parameter
+     * @param string $nom        parameter
+     * @param string $text       parameter
+     * @param array  $attributes parameter
      * @return $this
      */
     public function addTextArea(string $nom, string $text = "", array $attributes = []): self
@@ -116,9 +117,9 @@ class Form
     }
 
     /**
-     * @param string $nom parameter
-     * @param array $options parameter
-     * @param array $attributes parameter
+     * @param string $nom        parameter
+     * @param array  $options    parameter
+     * @param array  $attributes parameter
      * @return $this
      */
     public function addSelect(string $nom, array $options, array $attributes = []): self
@@ -150,7 +151,7 @@ class Form
     }
 
     /**
-     * @param string $name parameter
+     * @param string $name  parameter
      * @param string $value parameter
      * @return $this
      */
