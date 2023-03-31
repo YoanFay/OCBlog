@@ -5,6 +5,7 @@ namespace App\Src\Validator;
 class Validator
 {
 
+
     /**
      * @param mixed $parameter parameter
      * @return bool

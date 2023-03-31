@@ -9,11 +9,30 @@ use Twig\Environment;
 abstract class Controller
 {
 
+    /**
+     * @var FilesystemLoader
+     */
     private $loader;
+
+    /**
+     * @var Environment
+     */
     protected $twig;
+
+    /**
+     * @var Dotenv
+     */
     protected $dotenv;
+
+    /**
+     * @var Session
+     */
     protected $session;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         require_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';

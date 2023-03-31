@@ -10,7 +10,7 @@ class CommentValidator extends Validator
 {
 
     /**
-     * @var
+     * @var Comment
      */
     private $comment;
 

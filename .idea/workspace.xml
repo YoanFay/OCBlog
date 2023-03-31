@@ -6,30 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Contact.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Homepage.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Session.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/CommentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CommentRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/ContactRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ContactRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RoleRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/AuthentificationForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/AuthentificationForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CommentForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CommentForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ConfigForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ConfigForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ContactForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ContactForm.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/PostForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PostForm.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Validator/CommentValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/CommentValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/ConfigValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/ConfigValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/ContactValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/ContactValidator.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Validator/FileValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/FileValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/PostValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/PostValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/UserValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/UserValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/Validator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/Validator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +155,7 @@
       <workItem from="1679556825109" duration="19131000" />
       <workItem from="1679643153029" duration="21821000" />
       <workItem from="1680190642020" duration="7153000" />
-      <workItem from="1680242106504" duration="6988000" />
+      <workItem from="1680242106504" duration="9084000" />
     </task>
     <servers />
   </component>

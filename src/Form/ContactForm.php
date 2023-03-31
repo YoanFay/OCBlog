@@ -8,14 +8,26 @@ use App\Src\Entity\Config;
 class ContactForm
 {
 
+    /**
+     * @var Form
+     */
     private $form;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->form = new Form();
     }
 
-    public function contact($errors, $token)
+    /**
+     * @param array $errors parameter
+     * @param string $token parameter
+     * @return Form
+     */
+    public function contact(array $errors, string $token): Form
     {
         return $this->form->startForm('post', '/contact')
             ->addLabelFor('name', "Nom et prénom :")
@@ -32,7 +44,13 @@ class ContactForm
             ->addHidden('csrfToken', $token);
     }
 
-    public function answer($errors, $token, $id)
+    /**
+     * @param array $errors parameter
+     * @param string $token parameter
+     * @param int $id parameter
+     * @return Form
+     */
+    public function answer(array $errors, string $token, int $id): Form
     {
         return $this->form->startForm('post', '/contact/answerContact/'.$id)
             ->addLabelFor('answer', "Réponse :")

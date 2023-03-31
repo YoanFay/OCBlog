@@ -9,6 +9,9 @@ class Session
 {
 
 
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         session_start();

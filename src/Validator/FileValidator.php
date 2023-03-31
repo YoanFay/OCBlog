@@ -23,7 +23,7 @@ class FileValidator
 
 
     /**
-     * @param File $file
+     * @param File $file parameter
      */
     public function __construct(File $file)
     {

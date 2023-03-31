@@ -7,14 +7,28 @@ use App\Src\Core\Form;
 class PostForm
 {
 
+    /**
+     * @var Form
+     */
     private $form;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->form = new Form();
     }
 
-    public function addPost($categoryTab, $errors, $errorsFile, $token)
+    /**
+     * @param array $categoryTab parameter
+     * @param array $errors parameter
+     * @param array $errorsFile parameter
+     * @param string $token parameter
+     * @return Form
+     */
+    public function addPost(array $categoryTab, array $errors, array $errorsFile, string $token): Form
     {
 
         return $this->form->startForm('post', '/Post/add', ['enctype' => 'multipart/form-data'])
@@ -33,34 +47,53 @@ class PostForm
 
     }
 
-    public function deletePost($id, $token)
+    /**
+     * @param int $id parameter
+     * @param string $token parameter
+     * @return Form
+     */
+    public function deletePost(int $id, string $token): Form
     {
 
-        return $this->form->startForm('post', '/Post/deletePost/' . $id)
+        return $this->form->startForm('post', '/Post/deletePost/'.$id)
             ->addInput('submit', 'validate', ['value' => 'Supprimer', 'class' => 'btn btn-danger me-2'])
-            ->addReturn('/Post/onePost/' . $id)
+            ->addReturn('/Post/onePost/'.$id)
             ->addHidden('formName', 'deletePost')
             ->addHidden('csrfToken', $token)
             ->endForm();
 
     }
 
-    public function publishPost($id, $token)
+    /**
+     * @param int $id parameter
+     * @param string $token parameter
+     * @return Form
+     */
+    public function publishPost(int $id, string $token): Form
     {
 
-        return $this->form->startForm('post', '/Post/publishedPost/' . $id)
+        return $this->form->startForm('post', '/Post/publishedPost/'.$id)
             ->addInput('submit', 'validate', ['value' => 'Publier', 'class' => 'btn btn-primary me-2'])
-            ->addReturn('/Post/onePost/' . $id)
+            ->addReturn('/Post/onePost/'.$id)
             ->addHidden('formName', 'publishPost')
             ->addHidden('csrfToken', $token)
             ->endForm();
 
     }
 
-    public function updatePost($categoryTab, $errors, $id, $content, $token, $image)
+    /**
+     * @param array $categoryTab parameter
+     * @param array $errors parameter
+     * @param int $id parameter
+     * @param string $content parameter
+     * @param string $token parameter
+     * @param string $image parameter
+     * @return Form
+     */
+    public function updatePost(array $categoryTab, array $errors, int $id, string $content, string $token, string $image): Form
     {
 
-        $updateForm = $this->form->startForm('post', '/Post/updatePost/' . $id, ['enctype' => 'multipart/form-data'])
+        $updateForm = $this->form->startForm('post', '/Post/updatePost/'.$id, ['enctype' => 'multipart/form-data'])
             ->addLabelFor('content', "Contenue")
             ->addTextArea('content', "$content", ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content'] ?? [])

@@ -7,14 +7,27 @@ use App\Src\Core\Form;
 class AuthentificationForm
 {
 
+    /**
+     * @var Form
+     */
     private $form;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->form = new Form();
     }
 
-    public function signUp($token, $errorFile, $errors)
+    /**
+     * @param string $token parameter
+     * @param array $errorFile parameter
+     * @param array $errors parameter
+     * @return Form
+     */
+    public function signUp(string $token, array $errorFile, array $errors): Form
     {
 
         return $this->form->startForm('post', 'http://localhost/Authentication/signUp')
@@ -39,7 +52,11 @@ class AuthentificationForm
 
     }
 
-    public function signIn($token)
+    /**
+     * @param string $token parameter
+     * @return Form
+     */
+    public function signIn(string $token): Form
     {
 
         return $this->form->startForm('post', 'http://localhost/Authentication/signIn', ['class' => 'form-sign'])
