@@ -4,6 +4,7 @@ namespace App\Src\Controller;
 
 class Request
 {
+
     /**
      * @var array
      */

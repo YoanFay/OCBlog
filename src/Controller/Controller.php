@@ -16,18 +16,22 @@ abstract class Controller
      * @var Environment
      */
     protected $twig;
+
     /**
      * @var Dotenv
      */
     protected $dotenv;
+
     /**
      * @var Session
      */
     protected $session;
+
     /**
      * @var FilesystemLoader
      */
     private $loader;
+
 
     /**
      * Constructeur
@@ -46,7 +50,7 @@ abstract class Controller
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
 
-        // End __construct()
+        //end __construct()
     }
 
 
@@ -68,19 +72,21 @@ abstract class Controller
         return false;
     }
 
+
     /**
      * Fonction pour rediriger vers une url
      *
+     * @param string $url parameter
      * @return null
      */
-    public function redirectTo($url)
+    public function redirectTo(string $url)
     {
         header('Location: '.$url);
     }
 
     /**
-     * @param string $fichier
-     * @param array  $donnees
+     * @param string $fichier parameter
+     * @param array  $donnees parameter
      * @return void
      */
     public function render(string $fichier, array $donnees = [])

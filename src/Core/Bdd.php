@@ -12,6 +12,7 @@ use PDO;
  */
 class Bdd
 {
+
     /**
      * @var null
      */
@@ -29,12 +30,12 @@ class Bdd
     public function __construct()
     {
         $host = '127.0.0.1';
-        $db = 'blog';
+        $dbName = 'blog';
         $user = 'root';
         $pass = 'root';
 
 
-        $dsn = "mysql:host=$host;dbname=$db";
+        $dsn = "mysql:host=$host;dbname=$dbName";
         $options = [
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS,
@@ -45,12 +46,11 @@ class Bdd
             $this->bdd = new PDO($dsn, $user, $pass, $options);
         } catch (\PDOException $e) {
             throw new \PDOException($e->getMessage(), (int)$e->getCode());
-        }
-    }
 
-    //----------------------------------------
-    //FONCTIONS
-    //----------------------------------------
+        }
+
+        //end __construct()
+    }
 
     /**
      * @param string $req    parameter
@@ -76,6 +76,9 @@ class Bdd
         return $query->fetchAll();
     }
 
+    /**
+     * @return false|string
+     */
     public function lastInsert()
     {
         return $this->bdd->lastInsertId();

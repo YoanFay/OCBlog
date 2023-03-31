@@ -26,12 +26,15 @@ class Upload
     {
         $this->file = $file;
         $this->where = $where;
+
+        //end __construct()
     }
+
 
     /**
      * @return false|string
      */
-    function addFile()
+    public function addFile()
     {
 
         $path = "img/".$this->where."/";
@@ -51,7 +54,7 @@ class Upload
     /**
      * @return false|string
      */
-    function addPdf()
+    public function addPdf()
     {
 
         $path = "pdf/".$this->where."/";
@@ -72,7 +75,7 @@ class Upload
      * @param string $url parameter
      * @return false|string
      */
-    function addFileByUrl(string $url)
+    public function addFileByUrl(string $url)
     {
 
         $path = "img/".$this->where."/";

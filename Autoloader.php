@@ -7,9 +7,7 @@ class Autoloader
 
 
     /**
-     * Fonction Register de l'Autoloader
-     *
-     * @return null
+     * @return void
      */
     public static function register()
     {
@@ -20,15 +18,15 @@ class Autoloader
             ]
         );
 
-        //end
+        //end register()
     }
 
 
     /**
      * Autoload
      *
-     * @param $class
-     * @return null
+     * @param string $class parameter
+     * @return void
      */
     public static function autoload($class)
     {
@@ -42,18 +40,18 @@ class Autoloader
 
         foreach ($vendorPaths as $namespace => $vendorPath) {
             if (strpos($class, $namespace) === 0) {
-                $class = $vendorPath . substr($class, strlen($namespace));
+                $class = $vendorPath.substr($class, strlen($namespace));
                 break;
             }
         }
 
-        $class = str_replace(__NAMESPACE__ . '\\', '', $class);
-        $file = __DIR__ . '\\' . $class . '.php';
+        $class = str_replace(__NAMESPACE__.'\\', '', $class);
+        $file = __DIR__.'\\'.$class.'.php';
 
         if (filetype($file) !== false) {
             include $file;
         }
 
-
     }
+    
 }
