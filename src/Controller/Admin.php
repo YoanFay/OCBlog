@@ -104,22 +104,12 @@ class Admin extends Controller
             $testCv = $fileValidator->validatePdf();
         }
 
-        if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
-            $uploadService = new UploadService();
+        $uploadService = new UploadService();
 
-            if ($testImage !== 'noChange' && $filename = $uploadService->uploadConfigImage(new File($request->get('file', 'image')))) {
-                $config->setImage($filename);
-            }
-
-            if ($testCv !== 'noChange' && $filename = $uploadService->uploadConfigCv(new File($request->get('file', 'cv')))) {
-                $config->setCv($filename);
-            }
-
-            $configRepository->update($config);
-            $this->session->setFlash('success', "Les informations ont bien été modifiées");
+        if ($uploadService->UploadWithCheck($testConfig, $testImage, $testCv, $config, $this->session)) {
             $this->redirectTo('/');
         }
-
+        
         $token = uniqid(rand(), true);
         $this->session->setToken($token);
         $form = $configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);
