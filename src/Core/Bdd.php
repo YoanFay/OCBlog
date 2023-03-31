@@ -12,22 +12,33 @@ use PDO;
  */
 class Bdd
 {
+    /**
+     * @var null
+     */
     protected static $connect = null;
+
+    /**
+     * @var PDO
+     */
     public $bdd;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $host = '127.0.0.1';
-        $db   = 'blog';
+        $db = 'blog';
         $user = 'root';
         $pass = 'root';
 
 
         $dsn = "mysql:host=$host;dbname=$db";
         $options = [
-            PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_CLASS,
-            PDO::ATTR_EMULATE_PREPARES   => false,
+            PDO::ATTR_EMULATE_PREPARES => false,
             PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8mb4"
         ];
         try {
@@ -41,12 +52,23 @@ class Bdd
     //FONCTIONS
     //----------------------------------------
 
-    public function query($req, $params = [])
+    /**
+     * @param string $req    parameter
+     * @param array  $params parameter
+     * @return void
+     */
+    public function query(string $req, array $params = [])
     {
         $this->bdd->prepare($req)->execute($params);
     }
 
-    public function select($req, $class, $params = [])
+    /**
+     * @param string $req    parameter
+     * @param mixed  $class  parameter
+     * @param array  $params parameter
+     * @return array|false
+     */
+    public function select(string $req, $class, array $params = [])
     {
         $query = $this->bdd->prepare($req);
         $query->setFetchMode(PDO::FETCH_CLASS, $class);
@@ -54,7 +76,8 @@ class Bdd
         return $query->fetchAll();
     }
 
-    public function lastInsert(){
+    public function lastInsert()
+    {
         return $this->bdd->lastInsertId();
     }
 }

@@ -60,7 +60,6 @@ class UploadService
         $configRepository = new ConfigRepository();
 
         if ($testConfig && in_array($testImage, [true, 'noChange']) && in_array($testCv, [true, 'noChange'])) {
-
             $config->setImage($this->uploadGetFilename('image', $testImage, $config));
             $config->setCv($this->uploadGetFilename('cv', $testCv, $config));
 
