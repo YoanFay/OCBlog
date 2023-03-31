@@ -6,16 +6,27 @@ use App\Src\Core\Bdd;
 use App\Src\Entity\User;
 use Exception;
 
-class UserRepository{
+class UserRepository
+{
 
     private $bdd;
     private $class = User::class;
 
-    public function __construct(){
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
         $this->bdd = new BDD();
     }
 
-    public function add(User $user){
+    /**
+     * @param User $user    parameter
+     * @return bool|Exception
+     */
+    public function add(User $user)
+    {
 
         $infoUser = [
             'firstname' => $user->getFirstname(),
@@ -32,49 +43,61 @@ class UserRepository{
         try {
             $this->bdd->query($req, $infoUser);
             return true;
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return $e;
         }
 
     }
 
-    public function findOneBy(array $parameters = []){
+    /**
+     * @param array $parameters    parameter
+     * @return mixed|null
+     */
+    public function findOneBy(array $parameters = [])
+    {
 
         $req = 'SELECT * FROM user';
 
         $row = 0;
         $length = count($parameters);
 
-        if ($parameters !== []){
+        if ($parameters !== []) {
             $req .= ' WHERE ';
 
-            foreach($parameters as $key => $parameter){
+            foreach ($parameters as $key => $parameter) {
                 $req .= "$key = '$parameter'";
 
                 $row++;
 
-                if ($row !== $length){
+                if ($row !== $length) {
                     $req .= " AND ";
                 }
             }
         }
 
-        if($user = $this->bdd->select($req, $this->class)) {
+        if ($user = $this->bdd->select($req, $this->class)) {
             return $user[0];
-        }else{
-            return NULL;
         }
+
+        return NULL;
+
     }
 
-    public function find(int $id){
+    /**
+     * @param int $idUser    parameter
+     * @return mixed|null
+     */
+    public function find(int $idUser)
+    {
 
-        $req = 'SELECT * FROM user WHERE id = '.$id;
+        $req = 'SELECT * FROM user WHERE id = '.$idUser;
 
-        if($user = $this->bdd->select($req, $this->class)) {
+        if ($user = $this->bdd->select($req, $this->class)) {
             return $user[0];
-        }else{
-            return NULL;
         }
+
+        return NULL;
+
     }
 
 }

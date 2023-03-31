@@ -7,63 +7,93 @@ use App\Src\Entity\Category;
 use App\Src\Entity\Role;
 use Exception;
 
-class CategoryRepository{
+class CategoryRepository
+{
 
+    /**
+     * @var Bdd
+     */
     private $bdd;
+
+    /**
+     * @var string
+     */
     private $class = Category::class;
 
-    public function __construct(){
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
         $this->bdd = new BDD();
     }
+    // end __construct
 
-    public function findOneBy(array $parameters = []){
+    /**
+     * @param array $parameters    parameter
+     * @return mixed|null
+     */
+    public function findOneBy(array $parameters = [])
+    {
 
         $req = 'SELECT * FROM category';
 
         $row = 0;
         $length = count($parameters);
 
-        if ($parameters !== []){
+        if ($parameters !== []) {
             $req .= ' WHERE ';
 
-            foreach($parameters as $key => $parameter){
+            foreach ($parameters as $key => $parameter) {
                 $req .= "$key = '$parameter'";
 
                 $row++;
 
-                if ($row !== $length){
+                if ($row !== $length) {
                     $req .= " AND ";
                 }
             }
         }
 
-        if($category = $this->bdd->select($req, $this->class)) {
+        if ($category = $this->bdd->select($req, $this->class)) {
             return $category[0];
-        }else{
-            return NULL;
         }
+
+        return NULL;
+
     }
 
-    public function findAll(){
+    /**
+     * @return array|null
+     */
+    public function findAll()
+    {
 
         $req = 'SELECT * FROM category';
-        $categories = [];
 
-        if($categories = $this->bdd->select($req, $this->class)) {
+        if ($categories = $this->bdd->select($req, $this->class)) {
             return $categories;
-        }else{
-            return NULL;
         }
+
+        return NULL;
+
     }
 
-    public function find(int $id){
+    /**
+     * @param int $idCategory    parameter
+     * @return mixed|null
+     */
+    public function find(int $idCategory)
+    {
 
-        $req = "SELECT * FROM category WHERE id = ".$id;
+        $req = "SELECT * FROM category WHERE id = ".$idCategory;
 
-        if($category = $this->bdd->select($req, $this->class)) {
+        if ($category = $this->bdd->select($req, $this->class)) {
             return $category[0];
-        }else{
-            return NULL;
         }
+
+        return NULL;
+
     }
 }

@@ -8,14 +8,29 @@ use App\Src\Entity\Contact;
 class ContactRepository
 {
 
+    /**
+     * @var Bdd
+     */
     private $bdd;
+
+    /**
+     * @var string
+     */
     private $class = Contact::class;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->bdd = new Bdd();
     }
 
+    /**
+     * @param Contact $contact    parameter
+     * @return void
+     */
     public function insert(Contact $contact)
     {
 
@@ -31,6 +46,10 @@ class ContactRepository
         $this->bdd->query($req, $postInfo);
     }
 
+    /**
+     * @param Contact $contact    parameter
+     * @return void
+     */
     public function update(Contact $contact)
     {
         $req = 'UPDATE contact SET name = :name, mail = :mail, message = :message, created_at = :createdAt, process = :process, process_by = :processBy, process_at = :processAt, answer = :answer WHERE id = :id';
@@ -50,6 +69,9 @@ class ContactRepository
         $this->bdd->query($req, $postInfo);
     }
 
+    /**
+     * @return array|null
+     */
     public function findAll()
     {
 
@@ -57,12 +79,15 @@ class ContactRepository
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
+    /**
+     * @return array|null
+     */
     public function findNotProcess()
     {
 
@@ -70,12 +95,15 @@ class ContactRepository
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
+    /**
+     * @return array|null
+     */
     public function findAnswer()
     {
 
@@ -83,12 +111,15 @@ class ContactRepository
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
+    /**
+     * @return array|null
+     */
     public function findArchive()
     {
 
@@ -96,22 +127,26 @@ class ContactRepository
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
-    public function find($id)
+    /**
+     * @param int $idContact    parameter
+     * @return mixed|null
+     */
+    public function find(int $idContact)
     {
 
-        $req = 'SELECT * FROM contact WHERE id = ' . $id;
+        $req = 'SELECT * FROM contact WHERE id = '.$idContact;
 
         if ($contact = $this->bdd->select($req, $this->class)) {
             return $contact[0];
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 }

@@ -10,6 +10,7 @@ use App\Src\Validator\ContactValidator;
 class Contact extends Controller
 {
 
+
     /**
      * Formulaire pour faire une demande de contact
      *
@@ -21,9 +22,7 @@ class Contact extends Controller
         $validate = [];
         $request = new Request();
 
-
-        if ($this->valideForm($request, 'contact', 'contact')) {
-
+        if ($this->valideForm($request, 'contact', 'contact') === TRUE) {
             $contact = new \App\Src\Entity\Contact("default");
             $contact->setName($request->get('post', 'name'));
             $contact->setMail($request->get('post', 'mail'));
@@ -48,10 +47,15 @@ class Contact extends Controller
 
         $form = $contactForm->contact($validate, $token);
 
-        $this->render('contact/contact', [
-            'form' => $form->create()
-        ]);
+        $this->render(
+            'contact/contact', [
+                'form' => $form->create()
+            ]
+        );
+
     }
+    // end index()
+
 
     /**
      * Page pour voir toutes les demandes de contact
@@ -71,6 +75,7 @@ class Contact extends Controller
     /**
      * Formulaire pour répondre aux demandes de contact
      *
+     * @param int $id    parameter
      * @return void
      */
     public function answerContact(int $id)
@@ -86,7 +91,7 @@ class Contact extends Controller
         $contact = $contactRepository->find($id);
         $validate = [];
 
-        if ($this->valideForm($request, 'answer', 'Contact/answerContact/' . $id)) {
+        if ($this->valideForm($request, 'answer', 'Contact/answerContact/'.$id) === TRUE) {
             $contact->setProcess('answer');
             $contact->setProcessAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $contact->setProcessBy(Session::getAuth('user_id'));
@@ -97,21 +102,22 @@ class Contact extends Controller
             $validate = $contactValidator->validateAnswer();
 
             if ($validate === true) {
-                $message = 'Votre message : <br>' . $contact->getMessage() . '<br><br>Notre réponse : <br>' . $contact->getAnswer();
+                $message = 'Votre message : <br>'.$contact->getMessage().'<br><br>Notre réponse : <br>'.$contact->getAnswer();
 
-                $mailService = new MailService($contact->getMail(), "Réponse à votre demande de contact du " . date_create_from_format('Y-m-d H:i:s', $contact->getCreatedAt())->format('d-m-Y à H:i'), $message, $contact->getName());
+                $mailService = new MailService($contact->getMail(), "Réponse à votre demande de contact du ".date_create_from_format('Y-m-d H:i:s', $contact->getCreatedAt())->format('d-m-Y à H:i'), $message, $contact->getName());
 
-                if ($mailService->send()) {
+                if ($mailService->send() === TRUE) {
                     $contactRepository->update($contact);
-                    Session::setFlash('success', "Demande de contact envoyé");
+                    Session::setFlash('success', "Réponse envoyé");
                     $this->redirectTo('/');
-                } else {
-                    Session::setFlash('danger', "Demande de contact non envoyé");
-                    $this->redirectTo('/Contact/answerContact/' . $id);
                 }
 
+                Session::setFlash('danger', "Réponse non envoyé");
+                $this->redirectTo('/Contact/answerContact/'.$id);
             }
+
         }
+        // end if
 
         $token = uniqid(rand(), true);
 
@@ -119,18 +125,22 @@ class Contact extends Controller
 
         $form = $contactForm->answer($validate, $token, $id);
 
-        $this->render('contact/answerContact', [
-            'form' => $form->create(),
-            'contact' => $contact,
-        ]);
+        $this->render(
+            'contact/answerContact',
+            [
+                'form' => $form->create(),
+                'contact' => $contact,
+            ]
+        );
     }
 
     /**
      * Formulaire pour archiver les demandes de contact
      *
+     * @param int $idContact    parameter
      * @return void
      */
-    public function archiveContact(int $id)
+    public function archiveContact(int $idContact)
     {
 
         if (Session::getAuth('level') < 60) {
@@ -138,7 +148,7 @@ class Contact extends Controller
         }
 
         $contactRepository = new ContactRepository();
-        $contact = $contactRepository->find($id);
+        $contact = $contactRepository->find($idContact);
 
         $contact->setProcess('archived');
         $contact->setProcessAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
@@ -174,8 +184,11 @@ class Contact extends Controller
                 $contacts = $contactRepository->findNotProcess();
         }
 
-        $this->render('contact/box', [
-            'contacts' => $contacts
-        ]);
+        $this->render(
+            'contact/box',
+            [
+                'contacts' => $contacts
+            ]
+        );
     }
 }

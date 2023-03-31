@@ -36,7 +36,7 @@ class Comment extends Controller
         );
 
     }
-    //end listModerateCommentAjax()
+    // end listModerateCommentAjax()
 
 
     /**
@@ -55,8 +55,7 @@ class Comment extends Controller
         $commentRepository = new CommentRepository();
         $comment = $commentRepository->find($idComment);
 
-        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/'.$idComment)) {
-
+        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/'.$idComment) === TRUE) {
             $commentRepository->softDelete($idComment);
 
             Session::setFlash('success', 'Le commentaire à bien était supprimé');
@@ -145,7 +144,6 @@ class Comment extends Controller
         $testComment = [];
 
         if ($this->valideForm($request, 'updateComment', 'Comment/updateComment/'.$idComment) === TRUE) {
-
             $comment->setContent($request->get('post', 'content'));
             $comment->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $comment->setValidatedAt(Null);
@@ -164,7 +162,7 @@ class Comment extends Controller
                 Session::setFlash('success', 'Le commentaire à bien était modifié');
                 $this->redirectTo('/');
             }
-            //end if
+            // end if
         }
 
         $commentForm = new CommentForm();
