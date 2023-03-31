@@ -48,33 +48,53 @@ class UploadService
     }
 
     /**
-     * @param array|bool $testConfig
-     * @param array|bool $testImage
-     * @param array|bool $testCv
-     * @param Config     $config
-     * @param Session    $session
+     * @param array|bool $testConfig parameter
+     * @param array|bool $testImage  parameter
+     * @param array|bool $testCv     parameter
+     * @param Config     $config     parameter
+     * @param Session    $session    parameter
      * @return bool
      */
     public function UploadWithCheck($testConfig, $testImage, $testCv, Config $config, Session $session): bool
     {
-        $request = new Request();
         $configRepository = new ConfigRepository();
 
-        if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
+        if ($testConfig && in_array($testImage, [true, 'noChange']) && in_array($testCv, [true, 'noChange'])) {
 
-            if ($testImage !== 'noChange' && $filename = $this->uploadConfigImage(new File($request->get('file', 'image')))) {
-                $config->setImage($filename);
-            }
-
-            if ($testCv !== 'noChange' && $filename = $this->uploadConfigCv(new File($request->get('file', 'cv')))) {
-                $config->setCv($filename);
-            }
+            $config->setImage($this->uploadGetFilename('image', $testImage, $config));
+            $config->setCv($this->uploadGetFilename('cv', $testCv, $config));
 
             $configRepository->update($config);
             $session->setFlash('success', "Les informations ont bien été modifiées");
             return true;
         }
         return false;
+
+    }
+
+    /**
+     * @param string $choice parameter
+     * @param string $test   parameter
+     * @param Config $config parameter
+     * @return false|string|null
+     */
+    public function uploadGetFilename(string $choice, string $test, Config $config)
+    {
+        $request = new Request();
+
+        if ($test === "noChange") {
+            switch ($choice) {
+                case 'image':
+                    return $config->getImage();
+                case 'cv':
+                    return $config->getCv();
+                default:
+                    return null;
+            }
+        }
+
+        return $this->uploadConfigImage(new File($request->get('file', $choice)));
+
     }
 
     /**
