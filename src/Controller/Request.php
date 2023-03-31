@@ -4,15 +4,29 @@ namespace App\Src\Controller;
 
 class Request
 {
+    /**
+     * @var array
+     */
     private $file;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
-        $this->file = &$_FILES;
+        $this->file = $_FILES;
+
+        // End __construct()
     }
+
 
     /**
      * Fonction qui retourne les données stockée dans la request
+     *
+     * @param string $method parameter
+     * @param string $key    parameter
+     * @return mixed|null
      */
     public function get(string $method, string $key)
     {

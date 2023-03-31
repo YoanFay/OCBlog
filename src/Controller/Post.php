@@ -188,8 +188,9 @@ class Post extends Controller
             $testPost = (new PostValidator($post))->validate();
 
             if ($testPost === true && ($testImage === true || $testImage === 'noChange')) {
+                $uploadService = new UploadService();
 
-                if ($testImage !== 'noChange' && $image->getName() && $filename = UploadService::uploadConfigImage($image)) {
+                if ($testImage !== 'noChange' && $image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
                     $post->setImage($filename);
                 } else if ($testImage !== 'noChange') {
                     $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
@@ -261,7 +262,8 @@ class Post extends Controller
 
             if ($testPost === true && $testFile === true) {
                 if ($file->getName()) {
-                    if ($filename = UploadService::uploadPost($file)) {
+                    $uploadService = new UploadService();
+                    if ($filename = $uploadService->uploadPost($file)) {
                         $post->setImage($filename);
                     } else {
                         $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");

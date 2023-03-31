@@ -105,11 +105,13 @@ class Admin extends Controller
         }
 
         if ($testConfig === true && ($testImage === true || $testImage === 'noChange') && ($testCv === true || $testCv === 'noChange')) {
-            if ($testImage !== 'noChange' && $filename = UploadService::uploadConfigImage(new File($request->get('file', 'image')))) {
+            $uploadService = new UploadService();
+
+            if ($testImage !== 'noChange' && $filename = $uploadService->uploadConfigImage(new File($request->get('file', 'image')))) {
                 $config->setImage($filename);
             }
 
-            if ($testCv !== 'noChange' && $filename = UploadService::uploadConfigCv(new File($request->get('file', 'cv')))) {
+            if ($testCv !== 'noChange' && $filename = $uploadService->uploadConfigCv(new File($request->get('file', 'cv')))) {
                 $config->setCv($filename);
             }
 

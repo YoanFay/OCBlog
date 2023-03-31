@@ -2,18 +2,35 @@
 
 namespace App\Src\Core;
 
+use App\Src\Entity\File;
+
 class Upload
 {
 
+    /**
+     * @var File
+     */
     private $file;
+
+    /**
+     * @var string
+     */
     private $where;
 
-    public function __construct($file, $where)
+
+    /**
+     * @param File   $file  parameter
+     * @param string $where parameter
+     */
+    public function __construct(File $file, string $where)
     {
         $this->file = $file;
         $this->where = $where;
     }
 
+    /**
+     * @return false|string
+     */
     function addFile()
     {
 
@@ -31,6 +48,9 @@ class Upload
         return $filename;
     }
 
+    /**
+     * @return false|string
+     */
     function addPdf()
     {
 
@@ -48,7 +68,11 @@ class Upload
         return $filename;
     }
 
-    function addFileByUrl($url)
+    /**
+     * @param string $url parameter
+     * @return false|string
+     */
+    function addFileByUrl(string $url)
     {
 
         $path = "img/".$this->where."/";

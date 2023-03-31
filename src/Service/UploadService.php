@@ -3,43 +3,66 @@
 namespace App\Src\Service;
 
 use App\Src\Core\Upload;
+use App\Src\Entity\File;
 
 class UploadService
 {
 
-    static public function uploadPost($file)
+
+    /**
+     * @param File $file parameter
+     * @return false|string
+     */
+    public function uploadPost(File $file)
     {
         $upload = new Upload($file, 'post');
 
         return $upload->addFile();
     }
 
-    static public function uploadUser($file)
+    /**
+     * @param File $file parameter
+     * @return false|string
+     */
+    public function uploadUser(File $file)
     {
         $upload = new Upload($file, 'user');
 
         return $upload->addFile();
     }
 
-    static public function uploadConfigImage($file)
+    /**
+     * @param File $file parameter
+     * @return false|string
+     */
+    public function uploadConfigImage(File $file)
     {
         $upload = new Upload($file, 'config');
 
         return $upload->addFile();
     }
 
-    static public function uploadConfigCv($file)
+    /**
+     * @param File $file parameter
+     * @return false|string
+     */
+    public function uploadConfigCv(File $file)
     {
         $upload = new Upload($file, 'config');
 
         return $upload->addPdf();
     }
 
-    static public function uploadDefaultUser($firstname, $lastname)
+    /**
+     * @param string $firstname parameter
+     * @param string $lastname  parameter
+     * @return false|string
+     */
+    public function uploadDefaultUser(string $firstname, string $lastname)
     {
-       $upload = new Upload(null, 'user');
+        $upload = new Upload(null, 'user');
 
-       return $upload->addFileByUrl('https://ui-avatars.com/api/?name='.$firstname.'+'.$lastname.'&background=random&format=png');
+        return $upload->addFileByUrl('https://ui-avatars.com/api/?name='.$firstname.'+'.$lastname.'&background=random&format=png');
     }
 
 }

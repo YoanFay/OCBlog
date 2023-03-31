@@ -3,14 +3,29 @@
 namespace App\Src\Service;
 
 use App\Src\Controller\Request;
+use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class MailService
 {
+    /**
+     * @var PHPMailer
+     */
     private $mail;
+    /**
+     * @var Request
+     */
     private $request;
 
-    public function __construct($mailTo, $subject, $message, $name)
+
+    /**
+     * @param string $mailTo  parameter
+     * @param string $subject parameter
+     * @param string $message parameter
+     * @param string $name    parameter
+     * @throws Exception
+     */
+    public function __construct(string $mailTo, string $subject, string $message, string $name)
     {
         $this->request = new Request();
 
@@ -30,9 +45,13 @@ class MailService
         $this->mail->Body = $message;
     }
 
-    public function send()
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function send(): bool
     {
-        if (!$this->mail->send()) {
+        if ($this->mail->send() === FALSE) {
             return false;
         }
 

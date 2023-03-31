@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Src\Core;
-ini_set('display_errors', 1);
 
 use App\Src\Controller\Homepage;
 use App\Src\Controller\Request;
@@ -10,6 +9,10 @@ use App\Src\Controller\Session;
 class Main
 {
 
+
+    /**
+     * @return void
+     */
     public function start()
     {
         $params = [];
@@ -20,25 +23,26 @@ class Main
         }
 
         if ($params[0] !== '') {
+            $controller = '\\App\\Src\\Controller\\'.ucfirst(array_shift($params));
 
-            $controller = '\\App\\Src\\Controller\\' . ucfirst(array_shift($params));
-
-            //Check si controller existe
             $controller = new $controller();
 
             $action = (isset($params[0])) ? array_shift($params) : 'index';
 
-            if (method_exists($controller, $action)) {
+            if (method_exists($controller, $action) === TRUE) {
                 (isset($params[0])) ? $controller->$action(implode(",", $params)) : $controller->$action();
             } else {
-                http_response_code(404);
-                echo "Cette page n'existe pas";
+                $errorController = new Homepage();
+                $errorController->notFound();
             }
         } else {
             $controller = new Homepage();
 
             $controller->index();
         }
+        
+        // End start()
     }
+
 
 }

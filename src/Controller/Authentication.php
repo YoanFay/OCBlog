@@ -54,14 +54,15 @@ class Authentication extends Controller
             $validate = $userValidator->validate();
 
             if ($validate === true) {
+                $uploadService = new UploadService();
                 if ($testFile === true) {
-                    if ($filename = UploadService::uploadUser($file)) {
+                    if ($filename = $uploadService->uploadUser($file)) {
                         $user->setAvatar($filename);
                     } else {
                         $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 } else if ($testFile === 'default') {
-                    if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
+                    if ($filename = $uploadService->uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
                         $user->setAvatar($filename);
                     } else {
                         $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");

@@ -3,6 +3,9 @@
 namespace App\Src\Controller;
 
 use Dotenv\Dotenv;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
@@ -10,25 +13,21 @@ abstract class Controller
 {
 
     /**
-     * @var FilesystemLoader
-     */
-    private $loader;
-
-    /**
      * @var Environment
      */
     protected $twig;
-
     /**
      * @var Dotenv
      */
     protected $dotenv;
-
     /**
      * @var Session
      */
     protected $session;
-
+    /**
+     * @var FilesystemLoader
+     */
+    private $loader;
 
     /**
      * Constructeur
@@ -46,14 +45,20 @@ abstract class Controller
 
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
+
+        // End __construct()
     }
+
 
     /**
      * Vérifie que le formulaire est valide
      *
+     * @param Request $request  parameter
+     * @param string  $formName parameter
+     * @param string  $referer  parameter
      * @return bool
      */
-    public function valideForm(Request $request, string $formName, string $referer)
+    public function valideForm(Request $request, string $formName, string $referer): bool
     {
 
         if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === $this->session->getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
@@ -74,15 +79,15 @@ abstract class Controller
     }
 
     /**
-     * Affiche la page sélectionner
-     *
-     * @return null
+     * @param string $fichier
+     * @param array  $donnees
+     * @return void
      */
-    public function render($fichier, array $donnees = [])
+    public function render(string $fichier, array $donnees = [])
     {
-
-        extract($donnees);
-
-        $this->twig->display($fichier.'.html.twig', $donnees);
+        try {
+            $this->twig->display($fichier.'.html.twig', $donnees);
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+        }
     }
 }

@@ -24,13 +24,28 @@ class Homepage extends Controller
         $flash = $this->session->getFlash();
         $this->session->resetFlash();
 
-        $this->render('homepage/homepage', [
-            'image' => $config->getImage(),
-            'catch_phrase' => $config->getCatchPhrase(),
-            'cv' => $config->getCv(),
-            'title' => $config->getTitle(),
-            'posts' => $posts,
-            'flash' => $flash,
-        ]);
+        $this->render(
+            'homepage/homepage',
+            [
+                'image' => $config->getImage(),
+                'catch_phrase' => $config->getCatchPhrase(),
+                'cv' => $config->getCv(),
+                'title' => $config->getTitle(),
+                'posts' => $posts,
+                'flash' => $flash,
+            ]
+        );
+    }
+
+    /**
+     * Page 404
+     *
+     * @return void
+     */
+    public function notFound()
+    {
+        $this->render(
+            'homepage/notFound'
+        );
     }
 }
