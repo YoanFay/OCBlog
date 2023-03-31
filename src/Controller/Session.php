@@ -5,19 +5,24 @@ namespace App\Src\Controller;
 use App\Src\Entity\Role;
 use App\Src\Entity\User;
 
-class Session extends Controller
+class Session
 {
 
+
+    public function __construct()
+    {
+        session_start();
+    }
 
     /**
      * Fonction qui retourne l'utilisateur s'il y en a un
      *
-     * @param string|null $key    parameter
+     * @param string|null $key parameter
      * @return mixed|null
      */
-    public static function getAuth(string $key = null)
+    public function getAuth(string $key = null)
     {
-        $session = $_SESSION;
+        $session = $this->getSession();
 
         if (isset($session['auth']) === FALSE) {
             return null;
@@ -26,17 +31,23 @@ class Session extends Controller
         return $key ? $session['auth'][$key] : $session['auth'];
 
     }
-    //end getAuth()
 
+    /**
+     * @return array
+     */
+    public function getSession(): array
+    {
+        return $_SESSION;
+    }
 
     /**
      * Fonction qui enregistre l'utilisateur
      *
-     * @param User $user    parameter
-     * @param Role $role    parameter
+     * @param User $user parameter
+     * @param Role $role parameter
      * @return void
      */
-    public static function setAuth(User $user, Role $role)
+    public function setAuth(User $user, Role $role)
     {
         $auth
             = [
@@ -46,7 +57,18 @@ class Session extends Controller
             'level' => $role->getLevel(),
         ];
 
-        $_SESSION['auth'] = $auth;
+        $this->setSession('auth', $auth);
+
+    }
+
+    /**
+     * @param string $key
+     * @param mixed $content
+     * @return void
+     */
+    public function setSession(string $key, $content)
+    {
+        $_SESSION[$key] = $content;
     }
 
     /**
@@ -54,19 +76,28 @@ class Session extends Controller
      *
      * @return void
      */
-    public static function logout(): void
+    public function logout(): void
     {
-        unset($_SESSION['auth']);
+        $this->unsetSession('auth');
+    }
+
+    /**
+     * @param string $key
+     * @return void
+     */
+    public function unsetSession(string $key)
+    {
+        unset($_SESSION[$key]);
     }
 
     /**
      * Fonction qui paramètre une flash
      *
-     * @param string $type    parameter
-     * @param string $message    parameter
+     * @param string $type parameter
+     * @param string $message parameter
      * @return void
      */
-    public static function setFlash(string $type, string $message): void
+    public function setFlash(string $type, string $message): void
     {
 
         $flash
@@ -75,18 +106,18 @@ class Session extends Controller
             'message' => $message,
         ];
 
-        $_SESSION['flash'] = $flash;
+        $this->setSession('flash', $flash);
     }
 
     /**
      * Fonction qui affiche une flash dans le footer s'il y en a
      *
-     * @param string|null $key    parameter
+     * @param string|null $key parameter
      * @return mixed|null
      */
-    public static function getFlash(string $key = null)
+    public function getFlash(string $key = null)
     {
-        $session = $_SESSION;
+        $session = $this->getSession();
 
         if (isset($session['flash']) === FALSE) {
             return null;
@@ -100,20 +131,20 @@ class Session extends Controller
      *
      * @return void
      */
-    public static function resetFlash(): void
+    public function resetFlash(): void
     {
-        unset($_SESSION['flash']);
+        $this->unsetSession('flash');
     }
 
     /**
      * Fonction qui paramètre le token pour les formulaires
      *
-     * @param string $token    parameter
+     * @param string $token parameter
      * @return void
      */
-    public static function setToken(string $token): void
+    public function setToken(string $token): void
     {
-        $_SESSION['token'] = $token;
+        $this->setSession('token', $token);
     }
 
     /**
@@ -121,9 +152,11 @@ class Session extends Controller
      *
      * @return mixed|null
      */
-    public static function getToken()
+    public function getToken()
     {
-        return ($_SESSION['token'] ?? null);
+        $session = $this->getSession();
+
+        return ($session['token'] ?? null);
     }
 
 }

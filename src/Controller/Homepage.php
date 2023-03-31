@@ -25,11 +25,10 @@ class Homepage extends Controller
     {
         $postRepository = new PostRepository();
         $configRepository = new ConfigRepository();
-
         $config = $configRepository->findOne();
         $posts = $postRepository->findLastPublishedPost();
-        $flash = Session::getFlash();
-        Session::resetFlash();
+        $flash = $this->session->getFlash();
+        $this->session->resetFlash();
 
         $this->render('homepage/homepage', [
             'image' => $config->getImage(),

@@ -58,13 +58,13 @@ class Authentication extends Controller
                     if ($filename = UploadService::uploadUser($file)) {
                         $user->setAvatar($filename);
                     } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 } else if ($testFile === 'default') {
                     if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
                         $user->setAvatar($filename);
                     } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 
@@ -78,7 +78,7 @@ class Authentication extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $authenticationForm->signUp($token, $testFile, $validate);
 
@@ -113,14 +113,14 @@ class Authentication extends Controller
             $role = $roleRepository->find($user->getRoleId());
 
             if (password_verify($password, $user->getPassword()) === TRUE) {
-                Session::setAuth($user, $role);
+                $this->session->setAuth($user, $role);
                 $this->redirectTo('/');
             }
         }
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $authenticationForm->signIn($token);
 
@@ -139,7 +139,7 @@ class Authentication extends Controller
      */
     public function logout()
     {
-        Session::logout();
+        $this->session->logout();
         $this->redirectTo('/');
     }
 }

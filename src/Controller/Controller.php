@@ -12,19 +12,20 @@ abstract class Controller
     private $loader;
     protected $twig;
     protected $dotenv;
+    protected $session;
 
     public function __construct()
     {
         require_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
-        session_start();
+        $this->session = new Session();
 
-        $this->loader=new FilesystemLoader('../templates');
+        $this->loader = new FilesystemLoader('../templates');
 
-        $this->twig=new Environment($this->loader);
+        $this->twig = new Environment($this->loader);
 
-        $this->twig->addGlobal('user', Session::getAuth());
+        $this->twig->addGlobal('user', $this->session->getAuth());
 
-        $this->dotenv=Dotenv::createImmutable('..\\');
+        $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
     }
 
@@ -36,7 +37,7 @@ abstract class Controller
     public function valideForm(Request $request, string $formName, string $referer)
     {
 
-        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
+        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === $this->session->getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
             return true;
         }
 
@@ -58,7 +59,7 @@ abstract class Controller
      *
      * @return null
      */
-    public function render($fichier, array $donnees=[])
+    public function render($fichier, array $donnees = [])
     {
 
         extract($donnees);

@@ -28,7 +28,7 @@ class ContactRepository
     }
 
     /**
-     * @param Contact $contact    parameter
+     * @param Contact $contact parameter
      * @return void
      */
     public function insert(Contact $contact)
@@ -47,7 +47,7 @@ class ContactRepository
     }
 
     /**
-     * @param Contact $contact    parameter
+     * @param Contact $contact parameter
      * @return void
      */
     public function update(Contact $contact)
@@ -72,7 +72,7 @@ class ContactRepository
     /**
      * @return array|null
      */
-    public function findAll()
+    public function findAll(): ?array
     {
 
         $req = 'SELECT * FROM contact';
@@ -88,7 +88,7 @@ class ContactRepository
     /**
      * @return array|null
      */
-    public function findNotProcess()
+    public function findNotProcess(): ?array
     {
 
         $req = 'SELECT * FROM contact WHERE process IS NULL';
@@ -104,7 +104,7 @@ class ContactRepository
     /**
      * @return array|null
      */
-    public function findAnswer()
+    public function findAnswer(): ?array
     {
 
         $req = 'SELECT c.*, CONCAT(u.firstname, " ", u.lastname) AS user FROM contact c INNER JOIN user u on c.process_by = u.id WHERE process = "answer"';
@@ -120,7 +120,7 @@ class ContactRepository
     /**
      * @return array|null
      */
-    public function findArchive()
+    public function findArchive(): ?array
     {
 
         $req = 'SELECT c.*, CONCAT(u.firstname, " ", u.lastname) AS user FROM contact c INNER JOIN user u on c.process_by = u.id WHERE process = "archived"';
@@ -134,7 +134,7 @@ class ContactRepository
     }
 
     /**
-     * @param int $idContact    parameter
+     * @param int $idContact parameter
      * @return mixed|null
      */
     public function find(int $idContact)

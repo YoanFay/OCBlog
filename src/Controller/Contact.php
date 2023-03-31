@@ -36,14 +36,14 @@ class Contact extends Controller
                 $contactRepository = new ContactRepository();
 
                 $contactRepository->insert($contact);
-                Session::setFlash('success', "Demande de contact envoyé");
+                $this->session->setFlash('success', "Demande de contact envoyé");
                 $this->redirectTo('/');
             }
         }
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $contactForm->contact($validate, $token);
 
@@ -54,7 +54,7 @@ class Contact extends Controller
         );
 
     }
-    // end index()
+    // End index()
 
 
     /**
@@ -65,7 +65,7 @@ class Contact extends Controller
     public function listContact()
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -75,13 +75,13 @@ class Contact extends Controller
     /**
      * Formulaire pour répondre aux demandes de contact
      *
-     * @param int $id    parameter
+     * @param int $id parameter
      * @return void
      */
     public function answerContact(int $id)
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -94,7 +94,7 @@ class Contact extends Controller
         if ($this->valideForm($request, 'answer', 'Contact/answerContact/'.$id) === TRUE) {
             $contact->setProcess('answer');
             $contact->setProcessAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-            $contact->setProcessBy(Session::getAuth('user_id'));
+            $contact->setProcessBy($this->session->getAuth('user_id'));
             $contact->setAnswer($request->get('post', 'answer'));
 
             $contactValidator = new ContactValidator($contact);
@@ -108,20 +108,20 @@ class Contact extends Controller
 
                 if ($mailService->send() === TRUE) {
                     $contactRepository->update($contact);
-                    Session::setFlash('success', "Réponse envoyé");
+                    $this->session->setFlash('success', "Réponse envoyé");
                     $this->redirectTo('/');
                 }
 
-                Session::setFlash('danger', "Réponse non envoyé");
+                $this->session->setFlash('danger', "Réponse non envoyé");
                 $this->redirectTo('/Contact/answerContact/'.$id);
             }
 
         }
-        // end if
+        // End if
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $contactForm->answer($validate, $token, $id);
 
@@ -137,13 +137,13 @@ class Contact extends Controller
     /**
      * Formulaire pour archiver les demandes de contact
      *
-     * @param int $idContact    parameter
+     * @param int $idContact parameter
      * @return void
      */
     public function archiveContact(int $idContact)
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -152,10 +152,10 @@ class Contact extends Controller
 
         $contact->setProcess('archived');
         $contact->setProcessAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-        $contact->setProcessBy(Session::getAuth('user_id'));
+        $contact->setProcessBy($this->session->getAuth('user_id'));
 
         $contactRepository->update($contact);
-        Session::setFlash('success', "Demande de contact archivé");
+        $this->session->setFlash('success', "Demande de contact archivé");
         $this->redirectTo('/Contact/listContact');
     }
 

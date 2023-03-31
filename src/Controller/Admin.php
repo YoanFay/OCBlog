@@ -27,7 +27,7 @@ class Admin extends Controller
         $commentRepository = new CommentRepository();
         $config = $configRepository->findOne();
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -68,7 +68,7 @@ class Admin extends Controller
     public function updateConfig()
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
         $configRepository = new ConfigRepository();
@@ -79,7 +79,7 @@ class Admin extends Controller
 
         if (!$this->valideForm($request, 'updateConfig', 'Admin/updateConfig')) {
             $token = uniqid(rand(), true);
-            Session::setToken($token);
+            $this->session->setToken($token);
             $form = $configForm->updateConfig([], [], [], $config, $token);
             $this->render('admin/update', ['form' => $form->create()]);
             return;
@@ -114,12 +114,12 @@ class Admin extends Controller
             }
 
             $configRepository->update($config);
-            Session::setFlash('success', "Les informations ont bien été modifiées");
+            $this->session->setFlash('success', "Les informations ont bien été modifiées");
             $this->redirectTo('/');
         }
-        
+
         $token = uniqid(rand(), true);
-        Session::setToken($token);
+        $this->session->setToken($token);
         $form = $configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);
         $this->render('admin/update', ['form' => $form->create()]);
     }

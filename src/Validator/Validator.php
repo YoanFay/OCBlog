@@ -5,35 +5,26 @@ namespace App\Src\Validator;
 class Validator
 {
 
-    public function intBetween($parameter, $min, $max)
+    /**
+     * @param mixed $parameter parameter
+     * @return bool
+     */
+    public function validateIsNotEmpty($parameter): bool
     {
-
-        if ($parameter >= $min && $parameter <= $max) {
-            return true;
-        }
-
-        return false;
-
-    }
-
-    public function validateIsNotEmpty($parameter){
-        if (!empty($parameter) && strlen($parameter) > 0){
+        if (empty($parameter) === FALSE && strlen($parameter) > 0) {
             return true;
         }
 
         return false;
     }
 
-    public function validateIsString($parameter){
-        if (is_string($parameter)){
-            return true;
-        }
-
-        return false;
-    }
-
-    public function validateIsGranted($parameter, $length){
-        if (strlen($parameter) <= $length){
+    /**
+     * @param mixed $parameter parameter
+     * @return bool
+     */
+    public function validateIsString($parameter): bool
+    {
+        if (is_string($parameter) === TRUE) {
             return true;
         }
 

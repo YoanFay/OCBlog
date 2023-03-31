@@ -48,8 +48,8 @@ class Comment
     private $user_id;
 
     /**
-     * @param bool $init    parameter
-     * @param int|null $idPost    parameter
+     * @param bool $init parameter
+     * @param int|null $idPost parameter
      */
     public function __construct(bool $init = false, int $idPost = null)
     {
@@ -59,16 +59,17 @@ class Comment
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      * @return void
      */
     public function default(int $id)
     {
+        $session = new Session();
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
         $this->updated_at = null;
         $this->deleted_at = null;
         $this->post_id = $id;
-        $this->user_id = Session::getAuth('user_id');
+        $this->user_id = $session->getAuth('user_id');
     }
 
     /**
@@ -80,7 +81,7 @@ class Comment
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -96,7 +97,7 @@ class Comment
     }
 
     /**
-     * @param string $content    parameter
+     * @param string $content parameter
      */
     public function setContent(string $content): void
     {
@@ -112,7 +113,7 @@ class Comment
     }
 
     /**
-     * @param mixed $created_at    parameter
+     * @param mixed $created_at parameter
      */
     public function setCreatedAt($created_at): void
     {
@@ -128,7 +129,7 @@ class Comment
     }
 
     /**
-     * @param mixed $validated_at    parameter
+     * @param mixed $validated_at parameter
      */
     public function setValidatedAt($validated_at): void
     {
@@ -144,7 +145,7 @@ class Comment
     }
 
     /**
-     * @param mixed $updated_at    parameter
+     * @param mixed $updated_at parameter
      */
     public function setUpdatedAt($updated_at): void
     {
@@ -160,7 +161,7 @@ class Comment
     }
 
     /**
-     * @param mixed $deleted_at    parameter
+     * @param mixed $deleted_at parameter
      */
     public function setDeletedAt($deleted_at): void
     {
@@ -176,7 +177,7 @@ class Comment
     }
 
     /**
-     * @param int $post_id    parameter
+     * @param int $post_id parameter
      */
     public function setPostId(int $post_id): void
     {
@@ -192,7 +193,7 @@ class Comment
     }
 
     /**
-     * @param int $user_id    parameter
+     * @param int $user_id parameter
      */
     public function setUserId(int $user_id): void
     {

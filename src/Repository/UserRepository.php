@@ -22,7 +22,7 @@ class UserRepository
     }
 
     /**
-     * @param User $user    parameter
+     * @param User $user parameter
      * @return bool|Exception
      */
     public function add(User $user)
@@ -50,7 +50,7 @@ class UserRepository
     }
 
     /**
-     * @param array $parameters    parameter
+     * @param array $parameters parameter
      * @return mixed|null
      */
     public function findOneBy(array $parameters = [])
@@ -84,7 +84,7 @@ class UserRepository
     }
 
     /**
-     * @param int $idUser    parameter
+     * @param int $idUser parameter
      * @return mixed|null
      */
     public function find(int $idUser)

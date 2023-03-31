@@ -31,8 +31,9 @@ class PostRepository
     }
     //end __construct()
 
+
     /**
-     * @param array $parameters    parameter
+     * @param array $parameters parameter
      * @return mixed|null
      */
     public function findOneBy(array $parameters = [])
@@ -66,7 +67,7 @@ class PostRepository
 
 
     /**
-     * @param array $parameters    parameter
+     * @param array $parameters parameter
      * @return array|null
      */
     public function findBy(array $parameters = []): ?array
@@ -124,7 +125,7 @@ class PostRepository
     }
 
     /**
-     * @param Category $category_id    parameter
+     * @param Category $category_id parameter
      * @return array|null
      */
     public function findPublishedPostByCategory(Category $category_id)
@@ -140,7 +141,7 @@ class PostRepository
     }
 
     /**
-     * @param Category $category_id    parameter
+     * @param Category $category_id parameter
      * @return array|null
      */
     public function findNotPublishedPostByCategory(Category $category_id): ?array
@@ -236,7 +237,7 @@ class PostRepository
     }
 
     /**
-     * @param Category $category_id    parameter
+     * @param Category $category_id parameter
      * @return array|null
      */
     public function findNotPublishedCommentPostByCategory(Category $category_id)
@@ -252,7 +253,7 @@ class PostRepository
     }
 
     /**
-     * @param Post $post    parameter
+     * @param Post $post parameter
      * @return void
      */
     public function insert(Post $post)
@@ -277,7 +278,7 @@ class PostRepository
     }
 
     /**
-     * @param int $idPost    parameter
+     * @param int $idPost parameter
      * @return mixed|null
      */
     public function find(int $idPost)
@@ -294,7 +295,7 @@ class PostRepository
     }
 
     /**
-     * @param int $idPost    parameter
+     * @param int $idPost parameter
      * @return Exception|void
      */
     public function delete(int $idPost)

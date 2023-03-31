@@ -6,9 +6,17 @@
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Admin.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Comment.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Contact.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Controller.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Controller.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Homepage.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Homepage.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Post.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Session.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Session.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Comment.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Post.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CategoryRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/CommentRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CommentRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ConfigRepository.php" afterDir="false" />
@@ -16,6 +24,12 @@
       <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/RoleRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/RoleRepository.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/UserRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/UserRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/CommentValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/CommentValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/ConfigValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/ConfigValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/ContactValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/ContactValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/FileValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/FileValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/PostValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/PostValidator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Validator/UserValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/UserValidator.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,29 +69,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/UwAmp/www/OCBlog&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "H:/UwAmp/www/OCBlog",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.editor",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;mysql&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="H:\UwAmp\www\OCBlog" />
@@ -154,7 +168,7 @@
       <workItem from="1679556825109" duration="19131000" />
       <workItem from="1679643153029" duration="21821000" />
       <workItem from="1680190642020" duration="7153000" />
-      <workItem from="1680242106504" duration="2114000" />
+      <workItem from="1680242106504" duration="6988000" />
     </task>
     <servers />
   </component>

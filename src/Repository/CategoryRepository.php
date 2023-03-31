@@ -28,10 +28,10 @@ class CategoryRepository
     {
         $this->bdd = new BDD();
     }
-    // end __construct
+    // End __construct
 
     /**
-     * @param array $parameters    parameter
+     * @param array $parameters parameter
      * @return mixed|null
      */
     public function findOneBy(array $parameters = [])
@@ -81,7 +81,7 @@ class CategoryRepository
     }
 
     /**
-     * @param int $idCategory    parameter
+     * @param int $idCategory parameter
      * @return mixed|null
      */
     public function find(int $idCategory)

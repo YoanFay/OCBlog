@@ -29,7 +29,7 @@ class RoleRepository
     }
 
     /**
-     * @param array $parameters    parameter
+     * @param array $parameters parameter
      * @return mixed|null
      */
     public function findOneBy(array $parameters = [])
@@ -63,7 +63,7 @@ class RoleRepository
     }
 
     /**
-     * @param int $idRole    parameter
+     * @param int $idRole parameter
      * @return mixed|null
      */
     public function find(int $idRole)

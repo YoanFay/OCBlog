@@ -33,7 +33,7 @@ class Post extends Controller
             'post/index',
             [
                 "categories" => $categories,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
             ]
         );
 
@@ -55,7 +55,7 @@ class Post extends Controller
 
             $comment->setContent($request->get('post', 'content'));
 
-            if (Session::getAuth('level') === 99) {
+            if ($this->session->getAuth('level') === 99) {
                 $comment->setValidatedAt($comment->getCreatedAt());
             }
 
@@ -67,7 +67,7 @@ class Post extends Controller
                 $commentRepository = new CommentRepository();
                 $commentRepository->insert($comment);
 
-                Session::setFlash('success', "Le commentaire a bien été envoyé");
+                $this->session->setFlash('success', "Le commentaire a bien été envoyé");
             }
             //endif
         }
@@ -82,7 +82,7 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $commentForm->addComment($idPost, $testComment, $token);
 
@@ -91,7 +91,7 @@ class Post extends Controller
             [
                 "post" => $post,
                 "comments" => $comments,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
                 'form' => $form->create(),
             ]
         );
@@ -105,7 +105,7 @@ class Post extends Controller
     public function deletePost($idPost)
     {
 
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         if ($user === FALSE) {
             $this->redirectTo('/');
         }
@@ -124,7 +124,7 @@ class Post extends Controller
 
             $postRepository->softDelete($idPost);
 
-            Session::setFlash('success', "L'article à bien était supprimé");
+            $this->session->setFlash('success', "L'article à bien était supprimé");
 
             $this->redirectTo('/');
 
@@ -134,7 +134,7 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $postForm->deletePost($idPost, $token);
 
@@ -154,7 +154,7 @@ class Post extends Controller
      */
     public function updatePost($idPost)
     {
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         $postRepository = new PostRepository();
         $post = $postRepository->find($idPost);
         if ($user === FALSE || $user['user_id'] !== $post->getUserId()) {
@@ -172,7 +172,7 @@ class Post extends Controller
                 ->setCategoryId($request->get('post', 'category'))
                 ->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
 
-            if (Session::getAuth('level') === 99) {
+            if ($this->session->getAuth('level') === 99) {
                 $post->setPublishedAt($post->getUpdatedAt());
             } else {
                 $post->setPublishedAt(Null);
@@ -191,14 +191,14 @@ class Post extends Controller
 
                 if ($testImage !== 'noChange' && $image->getName() && $filename = UploadService::uploadConfigImage($image)) {
                     $post->setImage($filename);
-                } elseif ($testImage !== 'noChange') {
-                    Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                } else if ($testImage !== 'noChange') {
+                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                 }
             }
 
             $postRepository->update($post);
 
-            Session::setFlash('success', "L'article à bien était modifié");
+            $this->session->setFlash('success', "L'article à bien était modifié");
             $this->redirectTo('/');
         }
 
@@ -211,7 +211,7 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $postForm->updatePost($categoryTab, $testPost, $idPost, $post->getContent(), $token, $post->getImage());
 
@@ -230,7 +230,7 @@ class Post extends Controller
      */
     public function add()
     {
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         if (!$user) {
             $this->redirectTo('/');
         }
@@ -245,7 +245,7 @@ class Post extends Controller
             $post->setContent($request->get('post', 'content'));
             $post->setCategoryId($request->get('post', 'category'));
 
-            if (Session::getAuth('level') === 99) {
+            if ($this->session->getAuth('level') === 99) {
                 $post->setPublishedAt($post->getCreatedAt());
             }
 
@@ -264,14 +264,14 @@ class Post extends Controller
                     if ($filename = UploadService::uploadPost($file)) {
                         $post->setImage($filename);
                     } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 
                 $postRepository = new PostRepository();
                 $postRepository->insert($post);
 
-                Session::setFlash('success', "L'article a bien été envoyé");
+                $this->session->setFlash('success', "L'article a bien été envoyé");
 
                 $this->redirectTo('/');
             }
@@ -292,7 +292,7 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $postForm->addPost($categoryTab, $testPost, $testFile, $token);
 
@@ -313,7 +313,7 @@ class Post extends Controller
     public function listPostNotValidate()
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -324,7 +324,7 @@ class Post extends Controller
             'post/moderate',
             [
                 "categories" => $categories,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
             ]
         );
 
@@ -338,7 +338,7 @@ class Post extends Controller
     public function publishedPost($idPost)
     {
 
-        if (Session::getAuth() === FALSE) {
+        if ($this->session->getAuth() === FALSE) {
             $this->redirectTo('/');
         }
 
@@ -350,7 +350,7 @@ class Post extends Controller
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
-            Session::setFlash('success', "L'article a bien été publié");
+            $this->session->setFlash('success', "L'article a bien été publié");
 
             $this->redirectTo('/');
 
@@ -360,7 +360,7 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $postForm->publishPost($idPost, $token);
 
@@ -396,7 +396,7 @@ class Post extends Controller
             'post/listPostAjax',
             [
                 "posts" => $posts,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
             ]
         );
     }
@@ -423,7 +423,7 @@ class Post extends Controller
             'post/listModeratePostAjax',
             [
                 "posts" => $posts,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
             ]
         );
     }
@@ -446,10 +446,10 @@ class Post extends Controller
         }
 
         $this->render(
-            'comment/listModerateCommentPostAjax',
+        'comment/listModerateCommentPostAjax',
             [
                 "posts" => $posts,
-                "user" => Session::getAuth(),
+                "user" => $this->session->getAuth(),
             ]
         );
     }

@@ -74,11 +74,12 @@ class Post
      */
     public function default()
     {
+        $session = new Session();
         $this->image = null;
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
         $this->updated_at = null;
         $this->deleted_at = null;
-        $this->user_id = Session::getAuth('user_id');
+        $this->user_id = $session->getAuth('user_id');
     }
 
     /**
@@ -90,7 +91,7 @@ class Post
     }
 
     /**
-     * @param int $id    parameter
+     * @param int $id parameter
      */
     public function setId(int $id): void
     {
@@ -106,7 +107,7 @@ class Post
     }
 
     /**
-     * @param string $content    parameter
+     * @param string $content parameter
      */
     public function setContent(string $content): void
     {
@@ -123,7 +124,7 @@ class Post
     }
 
     /**
-     * @param string|null $image    parameter
+     * @param string|null $image parameter
      */
     public function setImage(?string $image): void
     {
@@ -139,7 +140,7 @@ class Post
     }
 
     /**
-     * @param mixed $createdAt    parameter
+     * @param mixed $createdAt parameter
      */
     public function setCreatedAt($createdAt): void
     {
@@ -155,7 +156,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $publishedAt    parameter
+     * @param mixed|null $publishedAt parameter
      */
     public function setPublishedAt($publishedAt): void
     {
@@ -171,7 +172,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $updatedAt    parameter
+     * @param mixed|null $updatedAt parameter
      */
     public function setUpdatedAt($updatedAt): void
     {
@@ -187,7 +188,7 @@ class Post
     }
 
     /**
-     * @param mixed|null $deletedAt    parameter
+     * @param mixed|null $deletedAt parameter
      */
     public function setDeletedAt($deletedAt): void
     {
@@ -203,7 +204,7 @@ class Post
     }
 
     /**
-     * @param string $excerpt    parameter
+     * @param string $excerpt parameter
      */
     public function setExcerpt(string $excerpt): void
     {
@@ -219,7 +220,7 @@ class Post
     }
 
     /**
-     * @param int $categoryId    parameter
+     * @param int $categoryId parameter
      */
     public function setCategoryId(int $categoryId): void
     {
@@ -235,7 +236,7 @@ class Post
     }
 
     /**
-     * @param int $userId    parameter
+     * @param int $userId parameter
      */
     public function setUserId(int $userId): void
     {

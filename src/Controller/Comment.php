@@ -12,13 +12,13 @@ class Comment extends Controller
 
 
     /**
-     * @param int $postId    parameter
+     * @param int $postId parameter
      * @return void
      */
     public function moderateComment(int $postId)
     {
 
-        if (Session::getAuth('level') < 60) {
+        if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
 
@@ -46,7 +46,7 @@ class Comment extends Controller
      */
     public function deleteComment($idComment)
     {
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         if (!$user) {
             $this->redirectTo('/');
         }
@@ -58,7 +58,7 @@ class Comment extends Controller
         if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/'.$idComment) === TRUE) {
             $commentRepository->softDelete($idComment);
 
-            Session::setFlash('success', 'Le commentaire à bien était supprimé');
+            $this->session->setFlash('success', 'Le commentaire à bien était supprimé');
 
             $this->redirectTo('/Post/OnePost/'.$comment->getPostId());
 
@@ -68,7 +68,7 @@ class Comment extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $commentForm->deleteComment($idComment, $token, $comment->getPostId());
 
@@ -88,7 +88,7 @@ class Comment extends Controller
      */
     public function publishedComment($id)
     {
-        if (Session::getAuth() === FALSE) {
+        if ($this->session->getAuth() === FALSE) {
             $this->redirectTo('/');
         }
 
@@ -101,7 +101,7 @@ class Comment extends Controller
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
 
-            Session::setFlash('success', "L'article a bien été publié");
+            $this->session->setFlash('success', "L'article a bien été publié");
 
             $this->redirectTo('/');
 
@@ -111,7 +111,7 @@ class Comment extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $commentForm->publishComment($id, $token, $comment->getPostId());
 
@@ -132,7 +132,7 @@ class Comment extends Controller
      */
     public function updateComment($idComment)
     {
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         $commentRepository = new CommentRepository();
         $comment = $commentRepository->find($idComment);
         if ($user === FALSE || $user['user_id'] !== $comment->getUserId()) {
@@ -148,7 +148,7 @@ class Comment extends Controller
             $comment->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $comment->setValidatedAt(Null);
 
-            if (Session::getAuth('level') === 99) {
+            if ($this->session->getAuth('level') === 99) {
                 $comment->setValidatedAt($comment->getUpdatedAt());
             }
 
@@ -159,7 +159,7 @@ class Comment extends Controller
             if ($testComment === true) {
                 $commentRepository->update($comment);
 
-                Session::setFlash('success', 'Le commentaire à bien était modifié');
+                $this->session->setFlash('success', 'Le commentaire à bien était modifié');
                 $this->redirectTo('/');
             }
             // end if
@@ -169,7 +169,7 @@ class Comment extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $commentForm->updateComment($testComment, $idComment, $comment->getContent(), $token, $comment->getPostId());
 
