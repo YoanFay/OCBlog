@@ -10,7 +10,7 @@ class Post
     private const EXCERPT_SIZE = 70;
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -50,12 +50,12 @@ class Post
     private $excerpt;
 
     /**
-     * @var int
+     * @var integer
      */
     private $category_id;
 
     /**
-     * @var int
+     * @var integer
      */
     private $user_id;
 
@@ -69,7 +69,7 @@ class Post
             $this->default();
         }
 
-    }//end __construct
+    }//end __construct()
 
 
     /**

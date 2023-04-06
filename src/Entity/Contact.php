@@ -6,7 +6,7 @@ class Contact
 {
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -41,7 +41,7 @@ class Contact
     private $process_at;
 
     /**
-     * @var int
+     * @var integer
      */
     private $process_by;
 

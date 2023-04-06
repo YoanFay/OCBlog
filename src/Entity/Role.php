@@ -6,7 +6,7 @@ class Role
 {
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -21,7 +21,7 @@ class Role
     private $code;
 
     /**
-     * @var int
+     * @var integer
      */
     private $level;
 

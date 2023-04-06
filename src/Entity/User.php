@@ -6,7 +6,7 @@ class User
 {
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -41,7 +41,7 @@ class User
     private $avatar;
 
     /**
-     * @var int
+     * @var integer
      */
     private $role_id;
 

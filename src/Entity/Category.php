@@ -5,7 +5,7 @@ namespace App\Src\Entity;
 class Category
 {
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 

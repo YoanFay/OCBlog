@@ -6,7 +6,7 @@ class Config
 {
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 

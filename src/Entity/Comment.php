@@ -8,7 +8,7 @@ class Comment
 {
 
     /**
-     * @var int
+     * @var integer
      */
     private $id;
 
@@ -38,12 +38,12 @@ class Comment
     private $deleted_at;
 
     /**
-     * @var int
+     * @var integer
      */
     private $post_id;
 
     /**
-     * @var int
+     * @var integer
      */
     private $user_id;
 
