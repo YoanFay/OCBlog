@@ -241,12 +241,14 @@ class PostRepository
 
     /**
      * @param Post $post parameter
-     * @return Exception|void
+     * @return bool
      */
     public function update(Post $post)
     {
 
         $req = 'UPDATE post SET content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
+
+        var_dump($post->getImage());
 
         $postInfo
             = [
@@ -261,8 +263,10 @@ class PostRepository
 
         try {
             $this->bdd->query($req, $postInfo);
+
+            return true;
         } catch (Exception $e) {
-            return $e;
+            return false;
         }
     }
 

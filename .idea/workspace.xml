@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Controller/Comment.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Comment.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Contact.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Contact.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Core/Form.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Form.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/config/config_63ef32149063f.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/img/config/config_6426b8fd504ab.webp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Core/Main.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Core/Main.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Service/CommentService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/CommentService.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/ContactValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/ContactValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/Validator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/Validator.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/PostService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/PostService.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Service/UploadService.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Service/UploadService.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +153,7 @@
       <workItem from="1680190642020" duration="7153000" />
       <workItem from="1680242106504" duration="18809000" />
       <workItem from="1680765328841" duration="13253000" />
-      <workItem from="1680785181100" duration="4397000" />
+      <workItem from="1680785181100" duration="7565000" />
     </task>
     <servers />
   </component>

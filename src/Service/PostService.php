@@ -62,6 +62,39 @@ class PostService
 
     }
 
+    /**
+     * @param Request $request parameter
+     * @param Post    $post    parameter
+     * @param Session $session parameter
+     * @return Post
+     */
+    public function setImage(Request $request, Post $post, Session $session): Post
+    {
+        $testImage = 'noChange';
+        $image = false;
+
+        if ($request->get('file', 'image')['size'] > 0) {
+            $image = new File($request->get('file', 'image'));
+            $fileValidator = new FileValidator($image);
+            $testImage = $fileValidator->validateImage();
+        }
+
+        $testPost = (new PostValidator($post))->validate();
+
+        if ($image !== false && $testPost === true && ($testImage === true || $testImage === 'noChange')) {
+            $uploadService = new UploadService();
+
+            if ($testImage !== 'noChange') {
+                $session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                if ($image->getName() && $filename = $uploadService->uploadPost($image)) {
+                    $post->setImage($filename);
+                    $session->resetFlash();
+                }
+            }
+        }
+
+        return $post;
+    }
 
     /**
      * @param Post           $post           parameter
@@ -82,27 +115,18 @@ class PostService
             $post->setPublishedAt($post->getUpdatedAt());
         }
 
-        $testImage = 'noChange';
-        $image = false;
-        if ($request->get('file', 'image')['size'] > 0) {
-            $image = new File($request->get('file', 'image'));
-            $fileValidator = new FileValidator($image);
-            $testImage = $fileValidator->validateImage();
-        }
+        if ($request->get('post', 'deleteImage') !== 'on') {
 
-        $testPost = (new PostValidator($post))->validate();
+            $post = $this->setImage($request, $post, $session);
 
-        if ($image !== false && $testPost === true && ($testImage === true || $testImage === 'noChange')) {
-            $uploadService = new UploadService();
-
-            if ($testImage !== 'noChange') {
-                $session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                if ($image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
-                    $post->setImage($filename);
-                    $session->resetFlash();
-                }
+            if ($postRepository->update($post)) {
+                $session->setFlash('success', "L'article à bien était modifié");
+                return true;
             }
         }
+
+        unlink('/img/post/'.$post->getImage());
+        $post->setImage(null);
 
         if ($postRepository->update($post)) {
             $session->setFlash('success', "L'article à bien était modifié");

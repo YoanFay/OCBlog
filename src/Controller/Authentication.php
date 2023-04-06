@@ -62,10 +62,10 @@ class Authentication extends Controller
                         $this->session->resetFlash();
                     }
                 } else if ($testFile === 'default') {
+                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     if ($filename = $uploadService->uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
+                        $this->session->resetFlash();
                         $user->setAvatar($filename);
-                    } else {
-                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 
@@ -130,7 +130,9 @@ class Authentication extends Controller
                 'form' => $form->create()
             ]
         );
-    }
+
+    }//end signIn()
+    
 
     /**
      * Fonction de déconnexion

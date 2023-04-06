@@ -92,30 +92,27 @@ class UploadService
             }
         }
 
-        return $this->uploadConfigImage(new File($request->get('file', $choice)));
+        return $this->uploadConfig(new File($request->get('file', $choice)), $choice);
+
 
     }
 
     /**
-     * @param File $file parameter
+     * @param File   $file   parameter
+     * @param string $choice parameter
      * @return false|string
      */
-    public function uploadConfigImage(File $file)
+    public function uploadConfig(File $file, string $choice)
     {
         $upload = new Upload($file, 'config');
 
-        return $upload->addFile();
-    }
+        switch ($choice) {
+        case 'image':
+            return $upload->addFile();
+        case 'cv':
+            return $upload->addPdf();
+        }
 
-    /**
-     * @param File $file parameter
-     * @return false|string
-     */
-    public function uploadConfigCv(File $file)
-    {
-        $upload = new Upload($file, 'config');
-
-        return $upload->addPdf();
     }
 
 }

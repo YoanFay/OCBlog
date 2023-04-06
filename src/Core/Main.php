@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Src\Core;
+ini_set('display_errors', 1);
+
 
 use App\Src\Controller\Homepage;
 use App\Src\Controller\Request;
@@ -40,7 +42,7 @@ class Main
 
             $controller->index();
         }
-        
+
         // End start()
     }
 
