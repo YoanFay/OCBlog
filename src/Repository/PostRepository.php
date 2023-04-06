@@ -225,17 +225,6 @@ class PostRepository
      * @param int $idPost parameter
      * @return Exception|void
      */
-    public function delete(int $idPost)
-    {
-        $req = "DELETE FROM post WHERE id = ".$idPost;
-
-        try {
-            $this->bdd->query($req);
-        } catch (Exception $e) {
-            return $e;
-        }
-    }
-
     public function softDelete(int $idPost)
     {
         $req = 'UPDATE post SET deleted_at = "'.date_format(new \DateTime(), 'Y-m-d H:i:s').'" WHERE id = '.$idPost;
@@ -247,6 +236,10 @@ class PostRepository
         }
     }
 
+    /**
+     * @param Post $post parameter
+     * @return Exception|void
+     */
     public function update(Post $post)
     {
 

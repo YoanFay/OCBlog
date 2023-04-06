@@ -95,10 +95,12 @@ class PostService
         if ($image !== false && $testPost === true && ($testImage === true || $testImage === 'noChange')) {
             $uploadService = new UploadService();
 
-            if ($testImage !== 'noChange' && $image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
-                $post->setImage($filename);
-            } else if ($testImage !== 'noChange') {
+            if ($testImage !== 'noChange') {
                 $session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                if ($image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
+                    $post->setImage($filename);
+                    $session->resetFlash();
+                }
             }
         }
 
