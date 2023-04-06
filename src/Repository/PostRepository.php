@@ -13,7 +13,6 @@ class PostRepository
     /**
      * @var Bdd
      */
-
     private $bdd;
 
     /**
@@ -65,7 +64,7 @@ class PostRepository
                     $req .= " AND ";
                 }
             }
-        }//end if
+        }//end if()
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -73,7 +72,7 @@ class PostRepository
 
         return NULL;
 
-    }
+    }//end findBy()
 
 
     /**
@@ -91,6 +90,7 @@ class PostRepository
         return NULL;
 
     }
+
 
     /**
      * @param Category $category_id parameter
@@ -111,6 +111,7 @@ class PostRepository
         }
 
         return NULL;
+        
     }
 
     /**

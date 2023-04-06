@@ -34,7 +34,8 @@ class Form
         $this->formCode .= $attributes ? $this->addAttribute($attributes).'>' : '>';
 
         return $this;
-    }
+
+    }//end startForm()
 
 
     /**
@@ -58,6 +59,7 @@ class Form
         return $str;
     }
 
+    
     /**
      * @return $this
      */

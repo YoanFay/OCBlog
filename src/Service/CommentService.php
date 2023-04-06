@@ -39,7 +39,6 @@ class CommentService
             $session->setFlash('success', "Le commentaire a bien été envoyé");
         }
 
-    }
-    
+    }//end addComment()
 
 }

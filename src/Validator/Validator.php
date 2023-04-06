@@ -17,8 +17,10 @@ class Validator
         }
 
         return false;
-    }
 
+    }//end validateIsNotEmpty()
+
+    
     /**
      * @param mixed $parameter parameter
      * @return bool

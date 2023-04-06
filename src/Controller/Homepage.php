@@ -10,6 +10,8 @@ use App\Src\Repository\PostRepository;
 
 class Homepage extends Controller
 {
+
+
     /**
      * Page d'accueil
      *
@@ -35,7 +37,9 @@ class Homepage extends Controller
                 'flash' => $flash,
             ]
         );
-    }
+
+    }//end index()
+
 
     /**
      * Page 404

@@ -50,9 +50,7 @@ abstract class Controller
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
 
-        //end __construct()
-        
-    }
+    }//end __construct()
 
 
     /**
@@ -71,6 +69,7 @@ abstract class Controller
         }
 
         return false;
+
     }
 
 
@@ -98,4 +97,5 @@ abstract class Controller
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
         }
     }
+    
 }

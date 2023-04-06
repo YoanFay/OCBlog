@@ -6,6 +6,7 @@ use App\Src\Form\ContactForm;
 use App\Src\Repository\ContactRepository;
 use App\Src\Service\MailService;
 use App\Src\Validator\ContactValidator;
+use PHPMailer\PHPMailer\Exception;
 
 class Contact extends Controller
 {
@@ -53,8 +54,7 @@ class Contact extends Controller
             ]
         );
 
-    }
-    // End index()
+    }//end index()
 
 
     /**
@@ -70,15 +70,17 @@ class Contact extends Controller
         }
 
         $this->render('contact/listContact');
+
     }
 
     /**
      * Formulaire pour répondre aux demandes de contact
      *
-     * @param int $id parameter
+     * @param int $idContact parameter
      * @return void
+     * @throws Exception
      */
-    public function answerContact(int $id)
+    public function answerContact(int $idContact)
     {
 
         if ($this->session->getAuth('level') < 60) {
@@ -88,10 +90,10 @@ class Contact extends Controller
         $request = new Request();
         $contactForm = new ContactForm();
         $contactRepository = new ContactRepository();
-        $contact = $contactRepository->find($id);
+        $contact = $contactRepository->find($idContact);
         $validate = [];
 
-        if ($this->valideForm($request, 'answer', 'Contact/answerContact/'.$id) === TRUE) {
+        if ($this->valideForm($request, 'answer', 'Contact/answerContact/'.$idContact) === TRUE) {
             $contact->setProcess('answer');
             $contact->setProcessAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $contact->setProcessBy($this->session->getAuth('user_id'));
@@ -113,17 +115,17 @@ class Contact extends Controller
                 }
 
                 $this->session->setFlash('danger', "Réponse non envoyé");
-                $this->redirectTo('/Contact/answerContact/'.$id);
-            }
+                $this->redirectTo('/Contact/answerContact/'.$idContact);
+
+            }//end if()
 
         }
-        // End if
 
         $token = uniqid(rand(), true);
 
         $this->session->setToken($token);
 
-        $form = $contactForm->answer($validate, $token, $id);
+        $form = $contactForm->answer($validate, $token, $idContact);
 
         $this->render(
             'contact/answerContact',
@@ -162,13 +164,13 @@ class Contact extends Controller
     /**
      * Fonction qui définit ce qui sera afficher dans la liste des demandes de contact
      *
+     * @param int $choice parameter
      * @return void
      */
-    public function choiceBox($choice)
+    public function choiceBox(int $choice)
     {
 
         $contactRepository = new ContactRepository();
-
 
         switch ($choice) {
         case 1:

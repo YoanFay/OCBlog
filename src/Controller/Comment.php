@@ -35,19 +35,19 @@ class Comment extends Controller
             ]
         );
 
-    }
-    // end listModerateCommentAjax()
+    }// end moderateComment()
 
 
     /**
      * Page de confirmation pour supprimer un commentaire
      *
+     * @param int $idComment parameter
      * @return void
      */
-    public function deleteComment($idComment)
+    public function deleteComment(int $idComment)
     {
         $user = $this->session->getAuth();
-        if (!$user) {
+        if ($user === FALSE) {
             $this->redirectTo('/');
         }
 
@@ -79,14 +79,16 @@ class Comment extends Controller
                 'comment' => $comment
             ]
         );
+
     }
 
     /**
      * Page de confirmation pour publier un commentaire
      *
+     * @param int $idComment parameter
      * @return void
      */
-    public function publishedComment($id)
+    public function publishedComment(int $idComment)
     {
         if ($this->session->getAuth() === FALSE) {
             $this->redirectTo('/');
@@ -94,9 +96,9 @@ class Comment extends Controller
 
         $request = new Request();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
+        $comment = $commentRepository->find($idComment);
 
-        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/'.$id)) {
+        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/'.$idComment) === TRUE) {
 
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
@@ -113,7 +115,7 @@ class Comment extends Controller
 
         $this->session->setToken($token);
 
-        $form = $commentForm->publishComment($id, $token, $comment->getPostId());
+        $form = $commentForm->publishComment($idComment, $token, $comment->getPostId());
 
         $this->render(
             'comment/publish',
@@ -128,9 +130,10 @@ class Comment extends Controller
     /**
      * Formulaire pour modifier un commentaire
      *
+     * @param int $idComment parameter
      * @return void
      */
-    public function updateComment($idComment)
+    public function updateComment(int $idComment)
     {
         $user = $this->session->getAuth();
         $commentRepository = new CommentRepository();
@@ -161,8 +164,8 @@ class Comment extends Controller
 
                 $this->session->setFlash('success', 'Le commentaire à bien était modifié');
                 $this->redirectTo('/');
-            }
-            // end if
+            }// end if
+
         }
 
         $commentForm = new CommentForm();
