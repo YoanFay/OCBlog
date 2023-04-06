@@ -19,7 +19,6 @@ class Request
         $this->file = $_FILES;
 
         //end __construct()
-
     }
 
 
@@ -49,4 +48,5 @@ class Request
         }
 
     }
+
 }

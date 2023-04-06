@@ -2,18 +2,13 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Entity\Comment as CommentEntity;
-use App\Src\Entity\File;
 use App\Src\Form\CommentForm;
 use App\Src\Form\PostForm;
 use App\Src\Repository\CategoryRepository;
 use App\Src\Repository\CommentRepository;
 use App\Src\Repository\PostRepository;
-use App\Src\Service\UploadService;
-use App\Src\Validator\CommentValidator;
-use App\Src\Validator\FileValidator;
-use App\Src\Validator\PostValidator;
-use App\Src\Entity\Post as PostEntity;
+use App\Src\Service\CommentService;
+use App\Src\Service\PostService;
 
 class Post extends Controller
 {
@@ -37,39 +32,27 @@ class Post extends Controller
             ]
         );
 
+        //end index()
     }
+
 
     /**
      * Page pour voir un article
      *
+     * @param int $idPost parameter
      * @return void
      */
-    public function onePost($idPost)
+    public function onePost(int $idPost)
     {
         $testComment = [];
 
         $request = new Request();
 
         if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$idPost)) {
-            $comment = new CommentEntity("default", $idPost);
 
-            $comment->setContent($request->get('post', 'content'));
+            $commentService = new CommentService();
 
-            if ($this->session->getAuth('level') === 99) {
-                $comment->setValidatedAt($comment->getCreatedAt());
-            }
-
-            $commentValidator = new CommentValidator($comment);
-
-            $testComment = $commentValidator->validate();
-
-            if ($testComment === true) {
-                $commentRepository = new CommentRepository();
-                $commentRepository->insert($comment);
-
-                $this->session->setFlash('success', "Le commentaire a bien été envoyé");
-            }
-            //endif
+            $commentService->addComment($idPost, $request, $this->session);
         }
 
         $postRepository = new PostRepository();
@@ -166,41 +149,12 @@ class Post extends Controller
         $testPost = [];
 
         if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost)) {
+            $postService = new PostService();
 
-            $post->setContent($request->get('post', 'content'))
-                ->setExcerpt(substr($request->get('post', 'content'), 0, 70))
-                ->setCategoryId($request->get('post', 'category'))
-                ->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-
-            if ($this->session->getAuth('level') === 99) {
-                $post->setPublishedAt($post->getUpdatedAt());
-            } else {
-                $post->setPublishedAt(Null);
+            if ($postService->updatePost($post, $request, $this->session, $postRepository)) {
+                $this->redirectTo('/');
             }
 
-            $testImage = 'noChange';
-            if ($request->get('file', 'image')['size'] > 0) {
-                $image = new File($request->get('file', 'image'));
-                $fileValidator = new FileValidator($image);
-                $testImage = $fileValidator->validateImage();
-            }
-
-            $testPost = (new PostValidator($post))->validate();
-
-            if ($testPost === true && ($testImage === true || $testImage === 'noChange')) {
-                $uploadService = new UploadService();
-
-                if ($testImage !== 'noChange' && $image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
-                    $post->setImage($filename);
-                } else if ($testImage !== 'noChange') {
-                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                }
-            }
-
-            $postRepository->update($post);
-
-            $this->session->setFlash('success', "L'article à bien était modifié");
-            $this->redirectTo('/');
         }
 
         $categoryTab = [];
@@ -241,40 +195,9 @@ class Post extends Controller
         $testFile = [];
 
         if ($this->valideForm($request, 'addPost', 'Post/add')) {
-            $post = new PostEntity("default");
+            $postService = new PostService();
 
-            $post->setContent($request->get('post', 'content'));
-            $post->setCategoryId($request->get('post', 'category'));
-
-            if ($this->session->getAuth('level') === 99) {
-                $post->setPublishedAt($post->getCreatedAt());
-            }
-
-            $postValidator = new PostValidator($post);
-
-            $testPost = $postValidator->validate();
-
-            $file = new File($request->get('file', 'image'));
-
-            $fileValidator = new FileValidator($file);
-
-            $testFile = $fileValidator->validateImage();
-
-            if ($testPost === true && $testFile === true) {
-                if ($file->getName()) {
-                    $uploadService = new UploadService();
-                    if ($filename = $uploadService->uploadPost($file)) {
-                        $post->setImage($filename);
-                    } else {
-                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                    }
-                }
-
-                $postRepository = new PostRepository();
-                $postRepository->insert($post);
-
-                $this->session->setFlash('success', "L'article a bien été envoyé");
-
+            if ($postService->addPost($request, $this->session)) {
                 $this->redirectTo('/');
             }
         }
