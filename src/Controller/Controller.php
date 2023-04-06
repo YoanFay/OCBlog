@@ -38,7 +38,7 @@ abstract class Controller
      */
     public function __construct()
     {
-        require_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
+        include_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
         $this->session = new Session();
 
         $this->loader = new FilesystemLoader('../templates');
@@ -50,8 +50,8 @@ abstract class Controller
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
 
-        //end __construct()
     }
+    //end __construct()
 
 
     /**
@@ -84,6 +84,7 @@ abstract class Controller
         header('Location: '.$url);
     }
 
+
     /**
      * @param string $fichier parameter
      * @param array  $donnees parameter
@@ -94,6 +95,7 @@ abstract class Controller
         try {
             $this->twig->display($fichier.'.html.twig', $donnees);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
+            
         }
     }
 }
