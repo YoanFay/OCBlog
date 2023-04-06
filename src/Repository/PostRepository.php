@@ -84,14 +84,14 @@ class PostRepository
             foreach ($parameters as $key => $parameter) {
 
                 switch ($parameter) {
-                    case "is not null":
-                        $req .= "$key IS NOT NULL";
-                        break;
-                    case "is null":
-                        $req .= "$key IS NULL";
-                        break;
-                    default:
-                        $req .= "$key = '$parameter'";
+                case "is not null":
+                    $req .= "$key IS NOT NULL";
+                    break;
+                case "is null":
+                    $req .= "$key IS NULL";
+                    break;
+                default:
+                    $req .= "$key = '$parameter'";
                 }
 
                 $row++;

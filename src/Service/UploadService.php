@@ -83,12 +83,12 @@ class UploadService
 
         if ($test === "noChange") {
             switch ($choice) {
-                case 'image':
-                    return $config->getImage();
-                case 'cv':
-                    return $config->getCv();
-                default:
-                    return null;
+            case 'image':
+                return $config->getImage();
+            case 'cv':
+                return $config->getCv();
+            default:
+                return null;
             }
         }
 

@@ -71,7 +71,7 @@ class CommentRepository
 
     /**
      * @param array $parameters parameter
-     * @param array $sorts parameter
+     * @param array $sorts      parameter
      * @return array|null
      */
     public function findBy(array $parameters = [], array $sorts = [])
@@ -83,14 +83,14 @@ class CommentRepository
             $clauses = [];
             foreach ($parameters as $key => $parameter) {
                 switch ($parameter) {
-                    case "is not null":
-                        $clauses[] = "$key IS NOT NULL";
-                        break;
-                    case "is null":
-                        $clauses[] = "$key IS NULL";
-                        break;
-                    default:
-                        $clauses[] = "$key = '$parameter'";
+                case "is not null":
+                    $clauses[] = "$key IS NOT NULL";
+                    break;
+                case "is null":
+                    $clauses[] = "$key IS NULL";
+                    break;
+                default:
+                    $clauses[] = "$key = '$parameter'";
                 }
             }
             $req .= implode(" AND ", $clauses);

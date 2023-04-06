@@ -171,17 +171,17 @@ class Contact extends Controller
 
 
         switch ($choice) {
-            case 1:
-                $contacts = $contactRepository->findNotProcess();
-                break;
-            case 2:
-                $contacts = $contactRepository->findAnswer();
-                break;
-            case 3:
-                $contacts = $contactRepository->findArchive();
-                break;
-            default:
-                $contacts = $contactRepository->findNotProcess();
+        case 1:
+            $contacts = $contactRepository->findNotProcess();
+            break;
+        case 2:
+            $contacts = $contactRepository->findAnswer();
+            break;
+        case 3:
+            $contacts = $contactRepository->findArchive();
+            break;
+        default:
+            $contacts = $contactRepository->findNotProcess();
         }
 
         $this->render(

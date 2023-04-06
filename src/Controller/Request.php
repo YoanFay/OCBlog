@@ -34,19 +34,19 @@ class Request
     {
 
         switch ($method) {
-            case 'post':
-                return filter_input(INPUT_POST, $key);
-            case 'get':
-                return filter_input(INPUT_GET, $key);
-            case 'server':
-                return filter_input(INPUT_SERVER, $key);
-            case 'env':
-                return filter_input(INPUT_ENV, $key);
-            case 'file':
-                return $this->file[$key];
-            default:
-                return NULL;
+        case 'post':
+            return filter_input(INPUT_POST, $key);
+        case 'get':
+            return filter_input(INPUT_GET, $key);
+        case 'server':
+            return filter_input(INPUT_SERVER, $key);
+        case 'env':
+            return filter_input(INPUT_ENV, $key);
+        case 'file':
+            return $this->file[$key];
+        default:
+            return NULL;
         }
+
     }
-    
 }
