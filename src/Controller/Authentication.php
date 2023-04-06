@@ -56,10 +56,10 @@ class Authentication extends Controller
             if ($validate === true) {
                 $uploadService = new UploadService();
                 if ($testFile === true) {
+                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     if ($filename = $uploadService->uploadUser($file)) {
                         $user->setAvatar($filename);
-                    } else {
-                        $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                        $this->session->resetFlash();
                     }
                 } else if ($testFile === 'default') {
                     if ($filename = $uploadService->uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
@@ -73,8 +73,8 @@ class Authentication extends Controller
                 $userRepository->add($user);
 
                 $this->redirectTo('/Authentication/signIn');
-            }
-            //end if
+            }//end if
+
         }
 
         $token = uniqid(rand(), true);
@@ -89,9 +89,8 @@ class Authentication extends Controller
                 'form' => $form->create()
             ]
         );
-
-        //end signUp()
-    }
+        
+    }//end signUp()
 
     /**
      * Formulaire de connexion

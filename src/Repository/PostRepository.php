@@ -13,6 +13,7 @@ class PostRepository
     /**
      * @var Bdd
      */
+
     private $bdd;
     /**
      * @var string
@@ -27,8 +28,7 @@ class PostRepository
     {
         $this->bdd = new BDD();
 
-    }
-    //end __construct()
+    }//end __construct()
 
 
     /**
@@ -47,7 +47,6 @@ class PostRepository
             $req .= ' WHERE ';
 
             foreach ($parameters as $key => $parameter) {
-
                 switch ($parameter) {
                 case "is not null":
                     $req .= "$key IS NOT NULL";
@@ -65,7 +64,7 @@ class PostRepository
                     $req .= " AND ";
                 }
             }
-        }
+        }//end if
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -87,6 +86,7 @@ class PostRepository
         }
 
         return NULL;
+
     }
 
     /**
@@ -188,18 +188,18 @@ class PostRepository
 
         $req = 'INSERT INTO post VALUES(NULL, :content, :image, :createdAt, :publishedAt, :updatedAt, :deletedAt, :excerpt, :category, :user)';
 
-        $postInfo =
-            [
-                'content' => $post->getContent(),
-                'image' => $post->getImage(),
-                'createdAt' => $post->getCreatedAt(),
-                'publishedAt' => $post->getPublishedAt(),
-                'updatedAt' => $post->getUpdatedAt(),
-                'deletedAt' => $post->getDeletedAt(),
-                'excerpt' => $post->getExcerpt(),
-                'category' => $post->getCategoryId(),
-                'user' => $post->getUserId(),
-            ];
+        $postInfo
+            = [
+            'content' => $post->getContent(),
+            'image' => $post->getImage(),
+            'createdAt' => $post->getCreatedAt(),
+            'publishedAt' => $post->getPublishedAt(),
+            'updatedAt' => $post->getUpdatedAt(),
+            'deletedAt' => $post->getDeletedAt(),
+            'excerpt' => $post->getExcerpt(),
+            'category' => $post->getCategoryId(),
+            'user' => $post->getUserId(),
+        ];
 
         $this->bdd->query($req, $postInfo);
     }

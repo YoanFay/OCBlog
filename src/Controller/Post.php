@@ -32,8 +32,7 @@ class Post extends Controller
             ]
         );
 
-        //end index()
-    }
+    }//end index()
 
 
     /**
@@ -48,8 +47,7 @@ class Post extends Controller
 
         $request = new Request();
 
-        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$idPost)) {
-
+        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$idPost) === TRUE) {
             $commentService = new CommentService();
 
             $commentService->addComment($idPost, $request, $this->session);
@@ -80,12 +78,14 @@ class Post extends Controller
         );
     }
 
+
     /**
      * Page de confirmation pour supprimer un article
      *
+     * @param int $idPost parameter
      * @return void
      */
-    public function deletePost($idPost)
+    public function deletePost(int $idPost)
     {
 
         $user = $this->session->getAuth();
@@ -97,8 +97,7 @@ class Post extends Controller
         $postRepository = new PostRepository();
         $post = $postRepository->find($idPost);
 
-        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/'.$idPost)) {
-
+        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/'.$idPost) === TRUE) {
             $file = "/img/post/".$post->getImage();
             if (file_exists($file)) {
                 unlink($file);
@@ -110,7 +109,6 @@ class Post extends Controller
             $this->session->setFlash('success', "L'article à bien était supprimé");
 
             $this->redirectTo('/');
-
         }
 
         $postForm = new PostForm();
@@ -148,7 +146,7 @@ class Post extends Controller
 
         $testPost = [];
 
-        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost)) {
+        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost) === TRUE) {
             $postService = new PostService();
 
             if ($postService->updatePost($post, $request, $this->session, $postRepository) === TRUE) {
@@ -186,7 +184,7 @@ class Post extends Controller
     public function add()
     {
         $user = $this->session->getAuth();
-        if (!$user) {
+        if ($user === FALSE) {
             $this->redirectTo('/');
         }
 
@@ -194,7 +192,7 @@ class Post extends Controller
         $testPost = [];
         $testFile = [];
 
-        if ($this->valideForm($request, 'addPost', 'Post/add')) {
+        if ($this->valideForm($request, 'addPost', 'Post/add') === TRUE) {
             $postService = new PostService();
 
             if ($postService->addPost($request, $this->session) === TRUE) {
@@ -271,7 +269,7 @@ class Post extends Controller
         $postRepository = new PostRepository();
         $post = $postRepository->find($idPost);
 
-        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/'.$idPost)) {
+        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/'.$idPost) === TRUE) {
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
@@ -310,8 +308,7 @@ class Post extends Controller
         $postRepository = new PostRepository();
         $category_id = ($request->get('post', 'category') ?? 0);
 
-
-        if ($category_id == 0) {
+        if ($category_id === 0) {
             $posts = $postRepository->findPublishedPost();
         } else {
             $posts = $postRepository->findPublishedPostByCategory($category_id);

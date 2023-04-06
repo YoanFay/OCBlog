@@ -15,7 +15,9 @@ class Session
     public function __construct()
     {
         session_start();
-    }
+
+    }//end getAuth()
+
 
     /**
      * Fonction qui retourne l'utilisateur s'il y en a un
@@ -31,7 +33,12 @@ class Session
             return null;
         }
 
-        return $key ? $session['auth'][$key] : $session['auth'];
+        if ($key !== null) {
+            return $session['auth'][$key];
+
+        }
+
+        return $session['auth'];
 
     }
 
@@ -65,8 +72,8 @@ class Session
     }
 
     /**
-     * @param string $key
-     * @param mixed  $content
+     * @param string $key     parameter
+     * @param mixed  $content parameter
      * @return void
      */
     public function setSession(string $key, $content)
@@ -124,9 +131,15 @@ class Session
 
         if (isset($session['flash']) === FALSE) {
             return null;
+
         }
 
-        return $key ? $session['flash'][$key] : $session['flash'];
+        if ($key !== null) {
+            return $session['flash'][$key];
+
+        }
+
+        return $session['flash'];
     }
 
     /**
