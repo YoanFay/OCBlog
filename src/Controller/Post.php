@@ -339,9 +339,9 @@ class Post extends Controller
 
 
         if ($category_id == 0) {
-            $posts = $postRepository->findNotPublishedPost();
+            $posts = $postRepository->findPublishedPost(true);
         } else {
-            $posts = $postRepository->findNotPublishedPostByCategory($category_id);
+            $posts = $postRepository->findPublishedPostByCategory($category_id, true);
         }
 
         $this->render(

@@ -5,7 +5,6 @@ namespace App\Src\Repository;
 use App\Src\Core\Bdd;
 use App\Src\Entity\Category;
 use App\Src\Entity\Post;
-use App\Src\Validator\PostValidator;
 use Exception;
 
 class PostRepository
@@ -30,40 +29,6 @@ class PostRepository
 
     }
     //end __construct()
-
-
-    /**
-     * @param array $parameters parameter
-     * @return mixed|null
-     */
-    public function findOneBy(array $parameters = [])
-    {
-
-        $req = 'SELECT * FROM post';
-
-        $row = 0;
-        $length = count($parameters);
-
-        if ($parameters !== []) {
-            $req .= ' WHERE ';
-
-            foreach ($parameters as $key => $parameter) {
-                $req .= "$key = '$parameter'";
-
-                $row++;
-
-                if ($row !== $length) {
-                    $req .= " AND ";
-                }
-            }
-        }
-
-        if ($post = $this->bdd->select($req, $this->class)) {
-            return $post[0];
-        }
-
-        return NULL;
-    }
 
 
     /**
@@ -126,50 +91,23 @@ class PostRepository
 
     /**
      * @param Category $category_id parameter
+     * @param bool     $not         parameter
      * @return array|null
      */
-    public function findPublishedPostByCategory(Category $category_id)
+    public function findPublishedPostByCategory(Category $category_id, bool $not = false): ?array
     {
 
         $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at DESC";
 
-        if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
-            return $posts;
+        if ($not === true) {
+            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
         }
-
-        return NULL;
-    }
-
-    /**
-     * @param Category $category_id parameter
-     * @return array|null
-     */
-    public function findNotPublishedPostByCategory(Category $category_id): ?array
-    {
-
-        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
         }
 
         return NULL;
-    }
-
-    /**
-     * @return array|null
-     */
-    public function findLastPost(): ?array
-    {
-
-        $req = 'SELECT * FROM post ORDER BY created_at DESC LIMIT 3';
-
-        if ($posts = $this->bdd->select($req, $this->class)) {
-            return $posts;
-        }
-
-        return NULL;
-
     }
 
     /**
@@ -189,28 +127,17 @@ class PostRepository
     }
 
     /**
+     * @param bool $not parameter
      * @return array|null
      */
-    public function findNotPublishedPost(): ?array
-    {
-
-        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY p.created_at ASC";
-
-        if ($posts = $this->bdd->select($req, $this->class)) {
-            return $posts;
-        }
-
-        return NULL;
-
-    }
-
-    /**
-     * @return array|null
-     */
-    public function findPublishedPost(): ?array
+    public function findPublishedPost(bool $not = false): ?array
     {
 
         $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY p.created_at DESC";
+
+        if ($not === true) {
+            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY p.created_at ASC";
+        }
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -240,7 +167,7 @@ class PostRepository
      * @param Category $category_id parameter
      * @return array|null
      */
-    public function findNotPublishedCommentPostByCategory(Category $category_id)
+    public function findNotPublishedCommentPostByCategory(Category $category_id): ?array
     {
 
         $req = "SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS 'nbr', u.avatar as 'avatar' FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
