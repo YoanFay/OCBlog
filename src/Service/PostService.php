@@ -41,7 +41,7 @@ class PostService
         $testFile = $fileValidator->validateImage();
 
         if ($testPost === true && $testFile === true) {
-            if ($file->getName()) {
+            if ($file->getName() === true) {
                 $uploadService = new UploadService();
                 if ($filename = $uploadService->uploadPost($file)) {
                     $post->setImage($filename);
@@ -62,6 +62,7 @@ class PostService
 
     }
 
+
     /**
      * @param Post           $post           parameter
      * @param Request        $request        parameter
@@ -75,11 +76,10 @@ class PostService
         $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
         $post->setCategoryId($request->get('post', 'category'));
         $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+        $post->setPublishedAt(Null);
 
         if ($session->getAuth('level') === 99) {
             $post->setPublishedAt($post->getUpdatedAt());
-        } else {
-            $post->setPublishedAt(Null);
         }
 
         $testImage = 'noChange';
@@ -92,7 +92,7 @@ class PostService
 
         $testPost = (new PostValidator($post))->validate();
 
-        if ($image !== false & $testPost === true && ($testImage === true || $testImage === 'noChange')) {
+        if ($image !== false && $testPost === true && ($testImage === true || $testImage === 'noChange')) {
             $uploadService = new UploadService();
 
             if ($testImage !== 'noChange' && $image->getName() && $filename = $uploadService->uploadConfigImage($image)) {
@@ -103,7 +103,6 @@ class PostService
         }
 
         if ($postRepository->update($post)) {
-
             $session->setFlash('success', "L'article à bien était modifié");
             return true;
         }

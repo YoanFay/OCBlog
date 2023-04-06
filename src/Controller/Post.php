@@ -151,7 +151,7 @@ class Post extends Controller
         if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost)) {
             $postService = new PostService();
 
-            if ($postService->updatePost($post, $request, $this->session, $postRepository)) {
+            if ($postService->updatePost($post, $request, $this->session, $postRepository) === TRUE) {
                 $this->redirectTo('/');
             }
 
@@ -197,7 +197,7 @@ class Post extends Controller
         if ($this->valideForm($request, 'addPost', 'Post/add')) {
             $postService = new PostService();
 
-            if ($postService->addPost($request, $this->session)) {
+            if ($postService->addPost($request, $this->session) === TRUE) {
                 $this->redirectTo('/');
             }
         }
