@@ -50,8 +50,9 @@ abstract class Controller
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
 
+        //end __construct()
+        
     }
-    //end __construct()
 
 
     /**
@@ -95,7 +96,6 @@ abstract class Controller
         try {
             $this->twig->display($fichier.'.html.twig', $donnees);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
-            
         }
     }
 }

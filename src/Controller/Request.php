@@ -18,7 +18,8 @@ class Request
     {
         $this->file = $_FILES;
 
-        // End __construct()
+        //end __construct()
+
     }
 
 
@@ -47,4 +48,5 @@ class Request
                 return NULL;
         }
     }
+    
 }
