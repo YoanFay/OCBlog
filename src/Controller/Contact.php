@@ -117,7 +117,7 @@ class Contact extends Controller
                 $this->session->setFlash('danger', "Réponse non envoyé");
                 $this->redirectTo('/Contact/answerContact/'.$idContact);
 
-            }//end if()
+            }//end if
 
         }
 

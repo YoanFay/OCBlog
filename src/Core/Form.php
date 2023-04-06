@@ -57,9 +57,9 @@ class Form
         }
 
         return $str;
-    }
 
-    
+    }//end addAttribute()
+
     /**
      * @return $this
      */
@@ -68,6 +68,7 @@ class Form
         $this->formCode .= '</form>';
         return $this;
     }
+    
 
     /**
      * @param string $type       parameter

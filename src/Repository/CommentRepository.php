@@ -27,8 +27,7 @@ class CommentRepository
     {
         $this->bdd = new BDD();
 
-    }
-    //end __construct()
+    }//end __construct()
 
 
     /**

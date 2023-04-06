@@ -64,7 +64,7 @@ class PostRepository
                     $req .= " AND ";
                 }
             }
-        }//end if()
+        }//end if
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -111,7 +111,6 @@ class PostRepository
         }
 
         return NULL;
-        
     }
 
     /**

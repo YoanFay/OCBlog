@@ -57,7 +57,6 @@ class ContactValidator extends Validator
         if ($this->validateIsNotEmpty($parameter) !== true) {
             $this->error['name'][] = "Le nom ne peut pas être vide.";
         }
-        
         if ($this->validateIsString($parameter) !== true) {
             $this->error['name'][] = "Le nom doit être une chaîne de caractère.";
         }

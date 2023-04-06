@@ -35,7 +35,7 @@ class Comment extends Controller
             ]
         );
 
-    }// end moderateComment()
+    }//end moderateComment()
 
 
     /**
@@ -99,7 +99,6 @@ class Comment extends Controller
         $comment = $commentRepository->find($idComment);
 
         if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/'.$idComment) === TRUE) {
-
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
 
@@ -164,7 +163,7 @@ class Comment extends Controller
 
                 $this->session->setFlash('success', 'Le commentaire à bien était modifié');
                 $this->redirectTo('/');
-            }// end if
+            }//end if
 
         }
 
