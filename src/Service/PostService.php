@@ -60,7 +60,8 @@ class PostService
 
         return false;
 
-    }
+    }//end addPost()
+
 
     /**
      * @param Request $request parameter
@@ -86,7 +87,7 @@ class PostService
 
             if ($testImage !== 'noChange') {
                 $session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
-                if ($image->getName() && $filename = $uploadService->uploadPost($image)) {
+                if ($image->getName() !== null && $filename = $uploadService->uploadPost($image)) {
                     $post->setImage($filename);
                     $session->resetFlash();
                 }
@@ -94,6 +95,7 @@ class PostService
         }
 
         return $post;
+
     }
 
     /**
@@ -116,7 +118,6 @@ class PostService
         }
 
         if ($request->get('post', 'deleteImage') !== 'on') {
-
             $post = $this->setImage($request, $post, $session);
 
             if ($postRepository->update($post)) {

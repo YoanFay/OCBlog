@@ -18,8 +18,7 @@ class Autoloader
             ]
         );
 
-        //end register()
-    }
+    }//end register()
 
 
     /**
@@ -48,10 +47,8 @@ class Autoloader
         $class = str_replace(__NAMESPACE__.'\\', '', $class);
         $file = __DIR__.'\\'.$class.'.php';
 
-        if (filetype($file) !== false) {
-            include $file;
-        }
+        include $file;
 
     }
-    
+
 }
