@@ -8,42 +8,42 @@ class Comment
 {
 
     /**
-     * @var
+     * @var int
      */
     private $id;
 
     /**
-     * @var
+     * @var string
      */
     private $content;
 
     /**
-     * @var
+     * @var mixed
      */
     private $created_at;
 
     /**
-     * @var
+     * @var mixed
      */
     private $validated_at;
 
     /**
-     * @var
+     * @var mixed
      */
     private $updated_at;
 
     /**
-     * @var
+     * @var mixed
      */
     private $deleted_at;
 
     /**
-     * @var
+     * @var int
      */
     private $post_id;
 
     /**
-     * @var
+     * @var int
      */
     private $user_id;
 
@@ -82,6 +82,8 @@ class Comment
 
     /**
      * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -98,6 +100,8 @@ class Comment
 
     /**
      * @param string $content parameter
+     *
+     * @return void
      */
     public function setContent(string $content): void
     {
@@ -114,6 +118,8 @@ class Comment
 
     /**
      * @param mixed $created_at parameter
+     *
+     * @return void
      */
     public function setCreatedAt($created_at): void
     {
@@ -130,6 +136,8 @@ class Comment
 
     /**
      * @param mixed $validated_at parameter
+     *
+     * @return void
      */
     public function setValidatedAt($validated_at): void
     {
@@ -146,6 +154,8 @@ class Comment
 
     /**
      * @param mixed $updated_at parameter
+     *
+     * @return void
      */
     public function setUpdatedAt($updated_at): void
     {
@@ -162,6 +172,8 @@ class Comment
 
     /**
      * @param mixed $deleted_at parameter
+     *
+     * @return void
      */
     public function setDeletedAt($deleted_at): void
     {
@@ -178,6 +190,8 @@ class Comment
 
     /**
      * @param int $post_id parameter
+     *
+     * @return void
      */
     public function setPostId(int $post_id): void
     {
@@ -194,6 +208,8 @@ class Comment
 
     /**
      * @param int $user_id parameter
+     *
+     * @return void
      */
     public function setUserId(int $user_id): void
     {

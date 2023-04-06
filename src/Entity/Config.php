@@ -6,27 +6,27 @@ class Config
 {
 
     /**
-     * @var
+     * @var int
      */
     private $id;
 
     /**
-     * @var
+     * @var string
      */
     private $image;
 
     /**
-     * @var
+     * @var string
      */
     private $catch_phrase;
 
     /**
-     * @var
+     * @var string
      */
     private $title;
 
     /**
-     * @var
+     * @var string
      */
     private $cv;
 
@@ -40,6 +40,8 @@ class Config
 
     /**
      * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -56,6 +58,8 @@ class Config
 
     /**
      * @param string|null $image parameter
+     *
+     * @return void
      */
     public function setImage(?string $image): void
     {
@@ -72,6 +76,8 @@ class Config
 
     /**
      * @param string $catch_phrase parameter
+     *
+     * @return void
      */
     public function setCatchPhrase(string $catch_phrase): void
     {
@@ -88,6 +94,8 @@ class Config
 
     /**
      * @param string $title parameter
+     *
+     * @return void
      */
     public function setTitle(string $title): void
     {
@@ -104,6 +112,8 @@ class Config
 
     /**
      * @param string|null $cv parameter
+     *
+     * @return void
      */
     public function setCv(?string $cv): void
     {

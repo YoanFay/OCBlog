@@ -56,8 +56,7 @@ class Admin extends Controller
             ]
         );
 
-        //end index()
-    }
+    }//end index()
 
 
     /**
@@ -71,20 +70,20 @@ class Admin extends Controller
         if ($this->session->getAuth('level') < 60) {
             $this->redirectTo('/');
         }
+
         $configRepository = new ConfigRepository();
         $config = $configRepository->findOne();
 
         $request = new Request();
         $configForm = new ConfigForm();
 
-        if (!$this->valideForm($request, 'updateConfig', 'Admin/updateConfig')) {
+        if ($this->valideForm($request, 'updateConfig', 'Admin/updateConfig') === FALSE) {
             $token = uniqid(rand(), true);
             $this->session->setToken($token);
             $form = $configForm->updateConfig([], [], [], $config, $token);
             $this->render('admin/update', ['form' => $form->create()]);
             return;
         }
-
 
         $config->setTitle($request->get('post', 'title'));
         $config->setCatchPhrase($request->get('post', 'catchPhrase'));
@@ -106,10 +105,10 @@ class Admin extends Controller
 
         $uploadService = new UploadService();
 
-        if ($uploadService->UploadWithCheck($testConfig, $testImage, $testCv, $config, $this->session)) {
+        if ($uploadService->UploadWithCheck($testConfig, $testImage, $testCv, $config, $this->session) === TRUE) {
             $this->redirectTo('/');
         }
-        
+
         $token = uniqid(rand(), true);
         $this->session->setToken($token);
         $form = $configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);

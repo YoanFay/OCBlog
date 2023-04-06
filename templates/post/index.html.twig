@@ -45,6 +45,9 @@
                 data: {category: id},
                 success: function (response) {
                     $('#listPost').html(response);
+                },
+                error: function () {
+                    console.log('test')
                 }
             });
         }

@@ -6,29 +6,30 @@ class File
 {
 
     /**
-     * @return string
+     * @var string
      */
     private $name;
 
     /**
-     * @return string
+     * @var string
      */
     private $type;
 
     /**
-     * @return string
+     * @var string
      */
     private $tmp_name;
 
     /**
-     * @return string
+     * @var string
      */
     private $error;
 
     /**
-     * @return string
+     * @var string
      */
     private $size;
+
 
     /**
      * @param mixed $file parameter
@@ -52,6 +53,8 @@ class File
 
     /**
      * @param string $name parameter
+     *
+     * @return void
      */
     public function setName(string $name): void
     {
@@ -68,6 +71,8 @@ class File
 
     /**
      * @param string $type parameter
+     *
+     * @return void
      */
     public function setType(string $type): void
     {
@@ -84,6 +89,8 @@ class File
 
     /**
      * @param string $tmp_name parameter
+     *
+     * @return void
      */
     public function setTmpName(string $tmp_name): void
     {
@@ -100,6 +107,8 @@ class File
 
     /**
      * @param string $error parameter
+     *
+     * @return void
      */
     public function setError(string $error): void
     {
@@ -116,6 +125,8 @@ class File
 
     /**
      * @param int $size parameter
+     *
+     * @return void
      */
     public function setSize(int $size): void
     {

@@ -74,7 +74,6 @@ class Authentication extends Controller
 
                 $this->redirectTo('/Authentication/signIn');
             }//end if
-
         }
 
         $token = uniqid(rand(), true);
@@ -89,8 +88,9 @@ class Authentication extends Controller
                 'form' => $form->create()
             ]
         );
-        
+
     }//end signUp()
+
 
     /**
      * Formulaire de connexion

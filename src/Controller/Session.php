@@ -16,7 +16,7 @@ class Session
     {
         session_start();
 
-    }//end getAuth()
+    }//end __construct()
 
 
     /**
@@ -35,12 +35,12 @@ class Session
 
         if ($key !== null) {
             return $session['auth'][$key];
-
         }
 
         return $session['auth'];
 
-    }
+    }//end getAuth()
+
 
     /**
      * @return array
@@ -48,6 +48,7 @@ class Session
     public function getSession(): array
     {
         return $_SESSION;
+
     }
 
     /**
@@ -92,7 +93,7 @@ class Session
     }
 
     /**
-     * @param string $key
+     * @param string $key parameter
      * @return void
      */
     public function unsetSession(string $key)

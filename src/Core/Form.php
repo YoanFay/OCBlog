@@ -18,8 +18,7 @@ class Form
     {
         return $this->formCode;
 
-        //end create()
-    }
+    }//end create()
 
 
     /**
@@ -36,6 +35,7 @@ class Form
 
         return $this;
     }
+
 
     /**
      * @param array $attributes parameter

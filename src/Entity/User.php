@@ -6,47 +6,48 @@ class User
 {
 
     /**
-     * @return string
+     * @var int
      */
     private $id;
 
     /**
-     * @return string
+     * @var string
      */
     private $lastname;
 
     /**
-     * @return string
+     * @var string
      */
     private $firstname;
 
     /**
-     * @return string
+     * @var string
      */
     private $login;
 
     /**
-     * @return string
+     * @var string
      */
     private $password;
 
     /**
-     * @return string
+     * @var mixed
      */
     private $created_at;
 
     /**
-     * @return string
+     * @var string
      */
     private $avatar;
 
     /**
-     * @return string
+     * @var int
      */
     private $role_id;
 
+
     /**
-     *
+     * Constructeur
      */
     public function __construct()
     {
@@ -63,6 +64,8 @@ class User
 
     /**
      * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -79,6 +82,8 @@ class User
 
     /**
      * @param string $lastname parameter
+     *
+     * @return void
      */
     public function setLastname(string $lastname): void
     {
@@ -95,6 +100,8 @@ class User
 
     /**
      * @param string $firstname parameter
+     *
+     * @return void
      */
     public function setFirstname(string $firstname): void
     {
@@ -111,6 +118,8 @@ class User
 
     /**
      * @param string $login parameter
+     *
+     * @return void
      */
     public function setLogin(string $login): void
     {
@@ -127,6 +136,8 @@ class User
 
     /**
      * @param string $password parameter
+     *
+     * @return void
      */
     public function setPassword(string $password): void
     {
@@ -140,6 +151,7 @@ class User
 
     /**
      * @param mixed $created_at parameter
+     *
      * @return void
      */
     public function setCreatedAt($created_at): void
@@ -157,6 +169,8 @@ class User
 
     /**
      * @param int $role_id parameter
+     *
+     * @return void
      */
     public function setRoleId(int $role_id): void
     {
@@ -173,6 +187,8 @@ class User
 
     /**
      * @param string $avatar parameter
+     *
+     * @return void
      */
     public function setAvatar(string $avatar): void
     {

@@ -15,6 +15,7 @@ class PostRepository
      */
 
     private $bdd;
+
     /**
      * @var string
      */
@@ -71,7 +72,9 @@ class PostRepository
         }
 
         return NULL;
+
     }
+
 
     /**
      * @return array|null
@@ -245,16 +248,16 @@ class PostRepository
 
         $req = 'UPDATE post SET content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
 
-        $postInfo =
-            [
-                'id' => $post->getId(),
-                'content' => $post->getContent(),
-                'image' => $post->getImage(),
-                'publishedAt' => $post->getPublishedAt(),
-                'updatedAt' => date_format(new \DateTime(), 'Y-m-d H:i:s'),
-                'excerpt' => $post->getExcerpt(),
-                'category' => $post->getCategoryId(),
-            ];
+        $postInfo
+            = [
+            'id' => $post->getId(),
+            'content' => $post->getContent(),
+            'image' => $post->getImage(),
+            'publishedAt' => $post->getPublishedAt(),
+            'updatedAt' => date_format(new \DateTime(), 'Y-m-d H:i:s'),
+            'excerpt' => $post->getExcerpt(),
+            'category' => $post->getCategoryId(),
+        ];
 
         try {
             $this->bdd->query($req, $postInfo);
