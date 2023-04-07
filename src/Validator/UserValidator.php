@@ -46,6 +46,7 @@ class UserValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function firstname(string $parameter)
@@ -60,6 +61,7 @@ class UserValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function lastname(string $parameter)
@@ -74,6 +76,7 @@ class UserValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function login(string $parameter)
@@ -88,6 +91,7 @@ class UserValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function password(string $parameter)

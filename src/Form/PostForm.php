@@ -28,6 +28,7 @@ class PostForm
      * @param array  $errors      parameter
      * @param array  $errorsFile  parameter
      * @param string $token       parameter
+     *
      * @return Form
      */
     public function addPost(array $categoryTab, array $errors, array $errorsFile, string $token): Form
@@ -52,6 +53,7 @@ class PostForm
     /**
      * @param int    $idPost parameter
      * @param string $token  parameter
+     *
      * @return Form
      */
     public function deletePost(int $idPost, string $token): Form
@@ -69,6 +71,7 @@ class PostForm
     /**
      * @param int    $idPost parameter
      * @param string $token  parameter
+     *
      * @return Form
      */
     public function publishPost(int $idPost, string $token): Form
@@ -90,6 +93,7 @@ class PostForm
      * @param string      $content     parameter
      * @param string      $token       parameter
      * @param string|null $image       parameter
+     *
      * @return Form
      */
     public function updatePost(array $categoryTab, array $errors, int $idPost, string $content, string $token, ?string $image): Form

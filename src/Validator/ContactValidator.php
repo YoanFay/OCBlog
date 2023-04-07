@@ -50,6 +50,7 @@ class ContactValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function name(string $parameter)
@@ -64,6 +65,7 @@ class ContactValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function mail(string $parameter)
@@ -78,6 +80,7 @@ class ContactValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function message(string $parameter)
@@ -106,6 +109,7 @@ class ContactValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function answer(string $parameter)

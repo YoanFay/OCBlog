@@ -23,6 +23,7 @@ class MailService
      * @param string $subject parameter
      * @param string $message parameter
      * @param string $name    parameter
+     *
      * @throws Exception
      */
     public function __construct(string $mailTo, string $subject, string $message, string $name)

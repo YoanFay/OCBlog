@@ -32,6 +32,7 @@ class PostRepository
 
     /**
      * @param array $parameters parameter
+     *
      * @return array|null
      */
     public function findBy(array $parameters = []): ?array
@@ -94,6 +95,7 @@ class PostRepository
     /**
      * @param int  $category_id parameter
      * @param bool $null        parameter
+     *
      * @return array|null
      */
     public function findPublishedPostByCategory(int $category_id, bool $null = false): ?array
@@ -104,8 +106,6 @@ class PostRepository
         if ($null === true) {
             $req = "SELECT p.*, u.avatar, u.firstname, u.lastname AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
         }
-
-        var_dump($req);
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -132,6 +132,7 @@ class PostRepository
 
     /**
      * @param bool $null parameter
+     *
      * @return array|null
      */
     public function findPublishedPost(bool $null = false): ?array
@@ -169,6 +170,7 @@ class PostRepository
 
     /**
      * @param int $category_id parameter
+     *
      * @return array|null
      */
     public function findNotPublishedCommentPostByCategory(int $category_id): ?array
@@ -185,6 +187,7 @@ class PostRepository
 
     /**
      * @param Post $post parameter
+     *
      * @return void
      */
     public function insert(Post $post)
@@ -210,6 +213,7 @@ class PostRepository
 
     /**
      * @param int $idPost parameter
+     *
      * @return mixed|null
      */
     public function find(int $idPost)
@@ -227,6 +231,7 @@ class PostRepository
 
     /**
      * @param int $idPost parameter
+     *
      * @return Exception|void
      */
     public function softDelete(int $idPost)
@@ -242,14 +247,13 @@ class PostRepository
 
     /**
      * @param Post $post parameter
+     *
      * @return bool
      */
     public function update(Post $post)
     {
 
         $req = 'UPDATE post SET content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
-
-        var_dump($post->getImage());
 
         $postInfo
             = [

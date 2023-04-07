@@ -15,6 +15,7 @@ class UploadService
 
     /**
      * @param File $file parameter
+     *
      * @return false|string
      */
     public function uploadPost(File $file)
@@ -26,6 +27,7 @@ class UploadService
 
     /**
      * @param File $file parameter
+     *
      * @return false|string
      */
     public function uploadUser(File $file)
@@ -38,6 +40,7 @@ class UploadService
     /**
      * @param string $firstname parameter
      * @param string $lastname  parameter
+     *
      * @return false|string
      */
     public function uploadDefaultUser(string $firstname, string $lastname)
@@ -53,6 +56,7 @@ class UploadService
      * @param array|bool $testCv     parameter
      * @param Config     $config     parameter
      * @param Session    $session    parameter
+     *
      * @return bool
      */
     public function UploadWithCheck($testConfig, $testImage, $testCv, Config $config, Session $session): bool
@@ -75,6 +79,7 @@ class UploadService
      * @param string $choice parameter
      * @param string $test   parameter
      * @param Config $config parameter
+     *
      * @return false|string|null
      */
     public function uploadGetFilename(string $choice, string $test, Config $config)
@@ -100,6 +105,7 @@ class UploadService
     /**
      * @param File   $file   parameter
      * @param string $choice parameter
+     *
      * @return false|string
      */
     public function uploadConfig(File $file, string $choice)

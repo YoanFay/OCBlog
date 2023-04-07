@@ -25,13 +25,17 @@ class Form
      * @param string $method     parameter
      * @param string $action     parameter
      * @param array  $attributes parameter
+     *
      * @return $this
      */
     public function startForm(string $method = 'post', string $action = '#', array $attributes = []): self
     {
         $this->formCode .= "<form action='$action' method='$method'";
 
-        $this->formCode .= $attributes ? $this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes
+            ?
+            $this->addAttribute($attributes).'>'
+            : '>';
 
         return $this;
 
@@ -40,6 +44,7 @@ class Form
 
     /**
      * @param array $attributes parameter
+     *
      * @return string
      */
     private function addAttribute(array $attributes): string
@@ -68,19 +73,22 @@ class Form
         $this->formCode .= '</form>';
         return $this;
     }
-    
+
 
     /**
      * @param string $type       parameter
      * @param string $name       parameter
      * @param array  $attributes parameter
+     *
      * @return $this
      */
     public function addInput(string $type, string $name, array $attributes = []): self
     {
         $this->formCode .= "<input type='$type' name='$name'";
 
-        $this->formCode .= $attributes ? $this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes
+            ? $this->addAttribute($attributes).'>'
+            : '>';
 
         return $this;
     }
@@ -89,13 +97,16 @@ class Form
      * @param string $for        parameter
      * @param string $text       parameter
      * @param array  $attributes parameter
+     *
      * @return $this
      */
     public function addLabelFor(string $for, string $text, array $attributes = []): self
     {
         $this->formCode .= "<label for='$for'";
 
-        $this->formCode .= $attributes ? $this->addAttribute($attributes) : '';
+        $this->formCode .= $attributes
+            ? $this->addAttribute($attributes)
+            : '';
 
         $this->formCode .= ">$text</label>";
 
@@ -106,13 +117,16 @@ class Form
      * @param string $nom        parameter
      * @param string $text       parameter
      * @param array  $attributes parameter
+     *
      * @return $this
      */
     public function addTextArea(string $nom, string $text = "", array $attributes = []): self
     {
         $this->formCode .= "<textarea name='$nom'";
 
-        $this->formCode .= $attributes ? $this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes
+            ? $this->addAttribute($attributes).'>'
+            : '>';
 
         $this->formCode .= "$text</textarea>";
 
@@ -123,13 +137,16 @@ class Form
      * @param string $nom        parameter
      * @param array  $options    parameter
      * @param array  $attributes parameter
+     *
      * @return $this
      */
     public function addSelect(string $nom, array $options, array $attributes = []): self
     {
         $this->formCode .= "<select name='$nom'";
 
-        $this->formCode .= $attributes ? $this->addAttribute($attributes).'>' : '>';
+        $this->formCode .= $attributes
+            ? $this->addAttribute($attributes).'>'
+            : '>';
 
         foreach ($options as $key => $option) {
             $this->formCode .= "<option value='$key'>$option</option>";
@@ -142,6 +159,7 @@ class Form
 
     /**
      * @param array $errors parameter
+     *
      * @return $this
      */
     public function addError(array $errors = []): self
@@ -156,6 +174,7 @@ class Form
     /**
      * @param string $name  parameter
      * @param string $value parameter
+     *
      * @return $this
      */
     public function addHidden(string $name, string $value): self
@@ -167,6 +186,7 @@ class Form
 
     /**
      * @param string $path parameter
+     *
      * @return $this
      */
     public function addReturn(string $path): self
@@ -179,6 +199,7 @@ class Form
     /**
      * @param string $name parameter
      * @param string $text parameter
+     *
      * @return $this
      */
     public function addCheckbox(string $name, string $text): self
@@ -191,6 +212,7 @@ class Form
     /**
      * @param string $type parameter
      * @param string $name parameter
+     *
      * @return $this
      */
     public function addImage(string $type, string $name): self

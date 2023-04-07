@@ -46,6 +46,7 @@ class ConfigRepository
 
     /**
      * @param Config $config parameter
+     *
      * @return Exception|void
      */
     public function update(Config $config)

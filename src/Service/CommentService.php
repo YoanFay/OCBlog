@@ -16,6 +16,7 @@ class CommentService
      * @param int     $idPost  parameter
      * @param Request $request parameter
      * @param Session $session parameter
+     *
      * @return void
      */
     public function addComment(int $idPost, Request $request, Session $session)

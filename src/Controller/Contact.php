@@ -77,6 +77,7 @@ class Contact extends Controller
      * Formulaire pour répondre aux demandes de contact
      *
      * @param int $idContact parameter
+     *
      * @return void
      * @throws Exception
      */
@@ -140,6 +141,7 @@ class Contact extends Controller
      * Formulaire pour archiver les demandes de contact
      *
      * @param int $idContact parameter
+     *
      * @return void
      */
     public function archiveContact(int $idContact)
@@ -165,6 +167,7 @@ class Contact extends Controller
      * Fonction qui définit ce qui sera afficher dans la liste des demandes de contact
      *
      * @param int $choice parameter
+     *
      * @return void
      */
     public function choiceBox(int $choice)

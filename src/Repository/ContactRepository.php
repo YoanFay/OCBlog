@@ -29,6 +29,7 @@ class ContactRepository
 
     /**
      * @param Contact $contact parameter
+     *
      * @return void
      */
     public function insert(Contact $contact)
@@ -48,6 +49,7 @@ class ContactRepository
 
     /**
      * @param Contact $contact parameter
+     *
      * @return void
      */
     public function update(Contact $contact)
@@ -135,6 +137,7 @@ class ContactRepository
 
     /**
      * @param int $idContact parameter
+     *
      * @return mixed|null
      */
     public function find(int $idContact)

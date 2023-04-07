@@ -17,6 +17,7 @@ class PostService
     /**
      * @param Request $request parameter
      * @param Session $session parameter
+     *
      * @return bool
      */
     public function addPost(Request $request, Session $session): bool
@@ -67,6 +68,7 @@ class PostService
      * @param Request $request parameter
      * @param Post    $post    parameter
      * @param Session $session parameter
+     *
      * @return Post
      */
     public function setImage(Request $request, Post $post, Session $session): Post
@@ -103,6 +105,7 @@ class PostService
      * @param Request        $request        parameter
      * @param Session        $session        parameter
      * @param PostRepository $postRepository parameter
+     *
      * @return bool
      */
     public function updatePost(Post $post, Request $request, Session $session, PostRepository $postRepository): bool

@@ -45,6 +45,7 @@ class CommentValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function comment(string $parameter)

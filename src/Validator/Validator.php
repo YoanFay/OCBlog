@@ -8,6 +8,7 @@ class Validator
 
     /**
      * @param mixed $parameter parameter
+     *
      * @return bool
      */
     public function validateIsNotEmpty($parameter): bool
@@ -22,6 +23,7 @@ class Validator
 
     /**
      * @param mixed $parameter parameter
+     *
      * @return bool
      */
     public function validateIsString($parameter): bool

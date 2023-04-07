@@ -27,6 +27,7 @@ class Request
      *
      * @param string $method parameter
      * @param string $key    parameter
+     *
      * @return mixed|null
      */
     public function get(string $method, string $key)

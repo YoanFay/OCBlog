@@ -59,6 +59,7 @@ abstract class Controller
      * @param Request $request  parameter
      * @param string  $formName parameter
      * @param string  $referer  parameter
+     *
      * @return bool
      */
     public function valideForm(Request $request, string $formName, string $referer): bool
@@ -77,6 +78,7 @@ abstract class Controller
      * Fonction pour rediriger vers une url
      *
      * @param string $url parameter
+     *
      * @return null
      */
     public function redirectTo(string $url)
@@ -88,6 +90,7 @@ abstract class Controller
     /**
      * @param string $fichier parameter
      * @param array  $donnees parameter
+     *
      * @return void
      */
     public function render(string $fichier, array $donnees = [])
@@ -97,5 +100,5 @@ abstract class Controller
         } catch (LoaderError|RuntimeError|SyntaxError $e) {
         }
     }
-    
+
 }

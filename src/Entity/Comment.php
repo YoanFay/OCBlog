@@ -60,6 +60,7 @@ class Comment
 
     /**
      * @param int $id parameter
+     *
      * @return void
      */
     public function default(int $id)

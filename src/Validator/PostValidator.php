@@ -46,6 +46,7 @@ class PostValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function content(string $parameter)
@@ -60,6 +61,7 @@ class PostValidator extends Validator
 
     /**
      * @param int $parameter parameter
+     *
      * @return void
      */
     public function category(int $parameter)

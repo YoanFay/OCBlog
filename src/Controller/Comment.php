@@ -13,6 +13,7 @@ class Comment extends Controller
 
     /**
      * @param int $postId parameter
+     *
      * @return void
      */
     public function moderateComment(int $postId)
@@ -42,6 +43,7 @@ class Comment extends Controller
      * Page de confirmation pour supprimer un commentaire
      *
      * @param int $idComment parameter
+     *
      * @return void
      */
     public function deleteComment(int $idComment)
@@ -86,6 +88,7 @@ class Comment extends Controller
      * Page de confirmation pour publier un commentaire
      *
      * @param int $idComment parameter
+     *
      * @return void
      */
     public function publishedComment(int $idComment)
@@ -130,6 +133,7 @@ class Comment extends Controller
      * Formulaire pour modifier un commentaire
      *
      * @param int $idComment parameter
+     *
      * @return void
      */
     public function updateComment(int $idComment)

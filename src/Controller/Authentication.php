@@ -132,7 +132,7 @@ class Authentication extends Controller
         );
 
     }//end signIn()
-    
+
 
     /**
      * Fonction de déconnexion

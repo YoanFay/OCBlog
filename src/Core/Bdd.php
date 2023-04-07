@@ -55,6 +55,7 @@ class Bdd
     /**
      * @param string $req    parameter
      * @param array  $params parameter
+     *
      * @return void
      */
     public function query(string $req, array $params = [])
@@ -66,6 +67,7 @@ class Bdd
      * @param string $req    parameter
      * @param mixed  $class  parameter
      * @param array  $params parameter
+     *
      * @return array|false
      */
     public function select(string $req, $class, array $params = [])

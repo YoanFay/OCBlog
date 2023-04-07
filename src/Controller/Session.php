@@ -23,6 +23,7 @@ class Session
      * Fonction qui retourne l'utilisateur s'il y en a un
      *
      * @param string|null $key parameter
+     *
      * @return mixed|null
      */
     public function getAuth(string $key = null)
@@ -56,6 +57,7 @@ class Session
      *
      * @param User $user parameter
      * @param Role $role parameter
+     *
      * @return void
      */
     public function setAuth(User $user, Role $role)
@@ -75,6 +77,7 @@ class Session
     /**
      * @param string $key     parameter
      * @param mixed  $content parameter
+     *
      * @return void
      */
     public function setSession(string $key, $content)
@@ -94,6 +97,7 @@ class Session
 
     /**
      * @param string $key parameter
+     *
      * @return void
      */
     public function unsetSession(string $key)
@@ -106,6 +110,7 @@ class Session
      *
      * @param string $type    parameter
      * @param string $message parameter
+     *
      * @return void
      */
     public function setFlash(string $type, string $message): void
@@ -124,6 +129,7 @@ class Session
      * Fonction qui affiche une flash dans le footer s'il y en a
      *
      * @param string|null $key parameter
+     *
      * @return mixed|null
      */
     public function getFlash(string $key = null)
@@ -157,6 +163,7 @@ class Session
      * Fonction qui paramètre le token pour les formulaires
      *
      * @param string $token parameter
+     *
      * @return void
      */
     public function setToken(string $token): void

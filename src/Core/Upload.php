@@ -73,6 +73,7 @@ class Upload
 
     /**
      * @param string $url parameter
+     *
      * @return false|string
      */
     public function addFileByUrl(string $url)

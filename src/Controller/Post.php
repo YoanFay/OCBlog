@@ -39,6 +39,7 @@ class Post extends Controller
      * Page pour voir un article
      *
      * @param int $idPost parameter
+     *
      * @return void
      */
     public function onePost(int $idPost)
@@ -83,6 +84,7 @@ class Post extends Controller
      * Page de confirmation pour supprimer un article
      *
      * @param int $idPost parameter
+     *
      * @return void
      */
     public function deletePost(int $idPost)

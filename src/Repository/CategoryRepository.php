@@ -32,6 +32,7 @@ class CategoryRepository
 
     /**
      * @param array $parameters parameter
+     *
      * @return mixed|null
      */
     public function findOneBy(array $parameters = [])
@@ -67,7 +68,7 @@ class CategoryRepository
     /**
      * @return array|null
      */
-    public function findAll()
+    public function findAll(): ?array
     {
 
         $req = 'SELECT * FROM category';
@@ -82,6 +83,7 @@ class CategoryRepository
 
     /**
      * @param int $idCategory parameter
+     *
      * @return mixed|null
      */
     public function find(int $idCategory)

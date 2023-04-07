@@ -32,6 +32,7 @@ class CommentRepository
 
     /**
      * @param Comment $comment parameter
+     *
      * @return void
      */
     public function insert(Comment $comment)
@@ -71,6 +72,7 @@ class CommentRepository
     /**
      * @param array $parameters parameter
      * @param array $sorts      parameter
+     *
      * @return array|null
      */
     public function findBy(array $parameters = [], array $sorts = [])
@@ -110,6 +112,7 @@ class CommentRepository
 
     /**
      * @param int $idComment parameter
+     *
      * @return mixed|null
      */
     public function find(int $idComment)
@@ -127,6 +130,7 @@ class CommentRepository
 
     /**
      * @param int $idComment parameter
+     *
      * @return Exception|void
      */
     public function softDelete(int $idComment)
@@ -142,6 +146,7 @@ class CommentRepository
 
     /**
      * @param Comment $comment parameter
+     *
      * @return Exception|void
      */
     public function update(Comment $comment)

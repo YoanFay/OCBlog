@@ -44,6 +44,7 @@ class ConfigValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function title(string $parameter)
@@ -58,6 +59,7 @@ class ConfigValidator extends Validator
 
     /**
      * @param string $parameter parameter
+     *
      * @return void
      */
     public function catchPhrase(string $parameter)
