@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Repository/PostRepositoryUpdate.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Controller/Authentication.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Authentication.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/PostRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/PostRepository.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,11 +70,11 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="H:\UwAmp\www\OCBlog\src\Repository" />
       <recent name="H:\UwAmp\www\OCBlog" />
       <recent name="H:\UwAmp\www\OCBlog\templates\contact" />
       <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
       <recent name="H:\UwAmp\www\OCBlog\templates\admin" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Form" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="H:\UwAmp\www\OCBlog" />
@@ -150,7 +147,7 @@
       <workItem from="1680242106504" duration="18809000" />
       <workItem from="1680765328841" duration="13253000" />
       <workItem from="1680785181100" duration="8259000" />
-      <workItem from="1680848288345" duration="6594000" />
+      <workItem from="1680848288345" duration="7294000" />
     </task>
     <servers />
   </component>

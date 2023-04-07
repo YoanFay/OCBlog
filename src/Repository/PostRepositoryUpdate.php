@@ -44,7 +44,8 @@ class PostRepositoryUpdate
         ];
 
         $this->bdd->query($req, $postInfo);
-    }
+
+    }//end insert()
 
 
     /**
@@ -95,4 +96,5 @@ class PostRepositoryUpdate
         }
     }
 
+    
 }
