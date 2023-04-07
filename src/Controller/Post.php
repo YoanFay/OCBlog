@@ -21,6 +21,7 @@ class Post extends Controller
      */
     public function index()
     {
+
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
@@ -44,6 +45,7 @@ class Post extends Controller
      */
     public function onePost(int $idPost)
     {
+
         $testComment = [];
 
         $request = new Request();
@@ -78,7 +80,7 @@ class Post extends Controller
             ]
         );
 
-    }//end index()
+    }//end onePost()
 
 
     /**
@@ -102,7 +104,7 @@ class Post extends Controller
 
         if ($this->valideForm($request, 'deletePost', 'Post/deletePost/'.$idPost) === TRUE) {
             $file = "/img/post/".$post->getImage();
-            if (file_exists($file)) {
+            if (file_exists($file) === TRUE) {
                 unlink($file);
                 $post->setImage(Null);
             }
@@ -130,7 +132,8 @@ class Post extends Controller
             ]
         );
 
-    }
+    }//end deletePost()
+
 
     /**
      * Formulaire pour modifier un article
@@ -141,6 +144,7 @@ class Post extends Controller
      */
     public function updatePost(int $idPost)
     {
+
         $user = $this->session->getAuth();
         $postRepository = new PostRepository();
         $post = $postRepository->find($idPost);
@@ -157,7 +161,6 @@ class Post extends Controller
 
             if ($postService->updatePost($post, $request, $this->session, $postRepository) === TRUE) {
                 $this->redirectTo('/');
-
             }
 
         }
@@ -183,6 +186,7 @@ class Post extends Controller
         );
     }
 
+
     /**
      * Formulaire pour ajouter un article
      *
@@ -190,6 +194,7 @@ class Post extends Controller
      */
     public function add()
     {
+
         $user = $this->session->getAuth();
         if ($user === FALSE) {
             $this->redirectTo('/');
@@ -235,6 +240,7 @@ class Post extends Controller
 
     }
 
+
     /**
      * Page pour voir les articles non publiés
      *
@@ -260,12 +266,15 @@ class Post extends Controller
 
     }
 
+
     /**
      * Page de confirmation pour publier un article
      *
+     * @param int $idPost parameter
+     *
      * @return void
      */
-    public function publishedPost($idPost)
+    public function publishedPost(int $idPost)
     {
 
         if ($this->session->getAuth() === FALSE) {
@@ -304,6 +313,7 @@ class Post extends Controller
 
     }
 
+
     /**
      * Fonction pour sélectionner les articles publiés selon leur catégorie
      *
@@ -311,6 +321,7 @@ class Post extends Controller
      */
     public function listPostAjax()
     {
+
         $request = new Request();
         $postRepository = new PostRepository();
         $category_id = ($request->get('post', 'category') ?? '0');
@@ -330,6 +341,7 @@ class Post extends Controller
         );
     }
 
+
     /**
      * Fonction pour sélectionner les articles non publiés selon leur catégorie
      *
@@ -337,11 +349,12 @@ class Post extends Controller
      */
     public function listModeratePostAjax()
     {
+
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = ($request->get('post', 'category') ?? 0);
+        $category_id = ($request->get('post', 'category') ?? '0');
 
-        if ($category_id == 0) {
+        if ($category_id === '0') {
             $posts = $postRepository->findPublishedPost(true);
         } else {
             $posts = $postRepository->findPublishedPostByCategory($category_id, true);
@@ -356,6 +369,7 @@ class Post extends Controller
         );
     }
 
+
     /**
      * Fonction pour sélectionner les commentaires non publiés par articles selon leur catégorie
      *
@@ -363,6 +377,7 @@ class Post extends Controller
      */
     public function listModerateCommentPostAjax()
     {
+
         $request = new Request();
         $postRepository = new PostRepository();
         $category_id = ($request->get('post', 'category') ?? '0');
