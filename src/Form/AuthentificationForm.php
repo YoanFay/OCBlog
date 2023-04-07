@@ -18,8 +18,10 @@ class AuthentificationForm
      */
     public function __construct()
     {
+
         $this->form = new Form();
     }
+
 
     /**
      * @param string $token     parameter
@@ -30,8 +32,8 @@ class AuthentificationForm
      */
     public function signUp(string $token, array $errorFile, array $errors): Form
     {
-//TODO: Vérifier toute les actions
-        return $this->form->startForm('post', 'http://localhost/Authentication/signUp')
+
+        return $this->form->startForm('post', '/Authentication/signUp')
             ->addLabelFor('firstname', "Prénom")
             ->addInput('text', 'firstname', ['class' => 'form-control col-6 sign-input', 'id' => 'firstname', 'required' => true])
             ->addError($errors['firstname'] ?? [])
@@ -53,6 +55,7 @@ class AuthentificationForm
 
     }
 
+
     /**
      * @param string $token parameter
      *
@@ -61,7 +64,7 @@ class AuthentificationForm
     public function signIn(string $token): Form
     {
 
-        return $this->form->startForm('post', 'http://localhost/Authentication/signIn', ['class' => 'form-sign'])
+        return $this->form->startForm('post', '/Authentication/signIn', ['class' => 'form-sign'])
             ->addLabelFor('login', "Login")
             ->addInput('text', 'login', ['class' => 'form-control sign-input', 'required' => true])
             ->addLabelFor('password', "Mot de passe")

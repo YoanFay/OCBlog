@@ -5,11 +5,11 @@ namespace App\Src\Core;
 class FormField
 {
 
-    
     /**
      * @var string
      */
     protected $formCode = '';
+
 
     /**
      * @param string $nom        parameter
@@ -20,6 +20,7 @@ class FormField
      */
     public function addTextArea(string $nom, string $text = "", array $attributes = []): self
     {
+
         $this->formCode .= "<textarea name='$nom'";
 
         $this->formCode .= $attributes !== [] ?
@@ -29,7 +30,9 @@ class FormField
         $this->formCode .= "$text</textarea>";
 
         return $this;
-    }
+
+    }//end addTextArea()
+
 
     /**
      * @param array $attributes parameter
@@ -38,6 +41,7 @@ class FormField
      */
     protected function addAttribute(array $attributes): string
     {
+
         $str = '';
 
         $courts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus'];
@@ -54,6 +58,7 @@ class FormField
 
     }
 
+
     /**
      * @param string $nom        parameter
      * @param array  $options    parameter
@@ -63,6 +68,7 @@ class FormField
      */
     public function addSelect(string $nom, array $options, array $attributes = []): self
     {
+
         $this->formCode .= "<select name='$nom'";
 
         $this->formCode .= $attributes !== [] ?
@@ -76,7 +82,9 @@ class FormField
         $this->formCode .= "</select>";
 
         return $this;
+
     }//end addAttribute()
+
 
     /**
      * @param string $name parameter
@@ -86,10 +94,13 @@ class FormField
      */
     public function addCheckbox(string $name, string $text): self
     {
+
         $this->formCode .= "<div class='d-flex flex-row justify-content-start mb-2'><input type='checkbox' name='$name' id='$name' class='me-2' /><label for='$name'>$text</label></div>";
 
         return $this;
-    }
+
+    }//end addCheckbox()
+
 
     /**
      * @param string $type parameter
@@ -99,10 +110,13 @@ class FormField
      */
     public function addImage(string $type, string $name): self
     {
+
         $this->formCode .= "<img class='ms-3 mb-2 row' src='/img/$type/$name' width='100px'>";
 
         return $this;
+
     }
+
 
     /**
      * @param string $type       parameter
@@ -111,8 +125,9 @@ class FormField
      *
      * @return $this
      */
-    protected function addInput(string $type, string $name, array $attributes = []): self
+    public function addInput(string $type, string $name, array $attributes = []): self
     {
+
         $this->formCode .= "<input type='$type' name='$name'";
 
         $this->formCode .= $attributes !== [] ?
@@ -120,7 +135,9 @@ class FormField
             '>';
 
         return $this;
+
     }
+
 
     /**
      * @param string $for        parameter
@@ -129,8 +146,9 @@ class FormField
      *
      * @return $this
      */
-    protected function addLabelFor(string $for, string $text, array $attributes = []): self
+    public function addLabelFor(string $for, string $text, array $attributes = []): self
     {
+
         $this->formCode .= "<label for='$for'";
 
         $this->formCode .= $attributes !== [] ?
@@ -140,6 +158,7 @@ class FormField
         $this->formCode .= ">$text</label>";
 
         return $this;
+
     }
 
 }

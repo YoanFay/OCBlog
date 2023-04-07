@@ -11,7 +11,7 @@ class Form extends FormField
      */
     public function create(): string
     {
-        //TODO: Voir pour mettre start et end avec
+
         return $this->formCode;
 
     }//end create()
@@ -26,6 +26,7 @@ class Form extends FormField
      */
     public function startForm(string $method = 'post', string $action = '#', array $attributes = []): self
     {
+
         $this->formCode .= "<form action='$action' method='$method'";
 
         $this->formCode .= $attributes !== [] ?
@@ -36,14 +37,18 @@ class Form extends FormField
 
     }//end startForm()
 
+
     /**
      * @return $this
      */
     public function endForm(): self
     {
+
         $this->formCode .= '</form>';
         return $this;
-    }
+
+    }//end endForm()
+
 
     /**
      * @param array $errors parameter
@@ -52,12 +57,14 @@ class Form extends FormField
      */
     public function addError(array $errors = []): self
     {
+
         foreach ($errors as $error) {
             $this->formCode .= "<p class='d-flex align-items-center text-danger'><span class='material-symbols-outlined me-2'>warning</span>$error</p>";
         }
 
         return $this;
     }
+
 
     /**
      * @param string $name  parameter
@@ -67,10 +74,13 @@ class Form extends FormField
      */
     public function addHidden(string $name, string $value): self
     {
+
         $this->formCode .= "<input type='hidden'  name='$name' value='$value' />";
 
         return $this;
+
     }
+
 
     /**
      * @param string $path parameter
@@ -79,8 +89,11 @@ class Form extends FormField
      */
     public function addReturn(string $path): self
     {
+
         $this->formCode .= "<a href='$path' class='btn btn-primary'>Retour</a>";
 
         return $this;
+
     }
+
 }
