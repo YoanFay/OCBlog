@@ -55,7 +55,7 @@ class PostRepository extends PostRepositoryUpdate
                     $req .= " AND ";
                 }
             }
-        }//end if
+        }
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -80,7 +80,7 @@ class PostRepository extends PostRepositoryUpdate
 
         return NULL;
 
-    }
+    }//findAll()
 
 
     /**
@@ -103,6 +103,7 @@ class PostRepository extends PostRepositoryUpdate
         }
 
         return NULL;
+
     }
 
 
@@ -198,5 +199,6 @@ class PostRepository extends PostRepositoryUpdate
         return NULL;
 
     }
+
 
 }
