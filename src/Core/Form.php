@@ -32,10 +32,9 @@ class Form
     {
         $this->formCode .= "<form action='$action' method='$method'";
 
-        $this->formCode .= $attributes
-            ?
-            $this->addAttribute($attributes).'>'
-            : '>';
+        $this->formCode .= $attributes ?
+            $this->addAttribute($attributes).'>' :
+            '>';
 
         return $this;
 
@@ -86,9 +85,9 @@ class Form
     {
         $this->formCode .= "<input type='$type' name='$name'";
 
-        $this->formCode .= $attributes
-            ? $this->addAttribute($attributes).'>'
-            : '>';
+        $this->formCode .= $attributes ?
+            $this->addAttribute($attributes).'>' :
+            '>';
 
         return $this;
     }
@@ -104,9 +103,9 @@ class Form
     {
         $this->formCode .= "<label for='$for'";
 
-        $this->formCode .= $attributes
-            ? $this->addAttribute($attributes)
-            : '';
+        $this->formCode .= $attributes ?
+            $this->addAttribute($attributes) :
+            '';
 
         $this->formCode .= ">$text</label>";
 
@@ -124,9 +123,9 @@ class Form
     {
         $this->formCode .= "<textarea name='$nom'";
 
-        $this->formCode .= $attributes
-            ? $this->addAttribute($attributes).'>'
-            : '>';
+        $this->formCode .= $attributes ?
+            $this->addAttribute($attributes).'>' :
+            '>';
 
         $this->formCode .= "$text</textarea>";
 
@@ -144,9 +143,9 @@ class Form
     {
         $this->formCode .= "<select name='$nom'";
 
-        $this->formCode .= $attributes
-            ? $this->addAttribute($attributes).'>'
-            : '>';
+        $this->formCode .= $attributes ?
+            $this->addAttribute($attributes).'>' :
+            '>';
 
         foreach ($options as $key => $option) {
             $this->formCode .= "<option value='$key'>$option</option>";

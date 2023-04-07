@@ -27,14 +27,14 @@ class Main
 
             $controller = new $controller();
 
-            $action = (isset($params[0]))
-                ? array_shift($params)
-                : 'index';
+            $action = (isset($params[0])) ?
+                array_shift($params) :
+                'index';
 
             if (method_exists($controller, $action) === TRUE) {
-                (isset($params[0]))
-                    ? $controller->$action(implode(",", $params))
-                    : $controller->$action();
+                (isset($params[0])) ?
+                    $controller->$action(implode(",", $params)) :
+                    $controller->$action();
             } else {
                 $errorController = new Homepage();
                 $errorController->notFound();
