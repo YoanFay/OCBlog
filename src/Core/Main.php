@@ -15,6 +15,7 @@ class Main
      */
     public function start()
     {
+
         $params = [];
         $request = new Request();
 
@@ -43,10 +44,9 @@ class Main
             $controller = new Homepage();
 
             $controller->index();
-        }
+        }//end if
 
-        // End start()
-    }
+    }// End start()
 
 
 }
