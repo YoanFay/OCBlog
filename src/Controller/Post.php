@@ -306,9 +306,9 @@ class Post extends Controller
     {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = ($request->get('post', 'category') ?? 0);
+        $category_id = ($request->get('post', 'category') ?? '0');
 
-        if ($category_id === 0) {
+        if ($category_id === '0') {
             $posts = $postRepository->findPublishedPost();
         } else {
             $posts = $postRepository->findPublishedPostByCategory($category_id);
@@ -359,9 +359,9 @@ class Post extends Controller
     {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? 0;
+        $category_id = $request->get('post', 'category') ?? '0';
 
-        if ($category_id == 0) {
+        if ($category_id === '0') {
             $posts = $postRepository->findNotPublishedCommentPost();
         } else {
             $posts = $postRepository->findNotPublishedCommentPostByCategory($category_id);

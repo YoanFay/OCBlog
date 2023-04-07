@@ -2,7 +2,6 @@
 
 namespace App\Src\Core;
 
-
 use App\Src\Controller\Homepage;
 use App\Src\Controller\Request;
 use App\Src\Controller\Session;
