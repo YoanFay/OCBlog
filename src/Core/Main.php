@@ -44,9 +44,9 @@ class Main
             $controller = new Homepage();
 
             $controller->index();
-        }//end if
+        }
 
-    }// End start()
+    }//end start()
 
 
 }

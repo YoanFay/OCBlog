@@ -22,6 +22,7 @@ class Admin extends Controller
      */
     public function index()
     {
+
         $configRepository = new ConfigRepository();
         $postRepository = new PostRepository();
         $commentRepository = new CommentRepository();
@@ -33,18 +34,18 @@ class Admin extends Controller
 
         $post
             = [
-            'all' => (count($postRepository->findAll() ?? [])),
-            'publish' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? [])),
-            'delete' => (count($postRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
-            'moderate' => (count($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? [])),
+            'all' => (count(($postRepository->findAll() ?? []))),
+            'publish' => (count(($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is not null"]) ?? []))),
+            'delete' => (count(($postRepository->findBy(['deleted_at' => "is not null"]) ?? []))),
+            'moderate' => (count(($postRepository->findBy(['deleted_at' => "is null", 'published_at' => "is null"]) ?? []))),
         ];
 
         $comment
             = [
-            'all' => (count($commentRepository->findAll() ?? [])),
-            'publish' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? [])),
-            'delete' => (count($commentRepository->findBy(['deleted_at' => "is not null"]) ?? [])),
-            'moderate' => (count($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? [])),
+            'all' => (count(($commentRepository->findAll() ?? []))),
+            'publish' => (count(($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is not null"]) ?? []))),
+            'delete' => (count(($commentRepository->findBy(['deleted_at' => "is not null"]) ?? []))),
+            'moderate' => (count(($commentRepository->findBy(['deleted_at' => "is null", "validated_at" => "is null"]) ?? []))),
         ];
 
         $this->render(
@@ -113,7 +114,8 @@ class Admin extends Controller
         $this->session->setToken($token);
         $form = $configForm->updateConfig($testConfig, $testImage, $testCv, $config, $token);
         $this->render('admin/update', ['form' => $form->create()]);
-    }
+
+    }//end updateConfig()
 
 
 }

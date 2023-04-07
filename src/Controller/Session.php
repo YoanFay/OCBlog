@@ -207,7 +207,6 @@ class Session
         $session = $this->getSession();
 
         return ($session['token'] ?? null);
-        
     }
 
 }
