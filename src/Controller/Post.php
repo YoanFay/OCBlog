@@ -77,7 +77,8 @@ class Post extends Controller
                 'form' => $form->create(),
             ]
         );
-    }
+
+    }//end index()
 
 
     /**
@@ -128,14 +129,17 @@ class Post extends Controller
                 'post' => $post
             ]
         );
+
     }
 
     /**
      * Formulaire pour modifier un article
      *
+     * @param int $idPost parameter
+     *
      * @return void
      */
-    public function updatePost($idPost)
+    public function updatePost(int $idPost)
     {
         $user = $this->session->getAuth();
         $postRepository = new PostRepository();
@@ -153,6 +157,7 @@ class Post extends Controller
 
             if ($postService->updatePost($post, $request, $this->session, $postRepository) === TRUE) {
                 $this->redirectTo('/');
+
             }
 
         }
@@ -334,8 +339,7 @@ class Post extends Controller
     {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? 0;
-
+        $category_id = ($request->get('post', 'category') ?? 0);
 
         if ($category_id == 0) {
             $posts = $postRepository->findPublishedPost(true);
@@ -361,7 +365,7 @@ class Post extends Controller
     {
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? '0';
+        $category_id = ($request->get('post', 'category') ?? '0');
 
         if ($category_id === '0') {
             $posts = $postRepository->findNotPublishedCommentPost();
