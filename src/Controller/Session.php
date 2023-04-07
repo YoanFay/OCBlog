@@ -14,6 +14,7 @@ class Session
      */
     public function __construct()
     {
+
         session_start();
 
     }//end __construct()
@@ -28,6 +29,7 @@ class Session
      */
     public function getAuth(string $key = null)
     {
+
         $session = $this->getSession();
 
         if (isset($session['auth']) === FALSE) {
@@ -48,9 +50,11 @@ class Session
      */
     public function getSession(): array
     {
+
         return $_SESSION;
 
-    }
+    }//end getSession()
+
 
     /**
      * Fonction qui enregistre l'utilisateur
@@ -62,6 +66,7 @@ class Session
      */
     public function setAuth(User $user, Role $role)
     {
+
         $auth
             = [
             'user_id' => $user->getId(),
@@ -74,6 +79,7 @@ class Session
 
     }
 
+
     /**
      * @param string $key     parameter
      * @param mixed  $content parameter
@@ -82,8 +88,11 @@ class Session
      */
     public function setSession(string $key, $content)
     {
+
         $_SESSION[$key] = $content;
+
     }
+
 
     /**
      * Fonction qui déconnecte l'utilisateur
@@ -92,8 +101,10 @@ class Session
      */
     public function logout(): void
     {
+
         $this->unsetSession('auth');
     }
+
 
     /**
      * @param string $key parameter
@@ -102,8 +113,11 @@ class Session
      */
     public function unsetSession(string $key)
     {
+
         unset($_SESSION[$key]);
+
     }
+
 
     /**
      * Fonction qui paramètre une flash
@@ -123,7 +137,9 @@ class Session
         ];
 
         $this->setSession('flash', $flash);
+
     }
+
 
     /**
      * Fonction qui affiche une flash dans le footer s'il y en a
@@ -134,6 +150,7 @@ class Session
      */
     public function getFlash(string $key = null)
     {
+
         $session = $this->getSession();
 
         if (isset($session['flash']) === FALSE) {
@@ -147,7 +164,9 @@ class Session
         }
 
         return $session['flash'];
+
     }
+
 
     /**
      * Fonction qui supprime les flash
@@ -156,8 +175,11 @@ class Session
      */
     public function resetFlash(): void
     {
+
         $this->unsetSession('flash');
+
     }
+
 
     /**
      * Fonction qui paramètre le token pour les formulaires
@@ -168,8 +190,11 @@ class Session
      */
     public function setToken(string $token): void
     {
+
         $this->setSession('token', $token);
+
     }
+
 
     /**
      * Fonction qui récupère le token pour les formulaires
@@ -178,9 +203,11 @@ class Session
      */
     public function getToken()
     {
+
         $session = $this->getSession();
 
         return ($session['token'] ?? null);
+        
     }
 
 }
