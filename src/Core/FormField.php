@@ -5,6 +5,7 @@ namespace App\Src\Core;
 class FormField
 {
 
+    
     /**
      * @var string
      */
@@ -31,6 +32,29 @@ class FormField
     }
 
     /**
+     * @param array $attributes parameter
+     *
+     * @return string
+     */
+    protected function addAttribute(array $attributes): string
+    {
+        $str = '';
+
+        $courts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus'];
+
+        foreach ($attributes as $attribute => $valeur) {
+            if (in_array($attribute, $courts) === TRUE && $valeur === true) {
+                $str .= " $attribute";
+            } else {
+                $str .= " $attribute='$valeur'";
+            }
+        }
+
+        return $str;
+
+    }
+
+    /**
      * @param string $nom        parameter
      * @param array  $options    parameter
      * @param array  $attributes parameter
@@ -52,7 +76,7 @@ class FormField
         $this->formCode .= "</select>";
 
         return $this;
-    }
+    }//end addAttribute()
 
     /**
      * @param string $name parameter
@@ -65,7 +89,7 @@ class FormField
         $this->formCode .= "<div class='d-flex flex-row justify-content-start mb-2'><input type='checkbox' name='$name' id='$name' class='me-2' /><label for='$name'>$text</label></div>";
 
         return $this;
-    }//end addAttribute()
+    }
 
     /**
      * @param string $type parameter
@@ -96,29 +120,6 @@ class FormField
             '>';
 
         return $this;
-    }
-
-    /**
-     * @param array $attributes parameter
-     *
-     * @return string
-     */
-    protected function addAttribute(array $attributes): string
-    {
-        $str = '';
-
-        $courts = ['checked', 'disabled', 'readonly', 'multiple', 'required', 'autofocus'];
-
-        foreach ($attributes as $attribute => $valeur) {
-            if (in_array($attribute, $courts) === TRUE && $valeur === true) {
-                $str .= " $attribute";
-            } else {
-                $str .= " $attribute='$valeur'";
-            }
-        }
-
-        return $str;
-
     }
 
     /**
