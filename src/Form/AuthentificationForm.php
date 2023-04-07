@@ -30,7 +30,7 @@ class AuthentificationForm
      */
     public function signUp(string $token, array $errorFile, array $errors): Form
     {
-
+//TODO: Vérifier toute les actions
         return $this->form->startForm('post', 'http://localhost/Authentication/signUp')
             ->addLabelFor('firstname', "Prénom")
             ->addInput('text', 'firstname', ['class' => 'form-control col-6 sign-input', 'id' => 'firstname', 'required' => true])

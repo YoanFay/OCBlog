@@ -27,12 +27,12 @@ class Main
 
             $controller = new $controller();
 
-            $action = (isset($params[0])) ?
+            $action = (isset($params[0])) === TRUE ?
                 array_shift($params) :
                 'index';
 
             if (method_exists($controller, $action) === TRUE) {
-                (isset($params[0])) ?
+                (isset($params[0])) === TRUE ?
                     $controller->$action(implode(",", $params)) :
                     $controller->$action();
             } else {
