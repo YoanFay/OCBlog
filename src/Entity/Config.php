@@ -30,31 +30,39 @@ class Config
      */
     private $cv;
 
+
     /**
      * @return int
      */
     public function getId(): int
     {
+
         return $this->id;
-    }
+
+    }//end getId()
+
 
     /**
-     * @param int $id parameter
+     * @param int $idConfig parameter
      *
      * @return void
      */
-    public function setId(int $id): void
+    public function setId(int $idConfig): void
     {
-        $this->id = $id;
+
+        $this->id = $idConfig;
     }
+
 
     /**
      * @return string|null
      */
     public function getImage(): ?string
     {
+
         return $this->image;
     }
+
 
     /**
      * @param string|null $image parameter
@@ -63,16 +71,20 @@ class Config
      */
     public function setImage(?string $image): void
     {
+
         $this->image = $image;
     }
+
 
     /**
      * @return string
      */
     public function getCatchPhrase(): string
     {
+
         return $this->catch_phrase;
     }
+
 
     /**
      * @param string $catch_phrase parameter
@@ -81,16 +93,20 @@ class Config
      */
     public function setCatchPhrase(string $catch_phrase): void
     {
+
         $this->catch_phrase = $catch_phrase;
     }
+
 
     /**
      * @return string
      */
     public function getTitle(): string
     {
+
         return $this->title;
     }
+
 
     /**
      * @param string $title parameter
@@ -99,24 +115,29 @@ class Config
      */
     public function setTitle(string $title): void
     {
+
         $this->title = $title;
     }
+
 
     /**
      * @return string|null
      */
     public function getCv(): ?string
     {
+
         return $this->cv;
     }
 
+
     /**
-     * @param string|null $cv parameter
+     * @param string|null $cvConfig parameter
      *
      * @return void
      */
-    public function setCv(?string $cv): void
+    public function setCv(?string $cvConfig): void
     {
-        $this->cv = $cv;
+
+        $this->cv = $cvConfig;
     }
 }
