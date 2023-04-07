@@ -22,6 +22,7 @@ class Authentication extends Controller
      */
     public function signUp()
     {
+
         $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
         $testFile = [];
@@ -141,7 +142,10 @@ class Authentication extends Controller
      */
     public function logout()
     {
+
         $this->session->logout();
         $this->redirectTo('/');
-    }
+
+    }//end logout()
+
 }
