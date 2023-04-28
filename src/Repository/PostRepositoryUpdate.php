@@ -28,16 +28,15 @@ class PostRepositoryUpdate
     public function insert(Post $post)
     {
 
-        $req = 'INSERT INTO post VALUES(NULL, :content, :image, :createdAt, :publishedAt, :updatedAt, :deletedAt, :excerpt, :category, :user)';
+        $req = 'INSERT INTO post VALUES(NULL, :title, :content, :image, :createdAt, :publishedAt, NULL, NULL, :excerpt, :category, :user)';
 
         $postInfo
             = [
+            'title' => $post->getTitle(),
             'content' => $post->getContent(),
             'image' => $post->getImage(),
             'createdAt' => $post->getCreatedAt(),
             'publishedAt' => $post->getPublishedAt(),
-            'updatedAt' => $post->getUpdatedAt(),
-            'deletedAt' => $post->getDeletedAt(),
             'excerpt' => $post->getExcerpt(),
             'category' => $post->getCategoryId(),
             'user' => $post->getUserId(),
@@ -74,11 +73,12 @@ class PostRepositoryUpdate
     public function update(Post $post)
     {
 
-        $req = 'UPDATE post SET content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
+        $req = 'UPDATE post SET title = :title, content = :content, image = :image, published_at = :publishedAt, updated_at = :updatedAt, excerpt = :excerpt, category_id = :category WHERE id = :id';
 
         $postInfo
             = [
             'id' => $post->getId(),
+            'title' => $post->getTitle(),
             'content' => $post->getContent(),
             'image' => $post->getImage(),
             'publishedAt' => $post->getPublishedAt(),

@@ -7,12 +7,17 @@ use App\Src\Controller\Session;
 class Post
 {
 
-    private const EXCERPT_SIZE = 70;
+    private const EXCERPT_SIZE = 66;
 
     /**
      * @var integer
      */
     private $id;
+
+    /**
+     * @var string
+     */
+    private $title;
 
     /**
      * @var string
@@ -61,10 +66,11 @@ class Post
 
 
     /**
-     * @param bool $init parameter
+     * @param string|bool $init parameter
      */
-    public function __construct(bool $init = false)
+    public function __construct($init = false)
     {
+
         if ($init === "default") {
             $this->default();
         }
@@ -77,6 +83,7 @@ class Post
      */
     public function default()
     {
+
         $session = new Session();
         $this->image = null;
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
@@ -85,13 +92,16 @@ class Post
         $this->user_id = $session->getAuth('user_id');
     }
 
+
     /**
      * @return int
      */
     public function getId(): int
     {
+
         return $this->id;
     }
+
 
     /**
      * @param int $id parameter
@@ -100,16 +110,42 @@ class Post
      */
     public function setId(int $id): void
     {
+
         $this->id = $id;
     }
+
+
+    /**
+     * @return string
+     */
+    public function getTitle(): string
+    {
+
+        return $this->title;
+    }
+
+
+    /**
+     * @param string $title parameter
+     *
+     * @return void
+     */
+    public function setTitle(string $title): void
+    {
+
+        $this->title = $title;
+    }
+
 
     /**
      * @return string
      */
     public function getContent(): string
     {
+
         return $this->content;
     }
+
 
     /**
      * @param string $content parameter
@@ -118,17 +154,21 @@ class Post
      */
     public function setContent(string $content): void
     {
+
         $this->content = $content;
-        $this->setExcerpt(substr($content, 0, self::EXCERPT_SIZE));
+        $this->setExcerpt(substr($content, 0, self::EXCERPT_SIZE).'...');
     }
+
 
     /**
      * @return string|null
      */
     public function getImage(): ?string
     {
+
         return $this->image;
     }
+
 
     /**
      * @param string|null $image parameter
@@ -137,16 +177,20 @@ class Post
      */
     public function setImage(?string $image): void
     {
+
         $this->image = $image;
     }
+
 
     /**
      * @return mixed
      */
     public function getCreatedAt()
     {
+
         return $this->created_at;
     }
+
 
     /**
      * @param mixed $createdAt parameter
@@ -155,16 +199,20 @@ class Post
      */
     public function setCreatedAt($createdAt): void
     {
+
         $this->created_at = $createdAt;
     }
+
 
     /**
      * @return mixed|null
      */
     public function getPublishedAt()
     {
+
         return $this->published_at;
     }
+
 
     /**
      * @param mixed|null $publishedAt parameter
@@ -173,16 +221,20 @@ class Post
      */
     public function setPublishedAt($publishedAt): void
     {
+
         $this->published_at = $publishedAt;
     }
+
 
     /**
      * @return mixed|null
      */
     public function getUpdatedAt()
     {
+
         return $this->updated_at;
     }
+
 
     /**
      * @param mixed|null $updatedAt parameter
@@ -191,16 +243,20 @@ class Post
      */
     public function setUpdatedAt($updatedAt): void
     {
+
         $this->updated_at = $updatedAt;
     }
+
 
     /**
      * @return mixed|null
      */
     public function getDeletedAt()
     {
+
         return $this->deleted_at;
     }
+
 
     /**
      * @param mixed|null $deletedAt parameter
@@ -209,16 +265,20 @@ class Post
      */
     public function setDeletedAt($deletedAt): void
     {
+
         $this->deleted_at = $deletedAt;
     }
+
 
     /**
      * @return string
      */
-    public function getExcerpt(): string
+    public function getExcerpt(): ?string
     {
+
         return $this->excerpt;
     }
+
 
     /**
      * @param string $excerpt parameter
@@ -227,16 +287,20 @@ class Post
      */
     public function setExcerpt(string $excerpt): void
     {
+
         $this->excerpt = $excerpt;
     }
+
 
     /**
      * @return int
      */
     public function getCategoryId(): int
     {
+
         return $this->category_id;
     }
+
 
     /**
      * @param int $categoryId parameter
@@ -245,16 +309,20 @@ class Post
      */
     public function setCategoryId(int $categoryId): void
     {
+
         $this->category_id = $categoryId;
     }
+
 
     /**
      * @return int
      */
     public function getUserId(): int
     {
+
         return $this->user_id;
     }
+
 
     /**
      * @param int $userId parameter
@@ -263,6 +331,7 @@ class Post
      */
     public function setUserId(int $userId): void
     {
+
         $this->user_id = $userId;
     }
 

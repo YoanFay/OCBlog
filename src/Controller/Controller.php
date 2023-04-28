@@ -38,6 +38,7 @@ abstract class Controller
      */
     public function __construct()
     {
+
         include_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
         $this->session = new Session();
 
@@ -83,6 +84,7 @@ abstract class Controller
      */
     public function redirectTo(string $url)
     {
+
         header('Location: '.$url);
     }
 
@@ -95,6 +97,7 @@ abstract class Controller
      */
     public function render(string $fichier, array $donnees = [])
     {
+
         try {
             $this->twig->display($fichier.'.html.twig', $donnees);
         } catch (LoaderError|RuntimeError|SyntaxError $e) {

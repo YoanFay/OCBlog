@@ -2,16 +2,18 @@
     <div class="card col-8 my-2 cursor-click" onclick="onePost({{ post.id }})">
         <div class="card-body">
             <div class="d-flex flex-row align-items-center">
-                <img src="/img/user/{{ post.avatar }}.png" class="me-3">
+                <img src="/img/user/{{ post.avatar }}" class="me-3">
                 <div class="d-flex flex-column justify-content-center">
-                    <p class="mb-0">{{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
+                    <p class="mb-0">Auteur : {{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
                     <p class="mb-0">Posté le : {{ post.createdAt|date("d/m/Y") }}
                         à {{ post.createdAt|date("H:i", "Europe/Paris") }}</p>
+                    <p class="mb-0">Catégorie : {{ post.name }}</p>
                 </div>
             </div>
             <hr>
+            <p class="h5">{{ post.title }}</p>
             <div class="d-flex justify-content-between">
-                <p class="d-flex align-items-center">{{ post.content }}</p>
+                <p class="d-flex align-items-center">{{ post.excerpt }}</p>
                 <div>
                     {% if post.image is not null %}
                         <img class="img-post" src="/img/post/{{ post.image }}">

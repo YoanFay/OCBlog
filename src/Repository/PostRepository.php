@@ -92,10 +92,10 @@ class PostRepository extends PostRepositoryUpdate
     public function findPublishedPostByCategory(int $category_id, bool $null = false): ?array
     {
 
-        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at DESC";
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname, c.name FROM post p INNER JOIN user u ON p.user_id = u.id INNER JOIN category c on p.category_id = c.id WHERE published_at IS NOT NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at DESC";
 
         if ($null === true) {
-            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
+            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname, c.name AS 'post_id' FROM post p INNER JOIN user u ON p.user_id = u.id INNER JOIN category c on p.category_id = c.id WHERE published_at IS NULL AND category_id = :category_id AND deleted_at IS NULL ORDER BY p.created_at ASC";
         }
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
@@ -113,7 +113,7 @@ class PostRepository extends PostRepositoryUpdate
     public function findLastPublishedPost(): ?array
     {
 
-        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE p.published_at IS NOT NULL AND p.deleted_at IS NULL ORDER BY p.created_at DESC LIMIT 3";
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname, c.name FROM post p INNER JOIN user u ON p.user_id = u.id INNER JOIN category c on p.category_id = c.id WHERE p.published_at IS NOT NULL AND p.deleted_at IS NULL ORDER BY p.created_at DESC LIMIT 3";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -132,10 +132,10 @@ class PostRepository extends PostRepositoryUpdate
     public function findPublishedPost(bool $null = false): ?array
     {
 
-        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY p.created_at DESC";
+        $req = "SELECT p.*, u.avatar, u.firstname, u.lastname, c.name FROM post p INNER JOIN user u ON p.user_id = u.id INNER JOIN category c on p.category_id = c.id WHERE published_at IS NOT NULL AND deleted_at IS NULL ORDER BY p.created_at DESC";
 
         if ($null === true) {
-            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname FROM post p INNER JOIN user u ON p.user_id = u.id WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY p.created_at ASC";
+            $req = "SELECT p.*, u.avatar, u.firstname, u.lastname, c.name FROM post p INNER JOIN user u ON p.user_id = u.id INNER JOIN category c on p.category_id = c.id WHERE published_at IS NULL AND deleted_at IS NULL ORDER BY p.created_at ASC";
         }
 
         if ($posts = $this->bdd->select($req, $this->class)) {
@@ -153,7 +153,7 @@ class PostRepository extends PostRepositoryUpdate
     public function findNotPublishedCommentPost(): ?array
     {
 
-        $req = "SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS 'nbr', u.avatar as 'avatar' FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at";
+        $req = "SELECT p.id, p.content, p.image, p.created_at, p.excerpt, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN  category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -172,7 +172,7 @@ class PostRepository extends PostRepositoryUpdate
     public function findNotPublishedCommentPostByCategory(int $category_id): ?array
     {
 
-        $req = "SELECT p.id, p.content, p.image, p.created_at, COUNT(p.id) AS 'nbr', u.avatar as 'avatar' FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
+        $req = "SELECT p.id, p.content, p.image, p.created_at, p.excerpt, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;
@@ -190,7 +190,7 @@ class PostRepository extends PostRepositoryUpdate
     public function find(int $idPost)
     {
 
-        $req = "SELECT p.*, user.avatar, user.firstname, user.lastname FROM post as p INNER JOIN user ON p.user_id = user.id WHERE p.id = ".$idPost;
+        $req = "SELECT p.*, user.avatar, user.firstname, user.lastname, c.name FROM post as p INNER JOIN user ON p.user_id = user.id INNER JOIN category c on p.category_id = c.id WHERE p.id = ".$idPost;
 
         if ($post = $this->bdd->select($req, $this->class)) {
             return $post[0];

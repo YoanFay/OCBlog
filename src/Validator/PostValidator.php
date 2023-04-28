@@ -25,16 +25,20 @@ class PostValidator extends Validator
      */
     public function __construct(Post $post)
     {
+
         $this->post = $post;
         $this->error = [];
     }
+
 
     /**
      * @return array|bool
      */
     public function validate()
     {
+
         $this->content($this->post->getContent());
+        $this->title($this->post->getTitle());
         $this->category($this->post->getCategoryId());
 
         if ($this->error === []) {
@@ -44,6 +48,7 @@ class PostValidator extends Validator
         return $this->error;
     }
 
+
     /**
      * @param string $parameter parameter
      *
@@ -51,6 +56,7 @@ class PostValidator extends Validator
      */
     public function content(string $parameter)
     {
+
         if ($this->validateIsNotEmpty($parameter) !== true) {
             $this->error['content'][] = "L'article ne peut pas être vide.";
         }
@@ -58,6 +64,24 @@ class PostValidator extends Validator
             $this->error['content'][] = "L'article doit être une chaîne de caractère.";
         }
     }
+
+
+    /**
+     * @param string $parameter parameter
+     *
+     * @return void
+     */
+    public function title(string $parameter)
+    {
+
+        if ($this->validateIsNotEmpty($parameter) !== true) {
+            $this->error['title'][] = "Le titre ne peut pas être vide.";
+        }
+        if ($this->validateIsString($parameter) !== true) {
+            $this->error['title'][] = "Le titre doit être une chaîne de caractère.";
+        }
+    }
+
 
     /**
      * @param int $parameter parameter

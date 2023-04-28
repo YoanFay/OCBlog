@@ -18,6 +18,7 @@ class PostForm
      */
     public function __construct()
     {
+
         $this->form = new Form();
 
     }//end __construct()
@@ -35,6 +36,9 @@ class PostForm
     {
 
         return $this->form->startForm('post', '/Post/add', ['enctype' => 'multipart/form-data'])
+            ->addLabelFor('title', "Titre")
+            ->addTextArea('title', "", ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['title'] ?? [])
             ->addLabelFor('content', "Contenue")
             ->addTextArea('content', "", ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content'] ?? [])
@@ -49,6 +53,7 @@ class PostForm
             ->endForm();
 
     }
+
 
     /**
      * @param int    $idPost parameter
@@ -68,6 +73,7 @@ class PostForm
 
     }
 
+
     /**
      * @param int    $idPost parameter
      * @param string $token  parameter
@@ -86,6 +92,7 @@ class PostForm
 
     }
 
+
     /**
      * @param array       $categoryTab parameter
      * @param array       $errors      parameter
@@ -96,10 +103,13 @@ class PostForm
      *
      * @return Form
      */
-    public function updatePost(array $categoryTab, array $errors, int $idPost, string $content, string $token, ?string $image): Form
+    public function updatePost(array $categoryTab, array $errors, int $idPost, string $title, string $content, string $token, ?string $image): Form
     {
 
         $updateForm = $this->form->startForm('post', '/Post/updatePost/'.$idPost, ['enctype' => 'multipart/form-data'])
+            ->addLabelFor('title', "Titre")
+            ->addTextArea('title', "$title", ['class' => 'form-control my-3', 'required' => true])
+            ->addError($errors['title'] ?? [])
             ->addLabelFor('content', "Contenue")
             ->addTextArea('content', "$content", ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content'] ?? [])

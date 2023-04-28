@@ -6,7 +6,7 @@
         <div class="card col-8 my-2">
             <div class="card-body">
                 <div class="d-flex flex-row align-items-center">
-                    <img src="/img/user/{{ post.avatar }}.png" class="me-3">
+                    <img src="/img/user/{{ post.avatar }}" class="me-3">
                     <div class="d-flex flex-column justify-content-center">
                         <p class="mb-0">{{ post.firstname }} {{ post.lastname|slice(0, 1) }}</p>
                         <p class="mb-0">Posté le : {{ post.createdAt|date("d/m/Y") }}
@@ -35,7 +35,7 @@
             <div class="card col-8 my-2">
                 <div class="card-body">
                     <div class="d-flex flex-row align-items-center">
-                        <img src="/img/user/{{ comment.avatar }}.png" class="me-3">
+                        <img src="/img/user/{{ comment.avatar }}" class="me-3">
                         <div class="d-flex flex-column justify-content-center">
                             <p class="mb-0">{{ comment.firstname }} {{ comment.lastname|slice(0, 1) }}</p>
                             <p class="mb-0">Posté le : {{ comment.createdAt|date("d/m/Y") }}

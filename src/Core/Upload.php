@@ -8,7 +8,7 @@ class Upload
 {
 
     /**
-     * @var File
+     * @var File|null
      */
     private $file;
 
@@ -19,11 +19,12 @@ class Upload
 
 
     /**
-     * @param File   $file  parameter
-     * @param string $where parameter
+     * @param File|null $file  parameter
+     * @param string    $where parameter
      */
-    public function __construct(File $file, string $where)
+    public function __construct(?File $file, string $where)
     {
+
         $this->file = $file;
         $this->where = $where;
 
@@ -51,6 +52,7 @@ class Upload
         return $filename;
     }
 
+
     /**
      * @return false|string
      */
@@ -70,6 +72,7 @@ class Upload
 
         return $filename;
     }
+
 
     /**
      * @param string $url parameter

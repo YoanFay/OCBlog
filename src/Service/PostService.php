@@ -22,8 +22,10 @@ class PostService
      */
     public function addPost(Request $request, Session $session): bool
     {
+
         $post = new Post("default");
 
+        $post->setTitle($request->get('post', 'title'));
         $post->setContent($request->get('post', 'content'));
         $post->setCategoryId($request->get('post', 'category'));
 
@@ -73,6 +75,7 @@ class PostService
      */
     public function setImage(Request $request, Post $post, Session $session): Post
     {
+
         $testImage = 'noChange';
         $image = false;
 
@@ -100,6 +103,7 @@ class PostService
 
     }
 
+
     /**
      * @param Post           $post           parameter
      * @param Request        $request        parameter
@@ -110,8 +114,9 @@ class PostService
      */
     public function updatePost(Post $post, Request $request, Session $session, PostRepository $postRepository): bool
     {
+
+        $post->setTitle($request->get('post', 'title'));
         $post->setContent($request->get('post', 'content'));
-        $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
         $post->setCategoryId($request->get('post', 'category'));
         $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
         $post->setPublishedAt(Null);

@@ -176,7 +176,7 @@ class Post extends Controller
 
         $this->session->setToken($token);
 
-        $form = $postForm->updatePost($categoryTab, $testPost, $idPost, $post->getContent(), $token, $post->getImage());
+        $form = $postForm->updatePost($categoryTab, $testPost, $idPost, $post->getTitle(), $post->getContent(), $token, $post->getImage());
 
         $this->render(
             'post/update',
