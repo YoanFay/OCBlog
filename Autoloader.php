@@ -11,6 +11,7 @@ class Autoloader
      */
     public static function register()
     {
+
         spl_autoload_register(
             [
                 __CLASS__,
@@ -25,10 +26,12 @@ class Autoloader
      * Autoload
      *
      * @param string $class parameter
+     *
      * @return void
      */
     public static function autoload($class)
     {
+
         $vendorPaths = [
             'Twig\\' => 'Vendor\\Twig\\Twig\\Src\\',
             'Dotenv\\' => 'Vendor\\vlucas\\phpdotenv\\Src\\',
