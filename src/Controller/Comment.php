@@ -10,11 +10,17 @@ use App\Src\Validator\CommentValidator;
 class Comment extends Controller
 {
 
-    public function moderateComment($postId)
+
+    /**
+     * @param int $postId parameter
+     *
+     * @return void
+     */
+    public function moderateComment(int $postId)
     {
 
-        if (Session::getAuth('level') < 60) {
-            header('Location: /');
+        if ($this->session->getAuth('level') < 60) {
+            $this->redirectTo('/');
         }
 
         $postRepository = new PostRepository();
@@ -22,30 +28,41 @@ class Comment extends Controller
         $post = $postRepository->find($postId);
         $comments = $commentRepository->findBy(['post_id' => $postId, 'validated_at' => "is null", 'deleted_at' => "is null"], ['created_at' => 'DESC']);
 
-        $this->render('comment/moderateComment', [
-            "post" => $post,
-            "comments" => $comments
-        ]);
-    }
+        $this->render(
+            'comment/moderateComment',
+            [
+                "post" => $post,
+                "comments" => $comments
+            ]
+        );
 
-    public function deleteComment($id)
+    }//end moderateComment()
+
+
+    /**
+     * Page de confirmation pour supprimer un commentaire
+     *
+     * @param int $idComment parameter
+     *
+     * @return void
+     */
+    public function deleteComment(int $idComment)
     {
-        $user = Session::getAuth();
-        if (!$user) {
-            header('Location: /');
+        $user = $this->session->getAuth();
+        if ($user === FALSE) {
+            $this->redirectTo('/');
         }
 
         $request = new Request();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
+        $comment = $commentRepository->find($idComment);
 
-        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/' . $id)) {
+        if ($this->valideForm($request, 'deleteComment', 'Comment/deleteComment/'.$idComment) === TRUE) {
+            $commentRepository->softDelete($idComment);
 
-            $commentRepository->softDelete($id);
+            $this->session->setFlash('success', 'Le commentaire à bien était supprimé');
 
-            Session::setFlash('success', 'Le commentaire à bien était supprimé');
-
-            header('Location: /Post/OnePost/' . $comment->getPostId());
+            $this->redirectTo('/Post/OnePost/'.$comment->getPostId());
 
         }
 
@@ -53,34 +70,44 @@ class Comment extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $commentForm->deleteComment($id, $token, $comment->getPostId());
+        $form = $commentForm->deleteComment($idComment, $token, $comment->getPostId());
 
-        $this->render('comment/delete', [
-            'form' => $form->create(),
-            'comment' => $comment
-        ]);
+        $this->render(
+            'comment/delete',
+            [
+                'form' => $form->create(),
+                'comment' => $comment
+            ]
+        );
+
     }
 
-    public function publishedComment($id)
+    /**
+     * Page de confirmation pour publier un commentaire
+     *
+     * @param int $idComment parameter
+     *
+     * @return void
+     */
+    public function publishedComment(int $idComment)
     {
-        if (!Session::getAuth()) {
-            header('Location: /');
+        if ($this->session->getAuth() === FALSE) {
+            $this->redirectTo('/');
         }
 
         $request = new Request();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
+        $comment = $commentRepository->find($idComment);
 
-        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/' . $id)) {
-
+        if ($this->valideForm($request, 'publishComment', 'Comment/publishedComment/'.$idComment) === TRUE) {
             $comment->setValidatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $commentRepository->update($comment);
 
-            Session::setFlash('success', "L'article a bien été publié");
+            $this->session->setFlash('success', "L'article a bien été publié");
 
-            header('Location: /');
+            $this->redirectTo('/');
 
         }
 
@@ -88,39 +115,47 @@ class Comment extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $commentForm->publishComment($id, $token, $comment->getPostId());
+        $form = $commentForm->publishComment($idComment, $token, $comment->getPostId());
 
-        $this->render('comment/publish', [
-            'form' => $form->create(),
-            'comment' => $comment
-        ]);
+        $this->render(
+            'comment/publish',
+            [
+                'form' => $form->create(),
+                'comment' => $comment
+            ]
+        );
 
     }
 
-    public function updateComment($id)
+    /**
+     * Formulaire pour modifier un commentaire
+     *
+     * @param int $idComment parameter
+     *
+     * @return void
+     */
+    public function updateComment(int $idComment)
     {
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         $commentRepository = new CommentRepository();
-        $comment = $commentRepository->find($id);
-        if (!$user || $user['user_id'] !== $comment->getUserId()) {
-            header('Location: /');
+        $comment = $commentRepository->find($idComment);
+        if ($user === FALSE || $user['user_id'] !== $comment->getUserId()) {
+            $this->redirectTo('/');
         }
 
         $request = new Request();
 
         $testComment = [];
 
-        if ($this->valideForm($request, 'updateComment', 'Comment/updateComment/' . $id)) {
-
+        if ($this->valideForm($request, 'updateComment', 'Comment/updateComment/'.$idComment) === TRUE) {
             $comment->setContent($request->get('post', 'content'));
             $comment->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
+            $comment->setValidatedAt(Null);
 
-            if (Session::getAuth('level') === 99) {
+            if ($this->session->getAuth('level') === 99) {
                 $comment->setValidatedAt($comment->getUpdatedAt());
-            } else {
-                $comment->setValidatedAt(Null);
             }
 
             $commentValidator = new CommentValidator($comment);
@@ -128,25 +163,28 @@ class Comment extends Controller
             $testComment = $commentValidator->validate();
 
             if ($testComment === true) {
-
                 $commentRepository->update($comment);
 
-                Session::setFlash('success', 'Le commentaire à bien était modifié');
-                header('Location: /');
-            }
+                $this->session->setFlash('success', 'Le commentaire à bien était modifié');
+                $this->redirectTo('/');
+            }//end if
+
         }
 
         $commentForm = new CommentForm();
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $commentForm->updateComment($testComment, $id, $comment->getContent(), $token, $comment->getPostId());
+        $form = $commentForm->updateComment($testComment, $idComment, $comment->getContent(), $token, $comment->getPostId());
 
-        $this->render('comment/update', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'comment/update',
+            [
+                'form' => $form->create(),
+            ]
+        );
     }
 
 }

@@ -8,17 +8,33 @@ use App\Src\Entity\Config;
 class ConfigForm
 {
 
+    /**
+     * @var Form
+     */
     private $form;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->form = new Form();
     }
 
-    public function updateConfig($errors, $errorsImage, $errorsCv, Config $config, $token)
+    /**
+     * @param array  $errors      parameter
+     * @param array  $errorsImage parameter
+     * @param array  $errorsCv    parameter
+     * @param Config $config      parameter
+     * @param string $token       parameter
+     *
+     * @return Form
+     */
+    public function updateConfig(array $errors, array $errorsImage, array $errorsCv, Config $config, string $token): Form
     {
 
-        $updateForm = $this->form->startForm('post', '/Admin/updateConfig/' . $config->getId(), ['enctype' => 'multipart/form-data'])
+        $updateForm = $this->form->startForm('post', '/Admin/updateConfig', ['enctype' => 'multipart/form-data'])
             ->addLabelFor('title', "Titre du site")
             ->addTextArea('title', $config->getTitle(), ['class' => 'form-control my-3', 'required' => true])
             ->addError($errors['content'] ?? [])

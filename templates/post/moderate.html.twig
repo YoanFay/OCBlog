@@ -13,7 +13,7 @@
                    data-tab-value="#listModerateComment" id="commentTabs" onclick="change(2)">Commentaires</a>
             </li>
         </ul>
-        <select class="form-control mt-5" id="selectCategory">
+        <select class="form-control mt-5 select-category">
             <option value="0" selected>Tout</option>
             {% for category in categories %}
                 <option value="{{ category.id }}">{{ category.name }}</option>
@@ -81,10 +81,10 @@
         $('document').ready(function () {
             listModeratePostAjax();
             listModerateCommentPostAjax();
-            $("#selectCategory").val('0');
+            $(".select-category").val('0');
         });
 
-        $("#selectCategory").change(function () {
+        $(".select-category").change(function () {
             var selectedOption = $(this).val();
             listModeratePostAjax(selectedOption),
                 listModerateCommentPostAjax(selectedOption)

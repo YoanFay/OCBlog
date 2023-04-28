@@ -2,9 +2,21 @@
 
 namespace App\Src\Entity;
 
-class Category{
+class Category
+{
+    /**
+     * @var integer
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $code;
 
     /**
@@ -16,7 +28,9 @@ class Category{
     }
 
     /**
-     * @param int $id
+     * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -32,7 +46,9 @@ class Category{
     }
 
     /**
-     * @param string $name
+     * @param string $name parameter
+     *
+     * @return void
      */
     public function setName(string $name): void
     {
@@ -48,7 +64,9 @@ class Category{
     }
 
     /**
-     * @param string $code
+     * @param string $code parameter
+     *
+     * @return void
      */
     public function setCode(string $code): void
     {

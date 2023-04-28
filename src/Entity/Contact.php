@@ -5,23 +5,65 @@ namespace App\Src\Entity;
 class Contact
 {
 
+    /**
+     * @var integer
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $name;
+
+    /**
+     * @var string
+     */
     private $mail;
+
+    /**
+     * @var string
+     */
     private $message;
+
+    /**
+     * @var mixed
+     */
     private $created_at;
+
+    /**
+     * @var string
+     */
     private $process;
+
+    /**
+     * @var mixed
+     */
     private $process_at;
+
+    /**
+     * @var integer
+     */
     private $process_by;
+
+    /**
+     * @var string
+     */
     private $answer;
 
-    public function __construct($init = false)
+
+    /**
+     * @var bool $init parameter
+     */
+    public function __construct(bool $init = false)
     {
-        if ($init == "default") {
+        if ($init === "default") {
             $this->default();
         }
     }
 
+    /**
+     * @return void
+     */
     public function default()
     {
         $this->created_at = date_format(new \DateTime(), 'Y-m-d H:i:s');
@@ -36,7 +78,9 @@ class Contact
     }
 
     /**
-     * @param int $id
+     * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -52,7 +96,9 @@ class Contact
     }
 
     /**
-     * @param string $name
+     * @param string $name parameter
+     *
+     * @return void
      */
     public function setName(string $name): void
     {
@@ -68,7 +114,9 @@ class Contact
     }
 
     /**
-     * @param string $mail
+     * @param string $mail parameter
+     *
+     * @return void
      */
     public function setMail(string $mail): void
     {
@@ -84,7 +132,9 @@ class Contact
     }
 
     /**
-     * @param string $message
+     * @param string $message parameter
+     *
+     * @return void
      */
     public function setMessage(string $message): void
     {
@@ -100,7 +150,9 @@ class Contact
     }
 
     /**
-     * @param mixed $created_at
+     * @param mixed $created_at parameter
+     *
+     * @return void
      */
     public function setCreatedAt($created_at): void
     {
@@ -116,7 +168,9 @@ class Contact
     }
 
     /**
-     * @param string|null $process
+     * @param string|null $process parameter
+     *
+     * @return void
      */
     public function setProcess(string $process): void
     {
@@ -132,7 +186,9 @@ class Contact
     }
 
     /**
-     * @param mixed|null $process_at
+     * @param mixed|null $process_at parameter
+     *
+     * @return void
      */
     public function setProcessAt($process_at): void
     {
@@ -148,7 +204,9 @@ class Contact
     }
 
     /**
-     * @param int|null $process_by
+     * @param int|null $process_by parameter
+     *
+     * @return void
      */
     public function setProcessBy(int $process_by): void
     {
@@ -164,9 +222,11 @@ class Contact
     }
 
     /**
-     * @param string|null $answer
+     * @param string|null $answer parameter
+     *
+     * @return void
      */
-    public function setAnswer($answer): void
+    public function setAnswer(?string $answer): void
     {
         $this->answer = $answer;
     }

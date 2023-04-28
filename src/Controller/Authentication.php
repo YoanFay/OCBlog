@@ -2,8 +2,6 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Core\Bdd;
-use App\Src\Core\Form;
 use App\Src\Entity\File;
 use App\Src\Entity\User;
 use App\Src\Form\AuthentificationForm;
@@ -16,16 +14,22 @@ use App\Src\Validator\UserValidator;
 class Authentication extends Controller
 {
 
+
+    /**
+     * Formulaire d'inscription
+     *
+     * @return void
+     */
     public function signUp()
     {
+
         $roleRepository = new RoleRepository();
         $authenticationForm = new AuthentificationForm();
         $testFile = [];
         $validate = [];
         $request = new Request();
 
-        if ($this->valideForm($request, 'signUp', 'Authentication/signUp')) {
-
+        if ($this->valideForm($request, 'signUp', 'Authentication/signUp') === TRUE) {
             $role = $roleRepository->findOneBy(['code' => 'user']);
 
             $user = new User();
@@ -35,15 +39,15 @@ class Authentication extends Controller
             $user->setLogin($request->get('post', 'login'));
             $user->setPassword(password_hash($request->get('post', 'password'), PASSWORD_BCRYPT));
             $user->setRoleId($role->getId());
+            $testFile = 'default';
+            $file = null;
 
-            if ($request->get('post', 'avatar')) {
+            if ($request->get('post', 'avatar') === TRUE) {
                 $file = new File($request->get('file', 'image'));
 
                 $fileValidator = new FileValidator($file);
 
                 $testFile = $fileValidator->validateImage();
-            } else {
-                $testFile = 'default';
             }
 
             $userValidator = new UserValidator($user);
@@ -51,39 +55,49 @@ class Authentication extends Controller
             $validate = $userValidator->validate();
 
             if ($validate === true) {
-
+                $uploadService = new UploadService();
                 if ($testFile === true) {
-                    if ($filename = UploadService::uploadUser($file)) {
+                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                    if ($filename = $uploadService->uploadUser($file)) {
                         $user->setAvatar($filename);
-                    } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                        $this->session->resetFlash();
                     }
-                } elseif ($testFile === 'default') {
-                    if ($filename = UploadService::uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
+                } else if ($testFile === 'default') {
+                    $this->session->setFlash('danger', "Un problème est survenue lors du transfert de l'image");
+                    if ($filename = $uploadService->uploadDefaultUser($user->getFirstname(), $user->getLastname())) {
+                        $this->session->resetFlash();
                         $user->setAvatar($filename);
-                    } else {
-                        Session::setFlash('danger', "Un problème est survenue lors du transfert de l'image");
                     }
                 }
 
                 $userRepository = new UserRepository();
                 $userRepository->add($user);
 
-                header('Location: /Authentication/signIn');
-            }
+                $this->redirectTo('/Authentication/signIn');
+            }//end if
         }
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $authenticationForm->signUp($token, $testFile, $validate);
 
-        $this->render('authentication/signUp', [
-            'form' => $form->create()
-        ]);
-    }
+        $this->render(
+            'authentication/signUp',
+            [
+                'form' => $form->create()
+            ]
+        );
 
+    }//end signUp()
+
+
+    /**
+     * Formulaire de connexion
+     *
+     * @return void
+     */
     public function signIn()
     {
 
@@ -92,34 +106,47 @@ class Authentication extends Controller
         $authenticationForm = new AuthentificationForm();
         $request = new Request();
 
-        if ($this->valideForm($request, 'signIn', 'Authentication/signIn')) {
-
+        if ($this->valideForm($request, 'signIn', 'Authentication/signIn') === TRUE) {
             $login = $request->get('post', 'login');
             $password = $request->get('post', 'password');
 
             $user = $userRepository->findOneBy(['login' => $login]);
             $role = $roleRepository->find($user->getRoleId());
 
-            if (password_verify($password, $user->getPassword())) {
-                Session::setAuth($user, $role);
-                header('Location: /');
+            if (password_verify($password, $user->getPassword()) === TRUE) {
+                $this->session->setAuth($user, $role);
+                $this->redirectTo('/');
             }
         }
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $authenticationForm->signIn($token);
 
-        $this->render('authentication/signIn', [
-            'form' => $form->create()
-        ]);
-    }
+        $this->render(
+            'authentication/signIn',
+            [
+                'form' => $form->create()
+            ]
+        );
 
+    }//end signIn()
+
+
+    /**
+     * Fonction de déconnexion
+     *
+     * @return void
+     */
     public function logout()
     {
-        Session::logout();
-        header('Location: /');
-    }
+
+        $this->session->logout();
+        $this->redirectTo('/');
+
+    }//end logout()
+
+
 }

@@ -17,8 +17,8 @@
             </li>
         </ul>
     </div>
-    <div class="" id="maxHeight">
-        <div class="card" id="contactList">
+    <div class="height-max">
+        <div class="card contact-list">
         </div>
         <div class="card" id="divMail">
             <div class="container">
@@ -28,7 +28,7 @@
                 </div>
                 <hr>
                 <div class="card mb-3 d-none" id="mail">
-                    <div class="card-body" id="contactInfo">
+                    <div class="card-body contact-info">
                         <h5 class="card-title" id="mailName"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" id="mailTo"></h6>
                         <p class="card-text" id="mailText"></p>
@@ -36,16 +36,16 @@
                 </div>
                 <p class="d-flex flex-row-reverse" id="processInfo"></p>
 
-                <div class="border border-secondary rounded p-3 d-none" id="divAnswer">
+                <div class="border border-secondary rounded p-3 d-none div-answer">
                     <h4>Réponse</h4>
                     <p class="card-text" id="answerText"></p>
                 </div>
             </div>
-            <div class="d-flex flex-column flex-lg-row" id="divBtn">
+            <div class="flex-column flex-lg-row" id="divBtn">
                 <div>
-                    <a class="d-none mx-lg-2 m-2 btn btn-primary" id="answerBtn" href="">Répondre
+                    <a class="d-none mx-lg-2 m-2 btn btn-primary answer-btn" href="">Répondre
                     </a>
-                    <a class="d-none btn btn-danger m-2 m-lg-auto" id="archiveBtn" href="">Archiver
+                    <a class="d-none btn btn-danger m-2 m-lg-auto archive-btn" href="">Archiver
                     </a>
                 </div>
             </div>
@@ -66,15 +66,15 @@
             $('#mailText').html(message);
             $('#mailDate').html(createdAt);
             $('#mail').removeClass('d-none');
-            $('#answerBtn').removeClass('d-none').attr('href', '/Contact/answerContact/' + id);
-            $('#archiveBtn').removeClass('d-none').attr('href', '/Contact/archiveContact/' + id);
+            $('.answer-btn').removeClass('d-none').attr('href', '/Contact/answerContact/' + id);
+            $('.archive-btn').removeClass('d-none').attr('href', '/Contact/archiveContact/' + id);
 
             if (process) {
                 $('#processInfo').html(process);
             }
 
             if (answer) {
-                $('#divAnswer').removeClass('d-none');
+                $('.div-answer').removeClass('d-none');
                 $('#answerText').html(answer);
                 $('#mail').addClass('answer');
             }
@@ -87,12 +87,12 @@
                 url: "/Contact/choiceBox/" + choice,
                 method: "POST",
                 success: function (response) {
-                    $('#contactList').html(response);
+                    $('.contact-list').html(response);
 
                     switch (choice) {
                         case 1:
-                            $('#divBtn').removeClass('maxNone');
-                            $('#archiveBtn').removeClass('maxNone');
+                            $('#divBtn').removeClass('max-none').addClass('d-flex');
+                            $('.archive-btn').removeClass('max-none');
 
                             $('#notProcessTabs').addClass('active')
                             $('#answerTabs').removeClass('active')
@@ -100,15 +100,15 @@
 
                             break;
                         case 2:
-                            $('#divBtn').addClass('maxNone');
+                            $('#divBtn').addClass('max-none').removeClass('d-flex');
 
                             $('#notProcessTabs').removeClass('active')
                             $('#answerTabs').addClass('active')
                             $('#archiveTabs').removeClass('active')
                             break;
                         case 3:
-                            $('#divBtn').removeClass('maxNone');
-                            $('#archiveBtn').addClass('maxNone');
+                            $('#divBtn').removeClass('max-none').addClass('d-flex');
+                            $('.archive-btn').addClass('max-none');
 
                             $('#notProcessTabs').removeClass('active')
                             $('#answerTabs').removeClass('active')
@@ -121,10 +121,10 @@
                     $('#mailDate').html('');
                     $('#processInfo').html('');
                     $('#answerText').html('');
-                    $('#divAnswer').addClass('d-none');
+                    $('.div-answer').addClass('d-none');
                     $('#mail').addClass('d-none');
-                    $('#answerBtn').addClass('d-none').attr('href', '');
-                    $('#archiveBtn').addClass('d-none').attr('href', '');
+                    $('.answer-btn').addClass('d-none').attr('href', '');
+                    $('.archive-btn').addClass('d-none').attr('href', '');
                 }
             });
 

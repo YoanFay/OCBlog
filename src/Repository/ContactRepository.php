@@ -8,14 +8,30 @@ use App\Src\Entity\Contact;
 class ContactRepository
 {
 
+    /**
+     * @var Bdd
+     */
     private $bdd;
+
+    /**
+     * @var string
+     */
     private $class = Contact::class;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->bdd = new Bdd();
     }
 
+    /**
+     * @param Contact $contact parameter
+     *
+     * @return void
+     */
     public function insert(Contact $contact)
     {
 
@@ -31,6 +47,11 @@ class ContactRepository
         $this->bdd->query($req, $postInfo);
     }
 
+    /**
+     * @param Contact $contact parameter
+     *
+     * @return void
+     */
     public function update(Contact $contact)
     {
         $req = 'UPDATE contact SET name = :name, mail = :mail, message = :message, created_at = :createdAt, process = :process, process_by = :processBy, process_at = :processAt, answer = :answer WHERE id = :id';
@@ -50,68 +71,85 @@ class ContactRepository
         $this->bdd->query($req, $postInfo);
     }
 
-    public function findAll()
+    /**
+     * @return array|null
+     */
+    public function findAll(): ?array
     {
 
         $req = 'SELECT * FROM contact';
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
-    public function findNotProcess()
+    /**
+     * @return array|null
+     */
+    public function findNotProcess(): ?array
     {
 
         $req = 'SELECT * FROM contact WHERE process IS NULL';
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
-    public function findAnswer()
+    /**
+     * @return array|null
+     */
+    public function findAnswer(): ?array
     {
 
         $req = 'SELECT c.*, CONCAT(u.firstname, " ", u.lastname) AS user FROM contact c INNER JOIN user u on c.process_by = u.id WHERE process = "answer"';
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
-    public function findArchive()
+    /**
+     * @return array|null
+     */
+    public function findArchive(): ?array
     {
 
         $req = 'SELECT c.*, CONCAT(u.firstname, " ", u.lastname) AS user FROM contact c INNER JOIN user u on c.process_by = u.id WHERE process = "archived"';
 
         if ($contacts = $this->bdd->select($req, $this->class)) {
             return $contacts;
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 
-    public function find($id)
+    /**
+     * @param int $idContact parameter
+     *
+     * @return mixed|null
+     */
+    public function find(int $idContact)
     {
 
-        $req = 'SELECT * FROM contact WHERE id = ' . $id;
+        $req = 'SELECT * FROM contact WHERE id = '.$idContact;
 
         if ($contact = $this->bdd->select($req, $this->class)) {
             return $contact[0];
-        } else {
-            return NULL;
         }
+
+        return NULL;
 
     }
 }

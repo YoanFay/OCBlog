@@ -2,61 +2,211 @@
 
 namespace App\Src\Controller;
 
-class Session extends Controller
+use App\Src\Entity\Role;
+use App\Src\Entity\User;
+
+class Session
 {
 
-    static public function getAuth(string $key = null)
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
     {
 
-        if (!isset($_SESSION['auth'])) {
+        session_start();
+
+    }//end __construct()
+
+
+    /**
+     * Fonction qui retourne l'utilisateur s'il y en a un
+     *
+     * @param string|null $key parameter
+     *
+     * @return mixed|null
+     */
+    public function getAuth(string $key = null)
+    {
+
+        $session = $this->getSession();
+
+        if (isset($session['auth']) === FALSE) {
             return null;
         }
 
-        return $key ? $_SESSION['auth'][$key] : $_SESSION['auth'];
-    }
-
-    static public function setAuth($user, $role)
-    {
-        $_SESSION['auth']['user_id'] = $user->getId();
-        $_SESSION['auth']['role_id'] = $role->getId();
-        $_SESSION['auth']['role'] = $role->getCode();
-        $_SESSION['auth']['level'] = $role->getLevel();
-    }
-
-    static public function logout(): void
-    {
-        unset($_SESSION['auth']);
-    }
-
-    static public function setFlash(string $type, string $message): void
-    {
-        $_SESSION['flash']['type'] = $type;
-        $_SESSION['flash']['message'] = $message;
-    }
-
-    static public function getFlash(string $key = null)
-    {
-
-        if (!isset($_SESSION['flash'])) {
-            return null;
+        if ($key !== null) {
+            return $session['auth'][$key];
         }
 
-        return $key ? $_SESSION['flash'][$key] : $_SESSION['flash'];
+        return $session['auth'];
+
+    }//end getAuth()
+
+
+    /**
+     * @return array
+     */
+    public function getSession(): array
+    {
+
+        return $_SESSION;
+
+    }//end getSession()
+
+
+    /**
+     * Fonction qui enregistre l'utilisateur
+     *
+     * @param User $user parameter
+     * @param Role $role parameter
+     *
+     * @return void
+     */
+    public function setAuth(User $user, Role $role)
+    {
+
+        $auth
+            = [
+            'user_id' => $user->getId(),
+            'role_id' => $role->getId(),
+            'role' => $role->getCode(),
+            'level' => $role->getLevel(),
+        ];
+
+        $this->setSession('auth', $auth);
+
     }
 
-    static public function resetFlash(): void
+
+    /**
+     * @param string $key     parameter
+     * @param mixed  $content parameter
+     *
+     * @return void
+     */
+    public function setSession(string $key, $content)
     {
-        unset($_SESSION['flash']);
+
+        $_SESSION[$key] = $content;
+
     }
 
-    static public function setToken(string $token): void
+
+    /**
+     * Fonction qui déconnecte l'utilisateur
+     *
+     * @return void
+     */
+    public function logout(): void
     {
-        $_SESSION['token'] = $token;
+
+        $this->unsetSession('auth');
     }
 
-    static public function getToken()
+
+    /**
+     * @param string $key parameter
+     *
+     * @return void
+     */
+    public function unsetSession(string $key)
     {
-        return $_SESSION['token'] ?? null;
+
+        unset($_SESSION[$key]);
+
+    }
+
+
+    /**
+     * Fonction qui paramètre une flash
+     *
+     * @param string $type    parameter
+     * @param string $message parameter
+     *
+     * @return void
+     */
+    public function setFlash(string $type, string $message): void
+    {
+
+        $flash
+            = [
+            'type' => $type,
+            'message' => $message,
+        ];
+
+        $this->setSession('flash', $flash);
+
+    }
+
+
+    /**
+     * Fonction qui affiche une flash dans le footer s'il y en a
+     *
+     * @param string|null $key parameter
+     *
+     * @return mixed|null
+     */
+    public function getFlash(string $key = null)
+    {
+
+        $session = $this->getSession();
+
+        if (isset($session['flash']) === FALSE) {
+            return null;
+
+        }
+
+        if ($key !== null) {
+            return $session['flash'][$key];
+
+        }
+
+        return $session['flash'];
+
+    }
+
+
+    /**
+     * Fonction qui supprime les flash
+     *
+     * @return void
+     */
+    public function resetFlash(): void
+    {
+
+        $this->unsetSession('flash');
+
+    }
+
+
+    /**
+     * Fonction qui paramètre le token pour les formulaires
+     *
+     * @param string $token parameter
+     *
+     * @return void
+     */
+    public function setToken(string $token): void
+    {
+
+        $this->setSession('token', $token);
+
+    }
+
+
+    /**
+     * Fonction qui récupère le token pour les formulaires
+     *
+     * @return mixed|null
+     */
+    public function getToken()
+    {
+
+        $session = $this->getSession();
+
+        return ($session['token'] ?? null);
     }
 
 }

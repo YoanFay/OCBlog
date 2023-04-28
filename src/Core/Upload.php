@@ -2,25 +2,49 @@
 
 namespace App\Src\Core;
 
-class Upload{
+use App\Src\Entity\File;
 
+class Upload
+{
+
+    /**
+     * @var File|null
+     */
     private $file;
+
+    /**
+     * @var string
+     */
     private $where;
 
-    public function __construct($file, $where){
+
+    /**
+     * @param File|null $file  parameter
+     * @param string    $where parameter
+     */
+    public function __construct(?File $file, string $where)
+    {
+
         $this->file = $file;
         $this->where = $where;
+
+        //end __construct()
     }
 
-    function addFile(){
+
+    /**
+     * @return false|string
+     */
+    public function addFile()
+    {
 
         $path = "img/".$this->where."/";
         $prefix = $this->where."_";
 
-        $filename = uniqid($prefix) . "." . pathinfo($this->file->getName(), PATHINFO_EXTENSION);
+        $filename = uniqid($prefix).".".pathinfo($this->file->getName(), PATHINFO_EXTENSION);
 
         try {
-            move_uploaded_file($this->file->getTmpName(), $path . $filename);
+            move_uploaded_file($this->file->getTmpName(), $path.$filename);
         } catch (\Exception $e) {
             return false;
         }
@@ -28,15 +52,20 @@ class Upload{
         return $filename;
     }
 
-    function addPdf(){
+
+    /**
+     * @return false|string
+     */
+    public function addPdf()
+    {
 
         $path = "pdf/".$this->where."/";
         $prefix = $this->where."_";
 
-        $filename = uniqid($prefix) . "." . pathinfo($this->file->getName(), PATHINFO_EXTENSION);
+        $filename = uniqid($prefix).".".pathinfo($this->file->getName(), PATHINFO_EXTENSION);
 
         try {
-            move_uploaded_file($this->file->getTmpName(), $path . $filename);
+            move_uploaded_file($this->file->getTmpName(), $path.$filename);
         } catch (\Exception $e) {
             return false;
         }
@@ -44,14 +73,21 @@ class Upload{
         return $filename;
     }
 
-    function addFileByUrl($url){
+
+    /**
+     * @param string $url parameter
+     *
+     * @return false|string
+     */
+    public function addFileByUrl(string $url)
+    {
 
         $path = "img/".$this->where."/";
         $prefix = $this->where."_";
         $img = file_get_contents($url);
-        $filename = uniqid($prefix) . ".png";
+        $filename = uniqid($prefix).".png";
 
-        if (!$img){
+        if (!$img) {
             return false;
         }
 

@@ -7,15 +7,31 @@ use App\Src\Entity\Config;
 use App\Src\Entity\User;
 use Exception;
 
-class ConfigRepository{
+class ConfigRepository
+{
 
+    /**
+     * @var Bdd
+     */
     private $bdd;
+
+    /**
+     * @var string
+     */
     private $class = Config::class;
 
-    public function __construct(){
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
         $this->bdd = new BDD();
     }
 
+    /**
+     * @return mixed|null
+     */
     public function findOne()
     {
 
@@ -23,12 +39,16 @@ class ConfigRepository{
 
         if ($config = $this->bdd->select($req, $this->class)) {
             return $config[0];
-        } else {
-            return NULL;
         }
+        return NULL;
 
     }
 
+    /**
+     * @param Config $config parameter
+     *
+     * @return Exception|void
+     */
     public function update(Config $config)
     {
 
@@ -44,7 +64,7 @@ class ConfigRepository{
 
         try {
             $this->bdd->query($req, $configInfo);
-        }catch (Exception $e){
+        } catch (Exception $e) {
             return $e;
         }
     }

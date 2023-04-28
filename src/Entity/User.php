@@ -2,17 +2,55 @@
 
 namespace App\Src\Entity;
 
-class User{
+class User
+{
+
+    /**
+     * @var integer
+     */
     private $id;
+
+    /**
+     * @var string
+     */
     private $lastname;
+
+    /**
+     * @var string
+     */
     private $firstname;
+
+    /**
+     * @var string
+     */
     private $login;
+
+    /**
+     * @var string
+     */
     private $password;
+
+    /**
+     * @var mixed
+     */
     private $created_at;
+
+    /**
+     * @var string
+     */
     private $avatar;
+
+    /**
+     * @var integer
+     */
     private $role_id;
 
-    public function __construct(){
+
+    /**
+     * Constructeur
+     */
+    public function __construct()
+    {
         $this->created_at = new \DateTime();
     }
 
@@ -25,7 +63,9 @@ class User{
     }
 
     /**
-     * @param int $id
+     * @param int $id parameter
+     *
+     * @return void
      */
     public function setId(int $id): void
     {
@@ -41,7 +81,9 @@ class User{
     }
 
     /**
-     * @param string $lastname
+     * @param string $lastname parameter
+     *
+     * @return void
      */
     public function setLastname(string $lastname): void
     {
@@ -57,7 +99,9 @@ class User{
     }
 
     /**
-     * @param string $firstname
+     * @param string $firstname parameter
+     *
+     * @return void
      */
     public function setFirstname(string $firstname): void
     {
@@ -73,7 +117,9 @@ class User{
     }
 
     /**
-     * @param string $login
+     * @param string $login parameter
+     *
+     * @return void
      */
     public function setLogin(string $login): void
     {
@@ -89,7 +135,9 @@ class User{
     }
 
     /**
-     * @param string $password
+     * @param string $password parameter
+     *
+     * @return void
      */
     public function setPassword(string $password): void
     {
@@ -101,6 +149,11 @@ class User{
         return $this->created_at;
     }
 
+    /**
+     * @param mixed $created_at parameter
+     *
+     * @return void
+     */
     public function setCreatedAt($created_at): void
     {
         $this->created_at = $created_at;
@@ -115,7 +168,9 @@ class User{
     }
 
     /**
-     * @param int $role
+     * @param int $role_id parameter
+     *
+     * @return void
      */
     public function setRoleId(int $role_id): void
     {
@@ -131,7 +186,9 @@ class User{
     }
 
     /**
-     * @param string $avatar
+     * @param string $avatar parameter
+     *
+     * @return void
      */
     public function setAvatar(string $avatar): void
     {

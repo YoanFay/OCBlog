@@ -10,14 +10,31 @@ use App\Src\Repository\UserRepository;
 class ContactValidator extends Validator
 {
 
+    /**
+     * @var Contact
+     */
     private $contact;
 
-    public function __construct($contact)
+    /**
+     * @var array
+     */
+    private $error;
+
+
+    /**
+     * @param Contact $contact parameter
+     */
+    public function __construct(Contact $contact)
     {
         $this->contact = $contact;
         $this->error = [];
-    }
 
+    }//end __construct()
+
+
+    /**
+     * @return array|bool
+     */
     public function validate()
     {
         $this->name($this->contact->getName());
@@ -31,6 +48,54 @@ class ContactValidator extends Validator
         return $this->error;
     }
 
+    /**
+     * @param string $parameter parameter
+     *
+     * @return void
+     */
+    public function name(string $parameter)
+    {
+        if ($this->validateIsNotEmpty($parameter) !== true) {
+            $this->error['name'][] = "Le nom ne peut pas être vide.";
+        }
+        if ($this->validateIsString($parameter) !== true) {
+            $this->error['name'][] = "Le nom doit être une chaîne de caractère.";
+        }
+    }
+
+    /**
+     * @param string $parameter parameter
+     *
+     * @return void
+     */
+    public function mail(string $parameter)
+    {
+        if ($this->validateIsNotEmpty($parameter) !== true) {
+            $this->error['mail'][] = "Le destinataire ne peut pas être vide.";
+        }
+        if ($this->validateIsString($parameter) !== true) {
+            $this->error['mail'][] = "Le destinataire doit être une chaîne de caractère.";
+        }
+    }
+
+    /**
+     * @param string $parameter parameter
+     *
+     * @return void
+     */
+    public function message(string $parameter)
+    {
+        if ($this->validateIsNotEmpty($parameter) !== true) {
+            $this->error['message'][] = "Le message ne peut pas être vide.";
+        }
+        if ($this->validateIsString($parameter) !== true) {
+            $this->error['message'][] = "Le message doit être une chaîne de caractère.";
+        }
+    }
+
+    /**
+     * @return array|bool
+     */
     public function validateAnswer()
     {
         $this->answer($this->contact->getName());
@@ -42,37 +107,12 @@ class ContactValidator extends Validator
         return $this->error;
     }
 
-    public function name($parameter)
-    {
-        if ($this->validateIsNotEmpty($parameter) !== true) {
-            $this->error['name'][] = "Le nom ne peut pas être vide.";
-        }
-        if ($this->validateIsString($parameter) !== true) {
-            $this->error['name'][] = "Le nom doit être une chaîne de caractère.";
-        }
-    }
-
-    public function mail($parameter)
-    {
-        if ($this->validateIsNotEmpty($parameter) !== true) {
-            $this->error['mail'][] = "Le destinataire ne peut pas être vide.";
-        }
-        if ($this->validateIsString($parameter) !== true) {
-            $this->error['mail'][] = "Le destinataire doit être une chaîne de caractère.";
-        }
-    }
-
-    public function message($parameter)
-    {
-        if ($this->validateIsNotEmpty($parameter) !== true) {
-            $this->error['message'][] = "Le message ne peut pas être vide.";
-        }
-        if ($this->validateIsString($parameter) !== true) {
-            $this->error['message'][] = "Le message doit être une chaîne de caractère.";
-        }
-    }
-
-    public function answer($parameter)
+    /**
+     * @param string $parameter parameter
+     *
+     * @return void
+     */
+    public function answer(string $parameter)
     {
         if ($this->validateIsNotEmpty($parameter) !== true) {
             $this->error['answer'][] = "Le message ne peut pas être vide.";
