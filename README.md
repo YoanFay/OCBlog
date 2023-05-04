@@ -1,1 +1,1 @@
-# OCBlog
+Pour installer ce blog, il faut dans un premier temps télécharger le code depuis la branche develop

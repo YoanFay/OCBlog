@@ -1,28 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Controller/Admin.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/Comment.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Entity/File.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Service/UploadService.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Validator/FileValidator.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/admin/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/img/posts/202301121459181.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/img/posts/202301130657597.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Entity/Post.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Post.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Form/PostForm.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/PostForm.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Validator/PostValidator.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Validator/PostValidator.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/homepage/homepage.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/layout/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/layout/base.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/index.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/listModeratePostAjax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/listModeratePostAjax.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/listPostAjax.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/listPostAjax.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/moderate.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/moderate.html.twig" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/post/onePost.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/post/onePost.html.twig" afterDir="false" />
-    </list>
+    <list default="true" id="0f5d12cc-e0f2-4ea3-ace3-41cecc2054a0" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,6 +28,11 @@
       <path value="$PROJECT_DIR$/vendor/symfony/polyfill-ctype" />
       <path value="$PROJECT_DIR$/vendor/twig/twig" />
       <path value="$PROJECT_DIR$/vendor/twbs/bootstrap" />
+      <path value="$PROJECT_DIR$/vendor/vlucas/phpdotenv" />
+      <path value="$PROJECT_DIR$/vendor/symfony/polyfill-php80" />
+      <path value="$PROJECT_DIR$/vendor/phpoption/phpoption" />
+      <path value="$PROJECT_DIR$/vendor/graham-campbell/result-type" />
+      <path value="$PROJECT_DIR$/vendor/phpmailer/phpmailer" />
     </include_path>
   </component>
   <component name="ProjectId" id="2FAG8YO5XpNhFn0rJgs6T0Q2uZK" />
@@ -58,11 +45,16 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;H:/UwAmp/www/OCBlog/src/Validator&quot;,
+    &quot;last_opened_file_path&quot;: &quot;H:/UwAmp/www/OCBlog/src/Repository&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.editor&quot;,
@@ -76,18 +68,18 @@
 }</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
-      <recent name="H:\UwAmp\www\OCBlog\templates\post" />
       <recent name="H:\UwAmp\www\OCBlog\src\Repository" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Form" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Entity" />
+      <recent name="H:\UwAmp\www\OCBlog" />
+      <recent name="H:\UwAmp\www\OCBlog\templates\contact" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Validator" />
+      <recent name="H:\UwAmp\www\OCBlog\templates\admin" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="H:\UwAmp\www\OCBlog\src\Form" />
-      <recent name="H:\UwAmp\www\OCBlog\src\Form\Post" />
-      <recent name="H:\UwAmp\www\OCBlog\public\pdf" />
       <recent name="H:\UwAmp\www\OCBlog" />
       <recent name="H:\UwAmp\www\OCBlog\public" />
+      <recent name="H:\UwAmp\www\OCBlog\templates\contact" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Core" />
+      <recent name="H:\UwAmp\www\OCBlog\src\Form" />
     </key>
   </component>
   <component name="RunManager" selected="PHP Script.init.php">
@@ -132,7 +124,33 @@
       <workItem from="1672938118487" duration="6778000" />
       <workItem from="1673509437021" duration="29891000" />
       <workItem from="1674158751389" duration="9181000" />
-      <workItem from="1674729226028" duration="971000" />
+      <workItem from="1674729226028" duration="10818000" />
+      <workItem from="1675366487681" duration="11164000" />
+      <workItem from="1675932492367" duration="17025000" />
+      <workItem from="1676014131008" duration="6318000" />
+      <workItem from="1676615959866" duration="11910000" />
+      <workItem from="1677141107851" duration="28549000" />
+      <workItem from="1677228415392" duration="8665000" />
+      <workItem from="1677242731014" duration="4674000" />
+      <workItem from="1677778674325" duration="5590000" />
+      <workItem from="1677827172053" duration="4209000" />
+      <workItem from="1678349256762" duration="26138000" />
+      <workItem from="1678986141419" duration="5971000" />
+      <workItem from="1679005946868" duration="110000" />
+      <workItem from="1679036376850" duration="9902000" />
+      <workItem from="1679155337027" duration="125000" />
+      <workItem from="1679556825109" duration="19131000" />
+      <workItem from="1679643153029" duration="21821000" />
+      <workItem from="1680190642020" duration="7153000" />
+      <workItem from="1680242106504" duration="18809000" />
+      <workItem from="1680765328841" duration="13253000" />
+      <workItem from="1680785181100" duration="8259000" />
+      <workItem from="1680848288345" duration="10367000" />
+      <workItem from="1681401269257" duration="4053000" />
+      <workItem from="1681452083263" duration="9911000" />
+      <workItem from="1681973677451" duration="10628000" />
+      <workItem from="1682059592551" duration="4750000" />
+      <workItem from="1682673370040" duration="682000" />
     </task>
     <servers />
   </component>

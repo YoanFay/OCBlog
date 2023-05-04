@@ -2,38 +2,52 @@
 
 namespace App\Src\Controller;
 
-class Request{
+class Request
+{
 
-    private $post;
-    private $get;
-    private $server;
+    /**
+     * @var array
+     */
     private $file;
 
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
-        $this->post = $_POST;
-        $this->get = $_GET;
-        $this->server = $_SERVER;
         $this->file = $_FILES;
+
+        //end __construct()
     }
 
-    public function issetPost(){
-        if ($this->post !== []){
-            return true;
+
+    /**
+     * Fonction qui retourne les données stockée dans la request
+     *
+     * @param string $method parameter
+     * @param string $key    parameter
+     *
+     * @return mixed|null
+     */
+    public function get(string $method, string $key)
+    {
+
+        switch ($method) {
+        case 'post':
+            return filter_input(INPUT_POST, $key);
+        case 'get':
+            return filter_input(INPUT_GET, $key);
+        case 'server':
+            return filter_input(INPUT_SERVER, $key);
+        case 'env':
+            return filter_input(INPUT_ENV, $key);
+        case 'file':
+            return $this->file[$key];
+        default:
+            return NULL;
         }
 
-        return false;
     }
 
-    public function issetGet(){
-        if ($this->get !== []){
-            return true;
-        }
-
-        return false;
-    }
-
-    public function get(string $method, string $key){
-        return $this->$method[$key]??NULL;
-    }
 }

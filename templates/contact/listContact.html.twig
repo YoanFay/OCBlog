@@ -1,0 +1,134 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+    <div class="d-flex flex-column align-items-center mt-5">
+        <ul class="nav nav-tabs">
+            <li class="nav-item border">
+                <a class="nav-link text-dark border border-dark cursor-click active" data-toggle="tab"
+                   data-tab-value="#listModeratePost" id="notProcessTabs" onclick="box(1)">Non traités</a>
+            </li>
+            <li class="nav-item border">
+                <a class="nav-link text-dark border border-dark cursor-click" data-toggle="tab"
+                   data-tab-value="#listModerateComment" id="answerTabs" onclick="box(2)">Traités</a>
+            </li>
+            <li class="nav-item border">
+                <a class="nav-link text-dark border border-dark cursor-click" data-toggle="tab"
+                   data-tab-value="#listModerateComment" id="archiveTabs" onclick="box(3)">Archivés</a>
+            </li>
+        </ul>
+    </div>
+    <div class="height-max">
+        <div class="card contact-list">
+        </div>
+        <div class="card" id="divMail">
+            <div class="container">
+                <div class="d-flex flex-column flex-lg-row justify-content-between align-items-center mt-2">
+                    <h1>Informations</h1>
+                    <p class="m-0" id="mailDate"></p>
+                </div>
+                <hr>
+                <div class="card mb-3 d-none" id="mail">
+                    <div class="card-body contact-info">
+                        <h5 class="card-title" id="mailName"></h5>
+                        <h6 class="card-subtitle mb-2 text-muted" id="mailTo"></h6>
+                        <p class="card-text" id="mailText"></p>
+                    </div>
+                </div>
+                <p class="d-flex flex-row-reverse" id="processInfo"></p>
+
+                <div class="border border-secondary rounded p-3 d-none div-answer">
+                    <h4>Réponse</h4>
+                    <p class="card-text" id="answerText"></p>
+                </div>
+            </div>
+            <div class="flex-column flex-lg-row" id="divBtn">
+                <div>
+                    <a class="d-none mx-lg-2 m-2 btn btn-primary answer-btn" href="">Répondre
+                    </a>
+                    <a class="d-none btn btn-danger m-2 m-lg-auto archive-btn" href="">Archiver
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script>
+
+        $(document).ready(function () {
+            box(1);
+        });
+
+        function SelectContact(name, message, mail, createdAt, id, process = null, answer = null) {
+            $('#mailName').html(name);
+            $('#mailTo').html(mail);
+            $('#mailText').html(message);
+            $('#mailDate').html(createdAt);
+            $('#mail').removeClass('d-none');
+            $('.answer-btn').removeClass('d-none').attr('href', '/Contact/answerContact/' + id);
+            $('.archive-btn').removeClass('d-none').attr('href', '/Contact/archiveContact/' + id);
+
+            if (process) {
+                $('#processInfo').html(process);
+            }
+
+            if (answer) {
+                $('.div-answer').removeClass('d-none');
+                $('#answerText').html(answer);
+                $('#mail').addClass('answer');
+            }
+
+        }
+
+        function box(choice) {
+
+            $.ajax({
+                url: "/Contact/choiceBox/" + choice,
+                method: "POST",
+                success: function (response) {
+                    $('.contact-list').html(response);
+
+                    switch (choice) {
+                        case 1:
+                            $('#divBtn').removeClass('max-none').addClass('d-flex');
+                            $('.archive-btn').removeClass('max-none');
+
+                            $('#notProcessTabs').addClass('active')
+                            $('#answerTabs').removeClass('active')
+                            $('#archiveTabs').removeClass('active')
+
+                            break;
+                        case 2:
+                            $('#divBtn').addClass('max-none').removeClass('d-flex');
+
+                            $('#notProcessTabs').removeClass('active')
+                            $('#answerTabs').addClass('active')
+                            $('#archiveTabs').removeClass('active')
+                            break;
+                        case 3:
+                            $('#divBtn').removeClass('max-none').addClass('d-flex');
+                            $('.archive-btn').addClass('max-none');
+
+                            $('#notProcessTabs').removeClass('active')
+                            $('#answerTabs').removeClass('active')
+                            $('#archiveTabs').addClass('active')
+                    }
+
+                    $('#mailName').html('');
+                    $('#mailTo').html('');
+                    $('#mailText').html('');
+                    $('#mailDate').html('');
+                    $('#processInfo').html('');
+                    $('#answerText').html('');
+                    $('.div-answer').addClass('d-none');
+                    $('#mail').addClass('d-none');
+                    $('.answer-btn').addClass('d-none').attr('href', '');
+                    $('.archive-btn').addClass('d-none').attr('href', '');
+                }
+            });
+
+        }
+
+    </script>
+{% endblock %}

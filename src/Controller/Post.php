@@ -2,216 +2,213 @@
 
 namespace App\Src\Controller;
 
-use App\Src\Entity\File;
+use App\Src\Form\CommentForm;
 use App\Src\Form\PostForm;
 use App\Src\Repository\CategoryRepository;
+use App\Src\Repository\CommentRepository;
 use App\Src\Repository\PostRepository;
-use App\Src\Service\UploadService;
-use App\Src\Validator\FileValidator;
-use App\Src\Validator\PostValidator;
-use App\Src\Entity\Post as PostEntity;
+use App\Src\Service\CommentService;
+use App\Src\Service\PostService;
 
 class Post extends Controller
 {
 
+
+    /**
+     * Page pour voir les articles
+     *
+     * @return void
+     */
     public function index()
     {
+
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
-        $this->render('post/index', [
-            "categories" => $categories,
-            "user" => Session::getAuth(),
-        ]);
-    }
+        $this->render(
+            'post/index',
+            [
+                "categories" => $categories,
+                "user" => $this->session->getAuth(),
+            ]
+        );
 
-    public function onePost($id)
+    }//end index()
+
+
+    /**
+     * Page pour voir un article
+     *
+     * @param int $idPost parameter
+     *
+     * @return void
+     */
+    public function onePost(int $idPost)
     {
-        $postRepository = new PostRepository();
-        $post = $postRepository->find($id);
 
-        $this->render('post/onePost', [
-            "post" => $post,
-            "user" => Session::getAuth(),
-        ]);
-    }
-
-    public function deletePost($id)
-    {
-
-        $user = Session::getAuth();
-        if (!$user) {
-            header('Location: /');
-        }
+        $testComment = [];
 
         $request = new Request();
 
-        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/' . $id)) {
+        if ($this->valideForm($request, 'addComment', 'Post/onePost/'.$idPost) === TRUE) {
+            $commentService = new CommentService();
 
-            $postRepository = new PostRepository();
-            $post = $postRepository->find($id);
+            $commentService->addComment($idPost, $request, $this->session);
+        }
 
-            $file = "img/post/" . $post->getImage();
-            if (file_exists($file)) {
+        $postRepository = new PostRepository();
+        $commentRepository = new CommentRepository();
+        $post = $postRepository->find($idPost);
+
+        $comments = $commentRepository->findBy(['post_id' => $post->getId(), 'validated_at' => "is not null", 'deleted_at' => 'is null'], ['created_at' => 'DESC']);
+
+        $commentForm = new CommentForm();
+
+        $token = uniqid(rand(), true);
+
+        $this->session->setToken($token);
+
+        $form = $commentForm->addComment($idPost, $testComment, $token);
+
+        $this->render(
+            'post/onePost',
+            [
+                "post" => $post,
+                "comments" => $comments,
+                "user" => $this->session->getAuth(),
+                'form' => $form->create(),
+            ]
+        );
+
+    }//end onePost()
+
+
+    /**
+     * Page de confirmation pour supprimer un article
+     *
+     * @param int $idPost parameter
+     *
+     * @return void
+     */
+    public function deletePost(int $idPost)
+    {
+
+        $user = $this->session->getAuth();
+        if ($user === FALSE) {
+            $this->redirectTo('/');
+        }
+
+        $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($idPost);
+
+        if ($this->valideForm($request, 'deletePost', 'Post/deletePost/'.$idPost) === TRUE) {
+            $file = "/img/post/".$post->getImage();
+            if (file_exists($file) === TRUE) {
                 unlink($file);
                 $post->setImage(Null);
             }
 
-            $postRepository->delete($id);
+            $postRepository->softDelete($idPost);
 
-            Session::setFlash('success', 'L\'article à bien était supprimé');
+            $this->session->setFlash('success', "L'article à bien était supprimé");
 
-            header('Location: /');
-
+            $this->redirectTo('/');
         }
 
         $postForm = new PostForm();
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $postForm->deletePost($id, $token);
+        $form = $postForm->deletePost($idPost, $token);
 
-        $this->render('post/delete', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/delete',
+            [
+                'form' => $form->create(),
+                'post' => $post
+            ]
+        );
 
-    }
+    }//end deletePost()
 
-    public function updatePost($id)
+
+    /**
+     * Formulaire pour modifier un article
+     *
+     * @param int $idPost parameter
+     *
+     * @return void
+     */
+    public function updatePost(int $idPost)
     {
 
-        $user = Session::getAuth();
+        $user = $this->session->getAuth();
         $postRepository = new PostRepository();
-        $post = $postRepository->find($id);
-        if (!$user || $user['user_id'] !== $post->getUserId()) {
-            header('Location: /');
+        $post = $postRepository->find($idPost);
+        if ($user === FALSE || $user['user_id'] !== $post->getUserId()) {
+            $this->redirectTo('/');
         }
 
         $request = new Request();
 
         $testPost = [];
 
-        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/' . $id)) {
+        if ($this->valideForm($request, 'updatePost', 'Post/updatePost/'.$idPost) === TRUE) {
+            $postService = new PostService();
 
-            $post->setContent($request->get('post', 'content'));
-            $post->setExcerpt(substr($request->get('post', 'content'), 0, 70));
-            $post->setCategoryId($request->get('post', 'category'));
-            $post->setUpdatedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
-
-            if (Session::getAuth('level') === 99) {
-                $post->setPublishedAt($post->getUpdatedAt());
-            } else {
-                $post->setPublishedAt(Null);
+            if ($postService->updatePost($post, $request, $this->session, $postRepository) === TRUE) {
+                $this->redirectTo('/');
             }
 
-            if ($request->get('file', 'image')['name']) {
-
-                $file = "img/post/" . $post->getImage();
-                if (file_exists($file)) {
-                    unlink($file);
-                    $post->setImage(Null);
-                }
-
-                $array = explode('.', $request->get('file', 'image')['name']);
-                $file_ext = strtolower(end($array));
-                $filename = str_replace(['-', ' ', ':'], '', $post->getCreatedAt()) . $post->getUserId() . '.' . $file_ext;
-                $post->setImage($filename);
-            } elseif ($request->get('post', 'deleteImage') === "on") {
-                $file = "img/post/" . $post->getImage();
-                if (file_exists($file)) {
-                    unlink($file);
-                    $post->setImage(Null);
-                }
-            }
-
-            $postValidator = new PostValidator($post);
-
-            $testPost = $postValidator->validate();
-
-            if ($testPost === true) {
-
-                move_uploaded_file($request->get('file', 'image')['tmp_name'], "img/post/" . $post->getImage());
-
-                $postRepository->update($post);
-
-                Session::setFlash('success', 'L\'aticle à bien était modifié');
-                header('Location: /');
-            }
         }
 
-        $categoryRepository = new CategoryRepository();
-
-        $categories = $categoryRepository->findAll();
-
         $categoryTab = [];
-
-        foreach ($categories as $category) {
-            $categoryTab += [
-                $category->getId() => $category->getName(),
-            ];
+        foreach ((new CategoryRepository())->findAll() as $category) {
+            $categoryTab[$category->getId()] = $category->getName();
         }
 
         $postForm = new PostForm();
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $postForm->updatePost($categoryTab, $testPost, $id, $post->getContent(), $token, $post->getImage());
+        $form = $postForm->updatePost($categoryTab, $testPost, $idPost, $post->getTitle(), $post->getContent(), $token, $post->getImage());
 
-        $this->render('post/update', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/update',
+            [
+                'form' => $form->create(),
+            ]
+        );
     }
 
+
+    /**
+     * Formulaire pour ajouter un article
+     *
+     * @return void
+     */
     public function add()
     {
-        $user = Session::getAuth();
-        if (!$user) {
-            header('Location: /');
+
+        $user = $this->session->getAuth();
+        if ($user === FALSE) {
+            $this->redirectTo('/');
         }
+
         $request = new Request();
         $testPost = [];
         $testFile = [];
 
-        if ($this->valideForm($request, 'addPost', 'Post/add')) {
+        if ($this->valideForm($request, 'addPost', 'Post/add') === TRUE) {
+            $postService = new PostService();
 
-            $post = new PostEntity("default");
-
-            $post->setContent($request->get('post', 'content'));
-            $post->setCategoryId($request->get('post', 'category'));
-
-            if (Session::getAuth('level') === 99) {
-                $post->setPublishedAt($post->getCreatedAt());
-            }
-
-            $postValidator = new PostValidator($post);
-
-            $testPost = $postValidator->validate();
-
-            $file = new File($request->get('file', 'image'));
-
-            $fileValidator = new FileValidator($file);
-
-            $testFile = $fileValidator->validateImage();
-
-            if ($testPost === true && $testFile === true) {
-
-                if ($file->getName()) {
-
-                    if ($filename = UploadService::uploadPost($file)){
-                        $post->setImage($filename);
-                    }
-                }
-
-                $postRepository = new PostRepository();
-                $postRepository->insert($post);
-
-                Session::setFlash('success', "L'article a bien été envoyé");
-
-                header('Location: /');
+            if ($postService->addPost($request, $this->session) === TRUE) {
+                $this->redirectTo('/');
             }
         }
 
@@ -230,48 +227,71 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
         $form = $postForm->addPost($categoryTab, $testPost, $testFile, $token);
 
-        $this->render('post/add', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/add',
+            [
+                'form' => $form->create(),
+            ]
+        );
 
     }
 
+
+    /**
+     * Page pour voir les articles non publiés
+     *
+     * @return void
+     */
     public function listPostNotValidate()
     {
+
+        if ($this->session->getAuth('level') < 60) {
+            $this->redirectTo('/');
+        }
+
         $categoryRepository = new CategoryRepository();
         $categories = $categoryRepository->findAll();
 
-        $this->render('post/moderate', [
-            "categories" => $categories,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/moderate',
+            [
+                "categories" => $categories,
+                "user" => $this->session->getAuth(),
+            ]
+        );
 
     }
 
-    public function publishedPost($id)
+
+    /**
+     * Page de confirmation pour publier un article
+     *
+     * @param int $idPost parameter
+     *
+     * @return void
+     */
+    public function publishedPost(int $idPost)
     {
 
-        if (!Session::getAuth()) {
-            header('Location: /');
+        if ($this->session->getAuth() === FALSE) {
+            $this->redirectTo('/');
         }
 
         $request = new Request();
+        $postRepository = new PostRepository();
+        $post = $postRepository->find($idPost);
 
-        if ($this->valideForm($request, 'publishPost', 'publishedPost/' . $id)) {
-
-            $postRepository = new PostRepository();
-
-            $post = $postRepository->find($id);
+        if ($this->valideForm($request, 'publishPost', 'Post/publishedPost/'.$idPost) === TRUE) {
             $post->setPublishedAt(date_format(new \DateTime(), 'Y-m-d H:i:s'));
             $postRepository->update($post);
 
-            Session::setFlash('success', "L'article a bien été publié");
+            $this->session->setFlash('success', "L'article a bien été publié");
 
-            header('Location: /');
+            $this->redirectTo('/');
 
         }
 
@@ -279,51 +299,101 @@ class Post extends Controller
 
         $token = uniqid(rand(), true);
 
-        Session::setToken($token);
+        $this->session->setToken($token);
 
-        $form = $postForm->publishPost($id, $token);
+        $form = $postForm->publishPost($idPost, $token);
 
-        $this->render('post/publish', [
-            'form' => $form->create(),
-        ]);
+        $this->render(
+            'post/publish',
+            [
+                'form' => $form->create(),
+                'post' => $post
+            ]
+        );
 
     }
 
+
+    /**
+     * Fonction pour sélectionner les articles publiés selon leur catégorie
+     *
+     * @return void
+     */
     public function listPostAjax()
     {
+
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? 0;
+        $category_id = ($request->get('post', 'category') ?? '0');
 
-
-        if ($category_id == 0) {
+        if ($category_id === '0') {
             $posts = $postRepository->findPublishedPost();
         } else {
             $posts = $postRepository->findPublishedPostByCategory($category_id);
         }
 
-        $this->render('post/listPostAjax', [
-            "posts" => $posts,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/listPostAjax',
+            [
+                "posts" => $posts,
+                "user" => $this->session->getAuth(),
+            ]
+        );
     }
 
+
+    /**
+     * Fonction pour sélectionner les articles non publiés selon leur catégorie
+     *
+     * @return void
+     */
     public function listModeratePostAjax()
     {
+
         $request = new Request();
         $postRepository = new PostRepository();
-        $category_id = $request->get('post', 'category') ?? 0;
+        $category_id = ($request->get('post', 'category') ?? '0');
 
-
-        if ($category_id == 0) {
-            $posts = $postRepository->findNotPublishedPost();
+        if ($category_id === '0') {
+            $posts = $postRepository->findPublishedPost(true);
         } else {
-            $posts = $postRepository->findNotPublishedPostByCategory($category_id);
+            $posts = $postRepository->findPublishedPostByCategory($category_id, true);
         }
 
-        $this->render('post/listModeratePostAjax', [
-            "posts" => $posts,
-            "user" => Session::getAuth(),
-        ]);
+        $this->render(
+            'post/listModeratePostAjax',
+            [
+                "posts" => $posts,
+                "user" => $this->session->getAuth(),
+            ]
+        );
+    }
+
+
+    /**
+     * Fonction pour sélectionner les commentaires non publiés par articles selon leur catégorie
+     *
+     * @return void
+     */
+    public function listModerateCommentPostAjax()
+    {
+
+        $request = new Request();
+        $postRepository = new PostRepository();
+        $category_id = ($request->get('post', 'category') ?? '0');
+
+        if ($category_id === '0') {
+            $posts = $postRepository->findNotPublishedCommentPost();
+        } else {
+            $posts = $postRepository->findNotPublishedCommentPostByCategory($category_id);
+        }
+
+        $this->render(
+            'comment/listModerateCommentPostAjax',
+            [
+                "posts" => $posts,
+                "user" => $this->session->getAuth(),
+            ]
+        );
     }
 }

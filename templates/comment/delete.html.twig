@@ -1,0 +1,18 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block main %}
+    <div class="container my-4">
+        <div class="card mb-3">
+            <div class="card-header">
+                <h1>Confirmation de suppression</h1>
+            </div>
+            <div class="card-body">
+                <p>Voulez-vous vraiment supprimer ce commentaire :</p>
+                <div class="border border-secondary rounded p-3 mb-3">
+                    {{ comment.content }}
+                </div>
+                {{ form|raw }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

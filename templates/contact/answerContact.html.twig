@@ -1,0 +1,18 @@
+{% extends "/layout/base.html.twig" %}
+
+{% block mainClass %}main-centered{% endblock %}
+
+{% block main %}
+    <div class="card">
+        <div class="card-header">
+            <h1 class="h3 mb-3 font-weight-normal">Réponse à {{ contact.name }}</h1>
+        </div>
+        <div class="card-body">
+            <div class="border border-secondary rounded p-3 mb-3">
+                <p> {{ contact.message }} </p>
+            </div>
+            <hr>
+            {{ form | raw }}
+        </div>
+    </div>
+{% endblock %}

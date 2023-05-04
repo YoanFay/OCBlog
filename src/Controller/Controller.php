@@ -2,38 +2,106 @@
 
 namespace App\Src\Controller;
 
+use Dotenv\Dotenv;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
-abstract class Controller{
+abstract class Controller
+{
 
-    private $loader;
+    /**
+     * @var Environment
+     */
     protected $twig;
 
+    /**
+     * @var Dotenv
+     */
+    protected $dotenv;
+
+    /**
+     * @var Session
+     */
+    protected $session;
+
+    /**
+     * @var FilesystemLoader
+     */
+    private $loader;
+
+
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
-        session_start();
+
+        include_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
+        $this->session = new Session();
 
         $this->loader = new FilesystemLoader('../templates');
 
         $this->twig = new Environment($this->loader);
 
-        $this->twig->addGlobal('user', Session::getAuth());
-    }
+        $this->twig->addGlobal('user', $this->session->getAuth());
 
-    public function valideForm(Request $request, string $formName, string $referer){
+        $this->dotenv = Dotenv::createImmutable('..\\');
+        $this->dotenv->load();
 
-        if ($request->issetPost() && $request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === Session::getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer){
+    }//end __construct()
+
+
+    /**
+     * Vérifie que le formulaire est valide
+     *
+     * @param Request $request  parameter
+     * @param string  $formName parameter
+     * @param string  $referer  parameter
+     *
+     * @return bool
+     */
+    public function valideForm(Request $request, string $formName, string $referer): bool
+    {
+
+        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === $this->session->getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
             return true;
         }
 
         return false;
+
     }
 
-    public function render($fichier, array $donnees = []){
 
-        extract($donnees);
+    /**
+     * Fonction pour rediriger vers une url
+     *
+     * @param string $url parameter
+     *
+     * @return null
+     */
+    public function redirectTo(string $url)
+    {
 
-        $this->twig->display($fichier.'.html.twig', $donnees);
+        header('Location: '.$url);
     }
+
+
+    /**
+     * @param string $fichier parameter
+     * @param array  $donnees parameter
+     *
+     * @return void
+     */
+    public function render(string $fichier, array $donnees = [])
+    {
+
+        try {
+            $this->twig->display($fichier.'.html.twig', $donnees);
+        } catch (LoaderError|RuntimeError|SyntaxError $e) {
+        }
+    }
+
 }
