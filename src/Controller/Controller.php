@@ -40,6 +40,10 @@ abstract class Controller
     {
 
         include_once '../vendor/vlucas/phpdotenv/src/Dotenv.php';
+
+        $this->dotenv = Dotenv::createImmutable('..\\');
+        $this->dotenv->load();
+        
         $this->session = new Session();
 
         $this->loader = new FilesystemLoader('../templates');
@@ -47,9 +51,6 @@ abstract class Controller
         $this->twig = new Environment($this->loader);
 
         $this->twig->addGlobal('user', $this->session->getAuth());
-
-        $this->dotenv = Dotenv::createImmutable('..\\');
-        $this->dotenv->load();
 
     }//end __construct()
 

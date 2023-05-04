@@ -16,10 +16,10 @@ class Request
      */
     public function __construct()
     {
+
         $this->file = $_FILES;
 
-        //end __construct()
-    }
+    }//end __construct()
 
 
     /**
@@ -41,7 +41,7 @@ class Request
         case 'server':
             return filter_input(INPUT_SERVER, $key);
         case 'env':
-            return filter_input(INPUT_ENV, $key);
+            return $_ENV[$key];
         case 'file':
             return $this->file[$key];
         default:
