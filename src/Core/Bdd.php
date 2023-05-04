@@ -2,6 +2,7 @@
 
 namespace App\Src\Core;
 
+use App\Src\Controller\Request;
 use App\Src\Entity\Post;
 use Exception;
 use PDO;
@@ -29,10 +30,13 @@ class Bdd
      */
     public function __construct()
     {
-        $host = '127.0.0.1';
-        $dbName = 'blog';
-        $user = 'root';
-        $pass = 'root';
+
+        $request = new Request();
+
+        $host = $request->get('env', 'BDD_HOST');
+        $dbName = $request->get('env', 'BDD_NAME');
+        $user = $request->get('env', 'BDD_USERNAME');
+        $pass = $request->get('env', 'BDD_PASSWORD');
 
 
         $dsn = "mysql:host=$host;dbname=$dbName";
@@ -52,6 +56,7 @@ class Bdd
         //end __construct()
     }
 
+
     /**
      * @param string $req    parameter
      * @param array  $params parameter
@@ -60,8 +65,10 @@ class Bdd
      */
     public function query(string $req, array $params = [])
     {
+
         $this->bdd->prepare($req)->execute($params);
     }
+
 
     /**
      * @param string $req    parameter
@@ -72,17 +79,20 @@ class Bdd
      */
     public function select(string $req, $class, array $params = [])
     {
+
         $query = $this->bdd->prepare($req);
         $query->setFetchMode(PDO::FETCH_CLASS, $class);
         $query->execute($params);
         return $query->fetchAll();
     }
 
+
     /**
      * @return false|string
      */
     public function lastInsert()
     {
+
         return $this->bdd->lastInsertId();
     }
 }
