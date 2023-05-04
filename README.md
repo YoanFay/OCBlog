@@ -8,7 +8,7 @@
 
 ### Installation 
 
-1.  Cloner le repository grâce à la commande ` git clone https://github.com/YoanFay/OCBlog.git`  
+1.  Cloner le repository grâce à la commande `git clone https://github.com/YoanFay/OCBlog.git`  
 2.  Importer la base de données grâce au fichier `export blog`
 3.  Renommer le fichier `.env-default` en `.env` et modifier son contenu comme indiquer dans le ficher
 
