@@ -19,8 +19,8 @@ class Main
         $params = [];
         $request = new Request();
 
-        if ($request->get('get', 'p') !== NULL) {
-            $params = explode('/', $request->get('get', 'p'));
+        if ($request->get('server', 'REQUEST_URI') !== NULL) {
+            $params = explode('/', substr($request->get('server', 'REQUEST_URI'), 1));
         }
 
         if ($params[0] !== '') {
