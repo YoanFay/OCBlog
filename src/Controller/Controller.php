@@ -43,7 +43,7 @@ abstract class Controller
 
         $this->dotenv = Dotenv::createImmutable('..\\');
         $this->dotenv->load();
-        
+
         $this->session = new Session();
 
         $this->loader = new FilesystemLoader('../templates');
@@ -67,7 +67,7 @@ abstract class Controller
     public function valideForm(Request $request, string $formName, string $referer): bool
     {
 
-        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === $this->session->getToken() && $request->get('server', 'HTTP_REFERER') === 'http://localhost/'.$referer) {
+        if ($request->get('post', 'formName') === $formName && $request->get('post', 'csrfToken') === $this->session->getToken()) {
             return true;
         }
 
