@@ -14,11 +14,12 @@
                     </div>
                 </div>
                 <hr>
+                <p class="h5">{{ post.title }}</p>
                 <div class="d-flex justify-content-between">
                     <p class="d-flex align-items-center">{{ post.content }}</p>
                     <div>
                         {% if post.image is not null %}
-                            <img src="/img/post/{{ post.image }}" width="200px">
+                            <img class="img-post" src="/img/post/{{ post.image }}">
                         {% endif %}
                     </div>
                 </div>
