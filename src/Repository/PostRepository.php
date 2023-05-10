@@ -153,7 +153,7 @@ class PostRepository extends PostRepositoryUpdate
     public function findNotPublishedCommentPost(): ?array
     {
 
-        $req = "SELECT p.id, p.content, p.image, p.created_at, p.excerpt, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN  category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at";
+        $req = "SELECT p.id, p.content, p.image, p.created_at, p.excerpt, p.title, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN  category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL GROUP BY p.id ORDER BY c.created_at";
 
         if ($posts = $this->bdd->select($req, $this->class)) {
             return $posts;
@@ -172,7 +172,7 @@ class PostRepository extends PostRepositoryUpdate
     public function findNotPublishedCommentPostByCategory(int $category_id): ?array
     {
 
-        $req = "SELECT p.id, p.content, p.image, p.created_at, p.excerpt, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
+        $req = "SELECT p.id, p.content, p.image, p.created_at, p.title, p.excerpt, COUNT(p.id) AS 'nbr', u.avatar as 'avatar', u.firstname, u.lastname, c2.name FROM `post` as p INNER JOIN comment as c ON p.id = c.post_id INNER JOIN `user` as u ON p.user_id = u.id INNER JOIN category c2 on p.category_id = c2.id WHERE c.validated_at IS NULL AND  c.deleted_at IS NULL AND p.category_id = :category_id GROUP BY p.id";
 
         if ($posts = $this->bdd->select($req, $this->class, ['category_id' => $category_id])) {
             return $posts;

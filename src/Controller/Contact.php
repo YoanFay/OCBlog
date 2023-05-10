@@ -19,6 +19,7 @@ class Contact extends Controller
      */
     public function index()
     {
+
         $contactForm = new ContactForm();
         $validate = [];
         $request = new Request();
@@ -73,6 +74,7 @@ class Contact extends Controller
 
     }
 
+
     /**
      * Formulaire pour répondre aux demandes de contact
      *
@@ -112,7 +114,7 @@ class Contact extends Controller
                 if ($mailService->send() === TRUE) {
                     $contactRepository->update($contact);
                     $this->session->setFlash('success', "Réponse envoyé");
-                    $this->redirectTo('/');
+                    $this->redirectTo('/Contact/listContact');
                 }
 
                 $this->session->setFlash('danger', "Réponse non envoyé");
@@ -136,6 +138,7 @@ class Contact extends Controller
             ]
         );
     }
+
 
     /**
      * Formulaire pour archiver les demandes de contact
@@ -162,6 +165,7 @@ class Contact extends Controller
         $this->session->setFlash('success', "Demande de contact archivé");
         $this->redirectTo('/Contact/listContact');
     }
+
 
     /**
      * Fonction qui définit ce qui sera afficher dans la liste des demandes de contact
