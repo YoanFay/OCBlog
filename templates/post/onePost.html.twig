@@ -48,13 +48,15 @@
         <p class="h3">Commentaires</p>
     </div>
 
-    <div class="d-flex flex-column align-items-center mt-5">
-        <div class="card col-8 my-2">
-            <div class="card-body">
-                {{ form | raw }}
+    {% if user.user_id is defined and post.publishedAt is not null %}
+        <div class="d-flex flex-column align-items-center mt-5">
+            <div class="card col-8 my-2">
+                <div class="card-body">
+                    {{ form | raw }}
+                </div>
             </div>
         </div>
-    </div>
+    {% endif %}
 
     {% for comment in comments %}
         <div class="d-flex flex-column align-items-center mt-5">
@@ -90,6 +92,10 @@
                     {% endif %}
                 </div>
             </div>
+        </div>
+    {% else %}
+        <div class="d-flex flex-column align-items-center mt-5">
+            Il n'y aucun commentaire pour le moment
         </div>
     {% endfor %}
 
