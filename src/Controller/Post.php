@@ -70,6 +70,9 @@ class Post extends Controller
 
         $form = $commentForm->addComment($idPost, $testComment, $token);
 
+        $flash = $this->session->getFlash();
+        $this->session->resetFlash();
+
         $this->render(
             'post/onePost',
             [
@@ -77,6 +80,7 @@ class Post extends Controller
                 "comments" => $comments,
                 "user" => $this->session->getAuth(),
                 'form' => $form->create(),
+                'flash' => $flash
             ]
         );
 
