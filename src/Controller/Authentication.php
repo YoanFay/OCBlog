@@ -73,6 +73,8 @@ class Authentication extends Controller
                 $userRepository = new UserRepository();
                 $userRepository->add($user);
 
+                $this->session->setFlash('success', "Inscription réussi");
+
                 $this->redirectTo('/Authentication/signIn');
             }//end if
         }
@@ -125,10 +127,14 @@ class Authentication extends Controller
 
         $form = $authenticationForm->signIn($token);
 
+        $flash = $this->session->getFlash();
+        $this->session->resetFlash();
+
         $this->render(
             'authentication/signIn',
             [
-                'form' => $form->create()
+                'form' => $form->create(),
+                "flash" => $flash
             ]
         );
 

@@ -25,6 +25,7 @@ class CommentRepository
      */
     public function __construct()
     {
+
         $this->bdd = new BDD();
 
     }//end __construct()
@@ -53,6 +54,7 @@ class CommentRepository
         $this->bdd->query($req, $commentInfo);
     }
 
+
     /**
      * @return array|null
      */
@@ -69,6 +71,7 @@ class CommentRepository
 
     }
 
+
     /**
      * @param array $parameters parameter
      * @param array $sorts      parameter
@@ -77,7 +80,8 @@ class CommentRepository
      */
     public function findBy(array $parameters = [], array $sorts = [])
     {
-        $req = 'SELECT c.*, u.avatar, u.firstname, u.lastname FROM comment c INNER JOIN user u on c.user_id = u.id';
+
+        $req = 'SELECT c.*, u.avatar, u.firstname, u.lastname, u.avatar FROM comment c INNER JOIN user u on c.user_id = u.id';
 
         if (empty($parameters) === FALSE) {
             $req .= ' WHERE ';
@@ -110,6 +114,7 @@ class CommentRepository
 
     }
 
+
     /**
      * @param int $idComment parameter
      *
@@ -128,6 +133,7 @@ class CommentRepository
 
     }
 
+
     /**
      * @param int $idComment parameter
      *
@@ -135,6 +141,7 @@ class CommentRepository
      */
     public function softDelete(int $idComment)
     {
+
         $req = 'UPDATE comment SET deleted_at = "'.date_format(new \DateTime(), 'Y-m-d H:i:s').'" WHERE id = '.$idComment;
 
         try {
@@ -143,6 +150,7 @@ class CommentRepository
             return $e;
         }
     }
+
 
     /**
      * @param Comment $comment parameter

@@ -111,11 +111,11 @@ class Contact extends Controller
 
                 $mailService = new MailService($contact->getMail(), "Réponse à votre demande de contact du ".date_create_from_format('Y-m-d H:i:s', $contact->getCreatedAt())->format('d-m-Y à H:i'), $message, $contact->getName());
 
-                if ($mailService->send() === TRUE) {
-                    $contactRepository->update($contact);
-                    $this->session->setFlash('success', "Réponse envoyé");
-                    $this->redirectTo('/Contact/listContact');
-                }
+                // if ($mailService->send() === TRUE) {
+                $contactRepository->update($contact);
+                $this->session->setFlash('success', "Réponse envoyé");
+                $this->redirectTo('/Contact/listContact');
+                //  }
 
                 $this->session->setFlash('danger', "Réponse non envoyé");
                 $this->redirectTo('/Contact/answerContact/'.$idContact);

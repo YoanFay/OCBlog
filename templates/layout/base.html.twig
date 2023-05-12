@@ -57,13 +57,6 @@
 </main>
 
 <footer class="bg-dark text-light py-3 mt-3">
-    {% if flash is defined and flash is not null %}
-        <div class="bg-{{ flash.type }} col-2 p-2">
-            <p class="text-white m-3 text-center">
-                {{ flash.message }}
-            </p>
-        </div>
-    {% endif %}
     <footer class="bg-dark text-light py-3">
         <div class="container">
             <div class="row">
@@ -92,5 +85,13 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 {% block script %}
 {% endblock %}
+<script>
+    {% if flash.message is defined and flash.message is not null %}
+    jQuery(document).ready(function () {
+        console.log('{{ flash.message }}')
+        alert(decodeURIComponent('{{ flash.message }}'));
+        {% endif %}
+    });
+</script>
 </body>
 </html>

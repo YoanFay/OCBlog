@@ -44,7 +44,7 @@ class PostService
         $testFile = $fileValidator->validateImage();
 
         if ($testPost === true && $testFile === true) {
-            if ($file->getName() === true) {
+            if ($file->getName()) {
                 $uploadService = new UploadService();
                 if ($filename = $uploadService->uploadPost($file)) {
                     $post->setImage($filename);
@@ -56,7 +56,7 @@ class PostService
             $postRepository = new PostRepository();
             $postRepository->insert($post);
 
-            $session->setFlash('success', "L'article a bien été envoyé");
+            $session->setFlash('success', "L%27article a bien été envoyé");
 
             return true;
         }

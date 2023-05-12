@@ -20,10 +20,12 @@ class UploadService
      */
     public function uploadPost(File $file)
     {
+
         $upload = new Upload($file, 'post');
 
         return $upload->addFile();
     }
+
 
     /**
      * @param File $file parameter
@@ -32,10 +34,12 @@ class UploadService
      */
     public function uploadUser(File $file)
     {
+
         $upload = new Upload($file, 'user');
 
         return $upload->addFile();
     }
+
 
     /**
      * @param string $firstname parameter
@@ -45,10 +49,12 @@ class UploadService
      */
     public function uploadDefaultUser(string $firstname, string $lastname)
     {
+
         $upload = new Upload(null, 'user');
 
         return $upload->addFileByUrl('https://ui-avatars.com/api/?name='.$firstname.'+'.$lastname.'&background=random&format=png');
     }
+
 
     /**
      * @param array|bool $testConfig parameter
@@ -61,6 +67,7 @@ class UploadService
      */
     public function UploadWithCheck($testConfig, $testImage, $testCv, Config $config, Session $session): bool
     {
+
         $configRepository = new ConfigRepository();
 
         if ($testConfig && in_array($testImage, [true, 'noChange']) && in_array($testCv, [true, 'noChange'])) {
@@ -75,6 +82,7 @@ class UploadService
 
     }
 
+
     /**
      * @param string $choice parameter
      * @param string $test   parameter
@@ -84,6 +92,7 @@ class UploadService
      */
     public function uploadGetFilename(string $choice, string $test, Config $config)
     {
+
         $request = new Request();
 
         if ($test === "noChange") {
@@ -102,6 +111,7 @@ class UploadService
 
     }
 
+
     /**
      * @param File   $file   parameter
      * @param string $choice parameter
@@ -110,6 +120,7 @@ class UploadService
      */
     public function uploadConfig(File $file, string $choice)
     {
+
         $upload = new Upload($file, 'config');
 
         switch ($choice) {
